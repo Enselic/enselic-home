@@ -1,5 +1,5 @@
 ;;
-;;  Add this to ~/.emacs:
+;;  To get up and running, add this to ~/.emacs:
 ;;
 ;;    (setq user-init-file "~/enselic-elisp/init.el")
 ;;    (load user-init-file)
