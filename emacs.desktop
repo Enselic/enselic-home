@@ -1,0 +1,94 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Tue Nov 27 21:21:02 2007
+;; Desktop file format version 206
+;; Emacs version 22.1.1
+
+;; Global section:
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring '("adjust" "delete-un"))
+(setq regexp-search-ring nil)
+(setq register-alist nil)
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "/home/martin/emacs-files/Elisp/enspro.el"
+  "enspro.el"
+  'emacs-lisp-mode
+  '(abbrev-mode global-auto-revert-mode)
+  7712
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . iso-latin-1-unix) (overwrite-mode)))
+
+(desktop-create-buffer 206
+  "/home/martin/emacs-files/.emacs"
+  ".emacs"
+  'emacs-lisp-mode
+  '(abbrev-mode global-auto-revert-mode)
+  10038
+  '(9758 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . mule-utf-8-unix) (overwrite-mode)))
+
+(desktop-create-buffer 206
+  "/home/martin/emacs-files/Elisp/psvn.el"
+  "psvn.el"
+  'emacs-lisp-mode
+  '(abbrev-mode global-auto-revert-mode)
+  77716
+  '(77716 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/martin/emacs-files/project.el"
+  "project.el"
+  'emacs-lisp-mode
+  '(abbrev-mode global-auto-revert-mode)
+  301
+  '(3 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/martin/emacs-files/Elisp/gtags.el"
+  "gtags.el"
+  'emacs-lisp-mode
+  '(abbrev-mode global-auto-revert-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/martin/emacs-files/Elisp/browse-kill-ring.el"
+  "browse-kill-ring.el"
+  'emacs-lisp-mode
+  '(abbrev-mode global-auto-revert-mode)
+  9153
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . mule-utf-8-unix)))
+
+(desktop-create-buffer 206
+  nil
+  "emacs-files"
+  'dired-mode
+  '(abbrev-mode global-auto-revert-mode)
+  240
+  '(nil nil)
+  t
+  '("/home/martin/emacs-files/")
+  nil)
+

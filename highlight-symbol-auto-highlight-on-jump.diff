@@ -1,0 +1,131 @@
+--- highlight-symbol-orig.el	2008-03-15 08:08:44.000000000 +0100
++++ highlight-symbol.el	2008-03-15 10:19:40.000000000 +0100
+@@ -38,11 +38,19 @@
+ ;; symbol at point highlighted.
+ ;;
+ ;; The functions `highlight-symbol-next', `highlight-symbol-prev',
+-;; `highlight-symbol-next-in-defun' and `highlight-symbol-prev-in-defun' allow
+-;; for cycling through the locations of any symbol at point.
++;; `highlight-symbol-next-in-defun' and `highlight-symbol-prev-in-defun'
++;; allow for cycling through the locations of any symbol at point. If
++;; you want to highlight the symbol while navigating with these
++;; functions, customize `highlight-symbol-on-navigation'.
+ ;;
+ ;;; Changes Log:
+ ;;
++;; ????-??-?? (?.?.?)
++;;    Made navigation with the `highlight-symbol-jump' back-end
++;;    automatically handle highlight of the symbol, customizable
++;;    through `highlight-symbol-on-navigation'.
++;;    Patch from Martin Nordholts.
++;;
+ ;; 2008-02-26 (1.0.3)
+ ;;    Added `highlight-symbol-remove-all'.
+ ;;
+@@ -85,6 +93,12 @@
+   "*Face used by `highlight-symbol-mode'."
+   :group 'highlight-symbol)
+ 
++(defcustom highlight-symbol-on-navigation nil
++  "*Wether or not to temporary highlight the symbol when using
++`highlight-symbol-jump' family of functions."
++  :type 'boolean
++  :group 'highlight-symbol)
++
+ (defcustom highlight-symbol-idle-delay 1.5
+   "*Number of seconds of idle time before highlighting the current symbol.
+ If this variable is set to 0, no idle time is required.
+@@ -142,10 +156,37 @@
+     (kill-local-variable 'highlight-symbol)))
+ 
+ ;;;###autoload
++(define-minor-mode highlight-symbol-navigation-mode
++  "Minor mode that is active when navigating with
++`highlight-symbol-next' and `highlight-symbol-prev'."
++  nil nil nil
++  (if highlight-symbol-navigation-mode
++      (progn
++        (if (not (member (highlight-symbol-get-symbol) highlight-symbol-list))
++            (highlight-symbol-at-point))
++        (add-hook 'pre-command-hook 'highlight-symbol-navigation-mode-pre-command nil t))
++    (progn
++      (if (member (highlight-symbol-get-symbol) highlight-symbol-list)
++          (highlight-symbol-at-point))
++      (remove-hook 'pre-command-hook 'highlight-symbol-navigation-mode-pre-command t))))
++
++;;;###autoload
++(defun highlight-symbol-is-navigation-command (command)
++  (or (eq command 'highlight-symbol-next)
++      (eq command 'highlight-symbol-prev)
++      (eq command 'highlight-symbol-next-in-defun)
++      (eq command 'highlight-symbol-prev-in-defun)))
++
++;;;###autoload
++(defun highlight-symbol-navigation-mode-pre-command ()
++  (if (not (highlight-symbol-is-navigation-command this-command))
++      (highlight-symbol-navigation-mode -1)))
++
++;;;###autoload
+ (defun highlight-symbol-at-point ()
+   "Toggle highlighting of the symbol at point.
+ This highlights or unhighlights the symbol at point using the first
+-element in of `highlight-symbol-faces'."
++element in of `highlight-symbol-colors'."
+   (interactive)
+   (let ((symbol (highlight-symbol-get-symbol)))
+     (unless symbol (error "No symbol at point"))
+@@ -158,14 +199,7 @@
+       ;; add
+       (when (equal symbol highlight-symbol)
+         (highlight-symbol-mode-remove-temp))
+-      (let ((color (nth highlight-symbol-color-index
+-                        highlight-symbol-colors)))
+-        (if color ;; wrap
+-            (incf highlight-symbol-color-index)
+-          (setq highlight-symbol-color-index 0
+-                color (car highlight-symbol-colors)))
+-        (setq color `((background-color . ,color)
+-                      (foreground-color . "black")))
++      (let ((color (highlight-symbol-get-next-color)))
+         ;; highlight
+         (with-no-warnings
+           (if (< emacs-major-version 22)
+@@ -174,6 +208,18 @@
+         (push symbol highlight-symbol-list)))))
+ 
+ ;;;###autoload
++(defun highlight-symbol-get-next-color ()
++  "Returns the next color to use."
++      (let ((color (nth highlight-symbol-color-index
++                        highlight-symbol-colors)))
++        (if color ;; wrap
++            (incf highlight-symbol-color-index)
++          (setq highlight-symbol-color-index 0
++                color (car highlight-symbol-colors)))
++        `((background-color . ,color)
++          (foreground-color . "black"))))
++
++;;;###autoload
+ (defun highlight-symbol-remove-all ()
+   "Remove symbol highlighting in buffer."
+   (interactive)
+@@ -236,7 +282,7 @@
+   "After a command, change the temporary highlighting.
+ Remove the temporary symbol highlighting and, unless a timeout is specified,
+ create the new one."
+-  (unless (eq this-command 'highlight-symbol-jump)
++  (unless (highlight-symbol-is-navigation-command this-command)
+     (if highlight-symbol-timer
+         (highlight-symbol-mode-remove-temp)
+       (highlight-symbol-temp-highlight))))
+@@ -258,7 +304,9 @@
+               (goto-char (if (< 0 dir) (point-min) (point-max)))
+               (setq target (re-search-forward symbol nil nil dir)))
+             (goto-char (+ target offset)))
+-          (setq this-command 'highlight-symbol-jump))
++
++          (if highlight-symbol-on-navigation
++              (highlight-symbol-navigation-mode 1)))
+       (error "No symbol at point"))))
+ 
+ (provide 'highlight-symbol)
