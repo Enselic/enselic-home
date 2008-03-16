@@ -1,3 +1,10 @@
+;;
+;;  Add this to ~/.emacs:
+;;
+;;    (setq user-init-file "~/enselic-elisp/init.el")
+;;    (load user-init-file)
+;;
+
 (add-to-list 'load-path "~/enselic-elisp")
 
 (require 'browse-kill-ring)
@@ -18,7 +25,7 @@
 (require 'whitespace)
 
 
-(load "convenience-functions.el")
+(load "functions.el")
 (load "keys.el")
 (load "skeletons.el")
 
