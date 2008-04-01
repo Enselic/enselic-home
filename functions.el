@@ -1,5 +1,17 @@
 (require 'thingatpt)
 
+(defun highlight-symbol-next-auto-on ()
+  (interactive)
+  (if (not highlight-symbol-mode)
+      (highlight-symbol-mode t))
+  (highlight-symbol-next))
+
+(defun highlight-symbol-prev-auto-on ()
+  (interactive)
+  (if (not highlight-symbol-mode)
+      (highlight-symbol-mode t))
+  (highlight-symbol-prev))
+
 (defun enable-hl-line-mode ()
   (hl-line-mode 1))
 

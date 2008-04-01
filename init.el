@@ -1,3 +1,7 @@
+;;  Temp
+;;
+;;    '(font-lock-comment-face ((((class color) (min-colors 8) (background light)) (:foreground "#228b22"))))
+;;
 ;;
 ;;  To get up and running, add this to ~/.emacs:
 ;;
@@ -14,6 +18,7 @@
 (require 'filecache)
 (require 'filecache-enhancements)
 (require 'gimp-elisp)
+(require 'git)
 (require 'grep+)
 (require 'gtk-doc)
 (require 'highlight-symbol)
@@ -83,7 +88,9 @@
  '(global-auto-revert-mode t)
  '(grep-scroll-output t)
  '(grepp-default-regexp-fn (quote symbol-at-point))
+ '(highlight-symbol-idle-delay 7200)
  '(highlight-symbol-on-navigation t)
+ '(highlight-symbol-on-navigation-p t)
  '(history-delete-duplicates t)
  '(icicle-bind-top-level-commands-flag t)
  '(icicle-mode nil)

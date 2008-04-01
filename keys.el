@@ -2,7 +2,7 @@
 (require 'etags-select)
 
 ;; Single keystrokes
-(global-set-key (kbd "C-9")                   'add-symbol-at-point-to-kill-ring)
+(global-set-key (kbd "M-9")                   'add-symbol-at-point-to-kill-ring)
 (global-set-key (kbd "C-M-b")                 'backward-word)
 (global-set-key (kbd "C-l")                   'c-find-other-file)
 (global-set-key (kbd "S-<f7>")                'compile)
@@ -24,10 +24,10 @@
 (global-set-key (kbd "S-<f8>")                'gud-stop-subjob)
 (global-set-key (kbd "<f6>")                  'gud-up)  
 (global-set-key (kbd "C-o")                   'ido-switch-buffer)
-(global-set-key (kbd "C-M-z")                 'highlight-symbol-prev)
-(global-set-key (kbd "C-M-c")                 'highlight-symbol-next)
+(global-set-key (kbd "C-M-z")                 'highlight-symbol-prev-auto-on)
+(global-set-key (kbd "C-M-c")                 'highlight-symbol-next-auto-on)
 (global-set-key (kbd "C-M-d")                 'kill-word)
-(global-set-key (kbd "C-0")                   'line-to-top-of-window)
+(global-set-key (kbd "M-0")                   'line-to-top-of-window)
 (global-set-key (kbd "M-I")                   'message-and-kill-add-buffer-file-name)
 (global-set-key (kbd "C-M-p")                 'next-buffer)
 (global-set-key (kbd "<f4>")                  'next-error)
