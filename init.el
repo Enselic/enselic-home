@@ -1,19 +1,31 @@
-;;  Temp
+;; init.el - Enselic's Emacs customization starting point
 ;;
-;;    '(font-lock-comment-face ((((class color) (min-colors 8) (background light)) (:foreground "#228b22"))))
+;; Copyright © 2007-2008 Martin Nordholts
+;;
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;;
 ;;
-;;  To get up and running, add this to ~/.emacs:
+;; To get up and running, add this to ~/.emacs:
 ;;
-;;    (setq user-init-file "~/enselic-elisp/init.el")
-;;    (load user-init-file)
+;;   (setq user-init-file "~/enselic-elisp/init.el")
+;;   (load user-init-file)
 ;;
 
 (add-to-list 'load-path "~/enselic-elisp")
 
 (require 'browse-kill-ring)
 (require 'cc-mode)
-(require 'enspro)
 (require 'etags-select)
 (require 'filecache)
 (require 'filecache-enhancements)
@@ -25,9 +37,12 @@
 (require 'iswitchb)
 (require 'psvn)
 (require 'session)
+(require 'simple-programming-project)
+(require 'simple-project)
 (require 'thingatpt)
 (require 'vc-clearcase-auto)
 (require 'whitespace)
+
 
 
 (load "functions.el")
@@ -40,17 +55,16 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 
-(add-hook 'after-init-hook  'enspro-parse-projects-file)
 (add-hook 'after-init-hook  'safe-load-abbrevs)
 (add-hook 'after-init-hook  'session-initialize)
 (add-hook 'after-init-hook  'grep-compute-defaults)
+(add-hook 'after-init-hook  'simple-programming-project-init)
 
 (add-hook 'find-file-hook   'improve-tab)
 ;;(add-hook 'find-file-hook   'enable-hl-line-mode)
 
 (add-hook 'kill-buffer-hook 'file-cache-add-this-file)
 
-(add-hook 'kill-emacs-hook  'enspro-write-projects-file)
 (add-hook 'kill-emacs-hook  'write-abbrev-file)
 
 
@@ -132,6 +146,7 @@
  '(undo-strong-limit 300000)
  '(user-full-name "Martin Nordholts")
  '(user-mail-address "martinn@svn.gnome.org")
+ '(vc-clearcase-diff-switches (quote ("-graphical")))
  '(vc-consult-headers nil)
  '(vc-display-status nil)
  '(version-control (quote never))
@@ -161,7 +176,7 @@
  '(font-lock-comment-face ((((class color) (min-colors 8) (background light)) (:foreground "#228b22"))))
  '(font-lock-constant-face ((((class color) (min-colors 8)) (:foreground "#000000"))))
  '(font-lock-doc-face ((t (:foreground "#228b22"))))
- '(font-lock-function-name-face ((((class color) (min-colors 8)) (:foreground "#000000"))))
+ '(font-lock-function-name-face ((((class color) (min-colors 8)) (:foreground "#8b008b" :weight bold))))
  '(font-lock-keyword-face ((((class color) (min-colors 8)) (:foreground "#0000ff"))))
  '(font-lock-preprocessor-face ((t (:inherit font-lock-builtin-face))))
  '(font-lock-string-face ((((class color) (min-colors 8)) (:foreground "#ff0000"))))
@@ -182,3 +197,5 @@
 (put 'narrow-to-region 'disabled nil)
 (put 'narrow-to-page 'disabled nil)
 
+
+(put 'downcase-region 'disabled nil)

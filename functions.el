@@ -177,3 +177,44 @@
       (file-cache-add-directory-recursively ".")
       (file-cache-save-cache-to-file file-cache-file)
       (message (format "Wrote %s." file-cache-file)))))
+
+(defun get-buffer-regexp (regex)
+  (find-if (lambda (x) (string-match regex (buffer-name x)))
+           (buffer-list)))
+
+(defun get-config-string (file variable)
+  (save-excursion
+    (let (regexp
+          buffer
+          result)
+
+      (setq buffer (find-file-noselect file))
+      (set-buffer buffer)
+
+      (beginning-of-buffer)
+      (setq regexp (concat variable " *= *\\(.*\\)"))
+      (setq result (re-search-forward regexp (point-max) t))
+
+      (if result
+          (buffer-substring-no-properties (match-beginning 1) (match-end 1))
+        nil))))
+
+(defun directory-files-without-dots (directory)
+  (let (directory-files-content
+        result)
+    (setq directory-files-content (directory-files directory))
+    (dolist (item directory-files-content)
+      (if (not (or (string= item ".") (string= item "..")))
+          (add-to-list 'result item)))
+
+    result))
+
+
+(defun delete-file-if-exists (file)
+  (if (file-exists-p file)
+      (delete-file file)))
+
+
+(defun delete-directory-if-exists (directory)
+  (if (file-directory-p directory)
+      (delete-directory directory)))
