@@ -37,8 +37,8 @@
 (require 'iswitchb)
 (require 'psvn)
 (require 'session)
-(require 'simple-programming-project)
-(require 'simple-project)
+(require 'programming-project)
+(require 'simple-project-management)
 (require 'thingatpt)
 (require 'vc-clearcase-auto)
 (require 'whitespace)
@@ -58,7 +58,7 @@
 (add-hook 'after-init-hook  'safe-load-abbrevs)
 (add-hook 'after-init-hook  'session-initialize)
 (add-hook 'after-init-hook  'grep-compute-defaults)
-(add-hook 'after-init-hook  'simple-programming-project-init)
+(add-hook 'after-init-hook  'programming-project-init)
 
 (add-hook 'find-file-hook   'improve-tab)
 ;;(add-hook 'find-file-hook   'enable-hl-line-mode)
@@ -66,7 +66,7 @@
 (add-hook 'kill-buffer-hook 'file-cache-add-this-file)
 
 (add-hook 'kill-emacs-hook  'write-abbrev-file)
-(add-hook 'kill-emacs-hook  'simple-project-on-kill-emacs)
+(add-hook 'kill-emacs-hook  'simple-project-management-on-kill-emacs)
 
 
 (custom-set-variables
