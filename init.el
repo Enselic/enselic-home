@@ -66,6 +66,7 @@
 (add-hook 'kill-buffer-hook 'file-cache-add-this-file)
 
 (add-hook 'kill-emacs-hook  'write-abbrev-file)
+(add-hook 'kill-emacs-hook  'simple-project-on-kill-emacs)
 
 
 (custom-set-variables

@@ -88,7 +88,7 @@ simple-programming-project-batch-create PROJECTNAME'"
           additional-tag-files (simple-programming-project-get-additional-tag-files project-name))
 
     (if (not additional-tag-files)
-        (setq tags-file-name tags-file-name)
+        (setq tags-file-name tags-file)
       (setq tags-table-list (cons tags-file additional-tag-files)))))
 
 

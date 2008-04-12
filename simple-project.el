@@ -152,6 +152,10 @@ called interactively, prompt for project name and type."
                (cons (simple-project-project-type-entry-name project-type) project-type)))
 
 
+(defun simple-project-on-kill-emacs ()
+  (simple-project-unload-active-project))
+
+
 (defun simple-project-read-exisisting-project-name ()
   (let (existing-project-names)
     (setq existing-project-names (simple-project-get-existing-project-names))
