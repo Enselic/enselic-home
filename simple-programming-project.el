@@ -27,7 +27,7 @@
 (defconst simple-programming-project-tags-file-name                   "TAGS")
 (defconst simple-programming-project-file-cache-file-name             "FILECACHE")
 (defconst simple-programming-project-id-database-file-name            "ID")
-(defconst simple-programming-project-config-file-name                 "config.cfg")
+(defconst simple-programming-project-config-file-name                 "programming-project-config.cfg")
 (defconst simple-programming-project-source-root-config-key           "source_root")
 (defconst simple-programming-project-binary-to-debug-config-key       "binary_to_debug")
 (defconst simple-programming-project-additional-tag-files-config-key  "additional_tag_files")
@@ -36,12 +36,13 @@
 (defconst simple-programming-project-lid-template-command-format      "cd %s && lid -f %s --result=grep ")
 (defconst simple-programming-project-gdb-command-format               "libtool --mode=execute gdb --annotate=3 --args %s ")
 (defconst simple-programming-project-default-compile-command-format   "make -k -j3 -C %s")
+(defconst simple-programming-project-type                             "Programming Project")
 
 
 
 (defun simple-programming-project-init ()
   (let ((project-type (make-simple-project-project-type-entry
-                       :name                     "Programming Project"
+                       :name                      simple-programming-project-type
                        :create-project-function  'simple-programming-project-create
                        :load-project-function    'simple-programming-project-load
                        :unload-project-function  'simple-programming-project-unload
@@ -113,7 +114,8 @@ simple-programming-project-batch-create PROJECTNAME'"
   (delete-file-if-exists (simple-programming-project-get-config-file      project-name))
   (delete-file-if-exists (simple-programming-project-get-file-cache-file  project-name))
   (delete-file-if-exists (simple-programming-project-get-tags-file        project-name))
-  (delete-file-if-exists (simple-programming-project-get-id-database-file project-name)))
+  (delete-file-if-exists (simple-programming-project-get-id-database-file project-name))
+  (delete-file-if-exists (simple-programming-project-get-desktop-file     project-name)))
 
 
 (defun simple-programming-project-gdb-wrapper ()
@@ -137,7 +139,7 @@ simple-programming-project-batch-create PROJECTNAME'"
   (shell-command (format "ctags -e -o %s --recurse %s %s"
                          output-file
                          source-root
-                         (if synchroniously "&" ""))
+                         (if synchroniously "" "&"))
                  (format "*ctags (%s) Shell Command*"
                          project-name)))
 
@@ -161,7 +163,7 @@ simple-programming-project-batch-create PROJECTNAME'"
   (shell-command (format "cd %s && mkid -o %s %s"
                          source-root
                          output-file
-                         (if synchroniously "&" ""))
+                         (if synchroniously "" "&"))
                  (format "*mkid (%s) Shell Command*" project-name)))
 
 
@@ -218,11 +220,15 @@ simple-programming-project-batch-create PROJECTNAME'"
         source-root)
     (setq tag-output-file         (simple-programming-project-get-tags-file        project-name)
           id-database-output-file (simple-programming-project-get-id-database-file project-name)
-          file-cache-file         
           source-root             (expand-file-name "."))
+
+    (message "\n\n\n==== BATCH CREATE PROJECT `%s' ====" project-name)
 
     (message "Making sure project directory %s exists" (simple-project-get-project-directory project-name))
     (simple-project-create-project-directory project-name)
+
+    (message "Creating %s" simple-project-config-file-name)
+    (simple-project-create-config-file project-name simple-programming-project-type)
 
     (message "Creating %s" simple-programming-project-config-file-name)
     (simple-programming-project-create-config-file project-name source-root)
@@ -245,8 +251,13 @@ simple-programming-project-batch-create PROJECTNAME'"
 
 (defun simple-programming-project-recreate-file-cache (project-name)
   (file-cache-clear-cache)
-  (file-cache-add-directory-recursively source-root)
+  (file-cache-add-directory-recursively (simple-programming-project-get-source-root project-name))
   (simple-programming-project-save-file-cache project-name))
+
+
+(defun simple-programming-project-recreate-current-project-file-cache ()
+  (interactive)
+  (simple-programming-project-recreate-file-cache (simple-project-get-current-project)))
   
 
 (defun simple-programming-project-svn-status-current-source-root ()
