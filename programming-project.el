@@ -226,29 +226,31 @@ programming-project-batch-create PROJECTNAME'"
 
     (message "\n\n\n==== BATCH CREATE PROJECT `%s' ====" project-name)
 
-    (message "Making sure project directory %s exists" (simple-project-management-get-project-directory project-name))
+    (message "\n  ** Making sure project directory %s exists:" (simple-project-management-get-project-directory project-name))
     (simple-project-management-create-project-directory project-name)
 
-    (message "Creating %s" simple-project-management-config-file-name)
+    (message "\n  ** Creating %s:" simple-project-management-config-file-name)
     (simple-project-management-create-config-file project-name programming-project-type)
 
-    (message "Creating %s" programming-project-config-file-name)
+    (message "\n  ** Creating %s:" programming-project-config-file-name)
     (programming-project-create-config-file project-name source-root)
 
-    (message "Creating %s" programming-project-tags-file-name)
+    (message "\n  ** Creating %s:" programming-project-tags-file-name)
     (programming-project-recreate-tags-command tag-output-file
                                                source-root
                                                project-name
                                                t)
 
-    (message "Creating %s" programming-project-id-database-file-name)
+    (message "\n  ** Creating %s:" programming-project-id-database-file-name)
     (programming-project-recreate-id-dabatabse-command id-database-output-file
                                                        source-root
                                                        project-name
                                                        t)
 
-    (message "Creating %s" programming-project-file-cache-file-name)
-    (programming-project-recreate-file-cache project-name)))
+    (message "\n  ** Creating %s:" programming-project-file-cache-file-name)
+    (programming-project-recreate-file-cache project-name)
+
+    (message (concat "\n===============================" (multiply-string "=" (length project-name)) "\n\n\n\n"))))
 
 
 (defun programming-project-recreate-file-cache (project-name)
