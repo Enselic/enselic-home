@@ -218,3 +218,10 @@
 (defun delete-directory-if-exists (directory)
   (if (file-directory-p directory)
       (delete-directory directory)))
+
+
+(defun multiply-string (string number)
+  (let (result)
+    (dotimes (i 5)
+      (setq result (concat result string)))
+    result))
