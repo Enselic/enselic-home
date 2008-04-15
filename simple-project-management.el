@@ -33,7 +33,7 @@
 projects."
   :group 'tools)
 
-(defcustom simple-project-management-projects-directory "~/simple-project-management-projects"
+(defcustom simple-project-management-projects-directory "~/.simple-project-management-projects"
   "Where to read and write assoscitions of a project name and its
 project file - which is simply Elisp code that gets evaluated
 when the project is loaded."
