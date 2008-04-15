@@ -32,11 +32,13 @@
 (defconst programming-project-binary-to-debug-config-key       "binary_to_debug")
 (defconst programming-project-additional-tag-files-config-key  "additional_tag_files")
 (defconst programming-project-default-file-cache-file-name     ".simple-project-management-file-cache")
-(defconst programming-project-grep-template-command-format     "grep -rn %s -e ")
-(defconst programming-project-lid-template-command-format      "cd %s && lid -f %s --result=grep ")
-(defconst programming-project-gdb-command-format               "libtool --mode=execute gdb --annotate=3 --args %s ")
-(defconst programming-project-default-compile-command-format   "make -k -j3 -C %s")
+(defconst programming-project-grep-template-command-format     "grep -rn \"%s\" -e ")
+(defconst programming-project-lid-template-command-format      "%s lid -f \"%s\" --result=grep ")
+(defconst programming-project-gdb-command-format               "libtool --mode=execute gdb --annotate=3 --args \"%s\" ")
+(defconst programming-project-default-compile-command-format   "make -k -j3 -C \"%s\"")
 (defconst programming-project-type                             "Programming Project")
+(defconst programming-project-ctags-command-format             "ctags -e -o \"%s\" --recurse \"%s\" %s")
+(defconst programming-project-mkid-command-format              "cd \"%s\" && mkid -o \"%s\" %s")
 
 
 
@@ -100,7 +102,7 @@ programming-project-batch-create PROJECTNAME'"
 
 (defun programming-project-get-debug-binary (project-name)
   (programming-project-get-config project-name
-                                         programming-project-binary-to-debug-config-key))
+                                  programming-project-binary-to-debug-config-key))
 
 (defun programming-project-unload (project-name)
   (save-some-buffers) 
@@ -126,17 +128,17 @@ programming-project-batch-create PROJECTNAME'"
   (let (tag-files-string)
     (setq tag-files-string
           (programming-project-get-config project-name
-                                                 programming-project-additional-tag-files-config-key))
+                                          programming-project-additional-tag-files-config-key))
     (if tag-files-string
         (split-string tag-files-string ":")
       nil)))
 
 
 (defun programming-project-recreate-tags-command (output-file
-                                                         source-root
-                                                         project-name
-                                                         synchroniously)
-  (shell-command (format "ctags -e -o %s --recurse %s %s"
+                                                  source-root
+                                                  project-name
+                                                  synchroniously)
+  (shell-command (format programming-project-ctags-command-format
                          output-file
                          source-root
                          (if synchroniously "" "&"))
@@ -157,10 +159,10 @@ programming-project-batch-create PROJECTNAME'"
   
 
 (defun programming-project-recreate-id-dabatabse-command (output-file
-                                                                 source-root
-                                                                 project-name
-                                                                 synchroniously)
-  (shell-command (format "cd %s && mkid -o %s %s"
+                                                          source-root
+                                                          project-name
+                                                          synchroniously)
+  (shell-command (format programming-project-mkid-command-format
                          source-root
                          output-file
                          (if synchroniously "" "&"))
@@ -169,7 +171,7 @@ programming-project-batch-create PROJECTNAME'"
 
 (defun programming-project-get-source-root (project-name)
   (programming-project-get-config project-name
-                                         programming-project-source-root-config-key))
+                                  programming-project-source-root-config-key))
 
 
 (defun programming-project-get-config (project-name variable)
@@ -186,8 +188,8 @@ programming-project-batch-create PROJECTNAME'"
                                        (simple-project-management-get-project-directory project-name)))
         (source-root (programming-project-get-source-root project-name)))
     (programming-project-recreate-tags-command output-file
-                                                      source-root
-                                                      project-name)))
+                                               source-root
+                                               project-name)))
 
 
 (defun programming-project-get-desktop-file (project-name)
@@ -235,15 +237,15 @@ programming-project-batch-create PROJECTNAME'"
 
     (message "Creating %s" programming-project-tags-file-name)
     (programming-project-recreate-tags-command tag-output-file
-                                                      source-root
-                                                      project-name
-                                                      t)
+                                               source-root
+                                               project-name
+                                               t)
 
     (message "Creating %s" programming-project-id-database-file-name)
     (programming-project-recreate-id-dabatabse-command id-database-output-file
-                                                              source-root
-                                                              project-name
-                                                              t)
+                                                       source-root
+                                                       project-name
+                                                       t)
 
     (message "Creating %s" programming-project-file-cache-file-name)
     (programming-project-recreate-file-cache project-name)))
