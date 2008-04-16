@@ -225,3 +225,11 @@
     (dotimes (i 5)
       (setq result (concat result string)))
     result))
+
+
+(defun windowsify-path (path)
+  (replace-regexp-in-string "/" "\\\\" path))
+
+
+(defun on-windows-p ()
+  (string-match "mingw" (version)))
