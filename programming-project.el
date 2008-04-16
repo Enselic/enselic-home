@@ -162,11 +162,17 @@ programming-project-batch-create PROJECTNAME'"
                                                           source-root
                                                           project-name
                                                           synchroniously)
-  (shell-command (format programming-project-mkid-command-format
-                         source-root
-                         output-file
-                         (if synchroniously "" "&"))
-                 (format "*mkid (%s) Shell Command*" project-name)))
+  (let (command)
+    (setq command (format programming-project-mkid-command-format
+                          source-root
+                          output-file
+                          (if synchroniously "" "&")))
+
+    (if (on-windows-p)
+        (setq command (windowsify-path command)))
+    
+    (shell-command command
+                   (format "*mkid (%s) Shell Command*" project-name))))
 
 
 (defun programming-project-get-source-root (project-name)
