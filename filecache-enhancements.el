@@ -3,6 +3,17 @@
 ;;  filecache enhancements (from www.EmacsWiki.org)
 ;;
 
+(defvar file-cache-files-matching-map nil)
+
+(if file-cache-files-matching-map
+    ()
+  (setq file-cache-files-matching-map (make-sparse-keymap))
+  (define-key file-cache-files-matching-map (kbd "RET") 'file-cache-files-matching-mode-select)
+  (define-key file-cache-files-matching-map (kbd "n")   'next-line)
+  (define-key file-cache-files-matching-map (kbd "p")   'previous-line))
+
+
+
 (defun file-cache-save-cache-to-file (file)
   "Save contents of `file-cache-alist' to FILE.
 For later retrieval using `file-cache-read-cache-from-file'"
@@ -50,6 +61,32 @@ directory, select directory. Lastly the file is opened."
        (file-exists-p buffer-file-name)
        (file-cache-add-file buffer-file-name)))
 
+
+(defun file-cache-files-matching-with-mode ()
+  (interactive)
+  (call-interactively 'file-cache-files-matching)
+  (switch-to-buffer "*File Cache Files Matching*")
+  (file-cache-files-matching-mode)
+  (delete-other-windows)
+  (setq buffer-read-only t))
+
+
+(defun file-cache-files-matching-mode-select ()
+  (interactive)
+  (let (start
+        end
+        file-name)
+    (setq start     (line-beginning-position)
+          end       (line-end-position)
+          file-name (buffer-substring-no-properties start end))
+    (file-cache-ido-find-file file-name)))
+
+
+(defun file-cache-files-matching-mode ()
+  (kill-all-local-variables)
+  (use-local-map file-cache-files-matching-map)
+  (setq mode-name "FCFMM")
+  (setq major-mode 'file-cache-files-matching-mode))
 
 
 (provide 'filecache-enhancements)

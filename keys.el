@@ -46,6 +46,7 @@
 (global-set-key (kbd "C-c l")                 'simple-project-management-load-project)
 (global-set-key (kbd "C-c e")                 'simple-project-management-create-project)
 (global-set-key (kbd "C-c o")                 'file-cache-ido-find-file)
+(global-set-key (kbd "C-c z")                 'file-cache-files-matching-with-mode)
 (global-set-key (kbd "C-c <f12>")             'find-file-dot-emacs)
 (global-set-key (kbd "C-c c")                 'goto-scratch-buffer)
 (global-set-key (kbd "C-c j")                 'programming-project-grep-frontend)
