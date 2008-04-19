@@ -34,7 +34,7 @@
 (defconst programming-project-binary-to-debug-config-key       "binary_to_debug")
 (defconst programming-project-additional-tag-files-config-key  "additional_tag_files")
 (defconst programming-project-grep-template-command-format     "grep -rn \"%s\" -e ")
-(defconst programming-project-lid-template-command-format      "%s lid -f \"%s\" --result=grep ")
+(defconst programming-project-lid-template-command-format      "lid -f \"%s\" --result=grep ")
 (defconst programming-project-gdb-command-format               "libtool --mode=execute gdb --annotate=3 --args \"%s\" ")
 (defconst programming-project-default-compile-command-format   "make -k -j3 -C \"%s\"")
 (defconst programming-project-type                             "programming")
@@ -302,12 +302,27 @@ programming-project-batch-create PROJECTNAME'"
     (if (not arg)
         (setq grep-command
               (format programming-project-lid-template-command-format
-                      source-root
                       (programming-project-get-id-database-file project-name)))
       (setq grep-command
             (format programming-project-grep-template-command-format
                     source-root)))
-    (call-interactively 'grep)))
+    (call-interactively 'grep)
+    (save-excursion
+      (let (new-name)
+        (setq new-name (format "*grep* %s" (programming-project-get-grep-e)))
+        (set-buffer "*grep*")
+        (if (get-buffer new-name)
+            (kill-buffer (get-buffer new-name)))
+        (rename-buffer new-name)))))
+
+
+(defun programming-project-get-grep-e ()
+  (save-excursion
+    (set-buffer "*grep*")
+    (beginning-of-buffer)
+    (or (search-forward-regexp "^grep.*-e *\\(.*\\)$" nil t)
+        (search-forward-regexp "lid.*=grep *\\(.*\\)" nil t))
+    (match-string 1)))
 
 
 
