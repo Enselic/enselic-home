@@ -32,6 +32,7 @@
 (defconst programming-project-config-file-name                 "programming-project-config.cfg")
 (defconst programming-project-source-root-config-key           "source_root")
 (defconst programming-project-binary-to-debug-config-key       "binary_to_debug")
+(defconst programming-project-compile-command-config-key       "compile_command")
 (defconst programming-project-additional-tag-files-config-key  "additional_tag_files")
 (defconst programming-project-grep-template-command-format     "grep -rn \"%s\" -e ")
 (defconst programming-project-lid-template-command-format      "lid -f \"%s\" --result=grep ")
@@ -79,7 +80,9 @@ programming-project-batch-create PROJECTNAME'"
 
   (let (source-root)
     (setq source-root (programming-project-get-source-root project-name))
-    (setq compile-command (format programming-project-default-compile-command-format source-root)))
+    (if (programming-project-get-compile-command project-name)
+        (setq compile-command (programming-project-get-compile-command project-name))
+      (setq compile-command (format programming-project-default-compile-command-format source-root))))
 
   (if (file-regular-p (programming-project-get-file-cache-file project-name))
       (file-cache-read-cache-from-file (programming-project-get-file-cache-file project-name)))
@@ -104,6 +107,12 @@ programming-project-batch-create PROJECTNAME'"
 (defun programming-project-get-debug-binary (project-name)
   (programming-project-get-config project-name
                                   programming-project-binary-to-debug-config-key))
+
+
+(defun programming-project-get-compile-command (project-name)
+  (programming-project-get-config project-name
+                                  programming-project-compile-command-config-key))
+
 
 (defun programming-project-unload (project-name)
   (save-some-buffers) 
@@ -290,6 +299,7 @@ programming-project-batch-create PROJECTNAME'"
 (defun programming-project-edit-current-project-file ()
   (interactive)
   (find-file (programming-project-get-config-file (simple-project-management-get-current-project))))
+
 
 (defun programming-project-grep-frontend (arg)
   (interactive "P")
