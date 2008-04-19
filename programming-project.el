@@ -24,14 +24,15 @@
 
 
 
+(defconst programming-project-default-file-cache-file-name     ".simple-project-management-file-cache")
 (defconst programming-project-tags-file-name                   "TAGS")
 (defconst programming-project-file-cache-file-name             "FILECACHE")
 (defconst programming-project-id-database-file-name            "ID")
+(defconst programming-project-file-cache-save-threshold        20)
 (defconst programming-project-config-file-name                 "programming-project-config.cfg")
 (defconst programming-project-source-root-config-key           "source_root")
 (defconst programming-project-binary-to-debug-config-key       "binary_to_debug")
 (defconst programming-project-additional-tag-files-config-key  "additional_tag_files")
-(defconst programming-project-default-file-cache-file-name     ".simple-project-management-file-cache")
 (defconst programming-project-grep-template-command-format     "grep -rn \"%s\" -e ")
 (defconst programming-project-lid-template-command-format      "%s lid -f \"%s\" --result=grep ")
 (defconst programming-project-gdb-command-format               "libtool --mode=execute gdb --annotate=3 --args \"%s\" ")
@@ -219,7 +220,11 @@ programming-project-batch-create PROJECTNAME'"
 
 
 (defun programming-project-save-file-cache (project-name)
-  (file-cache-save-cache-to-file (programming-project-get-file-cache-file project-name)))
+  ;; In order to avoid overwriting a valid file cache with an empty
+  ;; file cache we only accept file caches with a certain ninimum
+  ;; number of elements
+  (if (> (file-cache-number-of-items) programming-project-file-cache-save-threshold)
+      (file-cache-save-cache-to-file (programming-project-get-file-cache-file project-name))))
 
 
 (defun programming-project-create-complete-project-at-working-directory (project-name)
