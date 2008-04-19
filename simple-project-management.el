@@ -51,16 +51,16 @@ when the project is loaded."
 
 
 (defconst simple-project-management-config-file-name        "simple-project-management.cfg")
-
 (defconst simple-project-management-project-type-config-key "project_type")
+(defconst simple-project-management-basis-project-type      "basic")
 
 
 (defvar simple-project-management-current-project nil
   "The current project.")
 
 (defvar simple-project-management-registered-project-types
-  (list (cons "Basic Project"
-              (make-simple-project-management-project-type-entry :name                     "Basic Project"
+  (list (cons simple-project-management-basis-project-type
+              (make-simple-project-management-project-type-entry :name           simple-project-management-basis-project-type
                                                       :create-project-function  'simple-project-management-create
                                                       :load-project-function    'simple-project-management-load
                                                       :unload-project-function  'simple-project-management-unload
