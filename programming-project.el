@@ -315,7 +315,9 @@ programming-project-batch-create PROJECTNAME'"
                       (programming-project-get-id-database-file project-name)))
       (setq grep-command
             (format programming-project-grep-template-command-format
-                    source-root)))
+                    default-directory)))
+    ;; We don't want to let grep pick up any prefix arg
+    (setq current-prefix-arg nil)
     (call-interactively 'grep)
     (save-excursion
       (let (new-name)
