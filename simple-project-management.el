@@ -79,8 +79,13 @@ called interactively, prompt for project name and type."
                            (error "Project `%s' already exists" project-name)
                          project-name))
                      
-                     (completing-read "Project type: "
-                                      simple-project-management-registered-project-types nil t)))
+                     (completing-read (format "Project type (default `%s') : " (simple-project-management-default-project-type))
+                                      simple-project-management-registered-project-types
+                                      nil
+                                      t
+                                      nil
+                                      nil
+                                      (simple-project-management-default-project-type))))
 
   (let (create-project-function)
     (setq create-project-function (simple-project-management-get-create-function project-type))
@@ -150,6 +155,10 @@ called interactively, prompt for project name and type."
 (defun simple-project-management-register-project-type (project-type)
   (add-to-list 'simple-project-management-registered-project-types
                (cons (simple-project-management-project-type-entry-name project-type) project-type)))
+
+
+(defun simple-project-management-default-project-type ()
+  (car (car simple-project-management-registered-project-types)))
 
 
 (defun simple-project-management-on-kill-emacs ()
