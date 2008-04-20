@@ -15,6 +15,7 @@
 
 (defun file-cache-files-matching-with-mode ()
   (interactive)
+  (kill-buffer "*File Cache Files Matching*")
   (call-interactively 'file-cache-files-matching)
   (switch-to-buffer "*File Cache Files Matching*")
   (file-cache-files-matching-mode)
