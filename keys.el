@@ -45,6 +45,7 @@
 (global-set-key (kbd "C-c p")                 'programming-project-edit-current-project-file)
 (global-set-key (kbd "C-c l")                 'simple-project-management-load-project)
 (global-set-key (kbd "C-c e")                 'simple-project-management-create-project)
+(global-set-key (kbd "C-c d")                 'file-cache-add-or-delete-this-file)
 (global-set-key (kbd "C-c o")                 'file-cache-ido-find-file)
 (global-set-key (kbd "C-c z")                 'file-cache-files-matching-with-mode)
 (global-set-key (kbd "C-c <f12>")             'find-file-dot-emacs)

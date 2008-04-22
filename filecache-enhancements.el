@@ -93,6 +93,18 @@ directory, select directory. Lastly the file is opened."
        (file-cache-add-file buffer-file-name)))
 
 
+(defun file-cache-delete-this-file ()
+  (and buffer-file-name
+       (file-cache-delete-file buffer-file-name)))
+
+
+(defun file-cache-add-or-delete-this-file (arg)
+  (interactive "P")
+  (if (not arg)
+      (file-cache-delete-this-file)
+    (file-cache-add-this-file)))               
+
+
 (defun file-cache-number-of-items ()
   (length file-cache-alist))
 

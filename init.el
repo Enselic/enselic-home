@@ -63,8 +63,6 @@
 (add-hook 'find-file-hook   'improve-tab)
 ;;(add-hook 'find-file-hook   'enable-hl-line-mode)
 
-(add-hook 'kill-buffer-hook 'file-cache-add-this-file)
-
 (add-hook 'kill-emacs-hook  'write-abbrev-file)
 (add-hook 'kill-emacs-hook  'simple-project-management-on-kill-emacs)
 
