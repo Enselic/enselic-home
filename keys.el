@@ -64,6 +64,9 @@
 (global-set-key (kbd "C-z")                   'ignore)
 (global-set-key (kbd "C-h C-c")               'ignore)
 
+;; Override some local keymaps
+(add-hook 'c-mode-hook            '(lambda () (local-set-key   (kbd "M-q") 'fill-paragraph)))
+
 ;; Unset some local keys
 (add-hook 'svn-status-mode-hook   '(lambda () (local-unset-key (kbd "C-o"))))
 (add-hook 'diff-mode-hook         '(lambda () (local-unset-key (kbd "M-RET"))))
