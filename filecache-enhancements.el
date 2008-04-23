@@ -106,7 +106,9 @@ directory, select directory. Lastly the file is opened."
 
 
 (defun file-cache-number-of-items ()
-  (length file-cache-alist))
+  (if (sequencep file-cache-alist)
+      (length file-cache-alist)
+    0))
 
 
 
