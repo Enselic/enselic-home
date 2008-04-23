@@ -35,6 +35,7 @@
 (global-set-key (kbd "C-M-n")                 'previous-buffer)
 (global-set-key (kbd "S-<f4>")                'previous-error)
 (global-set-key (kbd "C-S-p")                 'previous-six-lines)
+(global-set-key (kbd "M-u")                   'programming-project-uncrustify-region)
 (global-set-key (kbd "<f7>")                  'recompile)
 
 ;; C-c keystrokes

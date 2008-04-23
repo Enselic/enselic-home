@@ -328,6 +328,16 @@ programming-project-batch-create PROJECTNAME'"
         (rename-buffer new-name)))))
 
 
+(defun programming-project-uncrustify-region ()
+  (interactive)
+  (shell-command-on-region (region-beginning)
+                           (region-end)
+                           "uncrustify -q -c ~/enselic-elisp/uncrustify/gimp-uncrustify.cfg"
+                           nil
+                           t)
+  (indent-or-dabbrev-completion))
+
+
 (defun programming-project-get-grep-e ()
   (save-excursion
     (set-buffer "*grep*")
