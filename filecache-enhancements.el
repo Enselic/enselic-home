@@ -12,15 +12,21 @@
   (define-key file-cache-files-matching-map (kbd "p")   'previous-line))
 
 
+(defun kill-buffer-if-exists (buffer)
+  (if (get-buffer buffer)
+      (kill-buffer buffer)))
+
 
 (defun file-cache-files-matching-with-mode ()
   (interactive)
-  (kill-buffer "*File Cache Files Matching*")
-  (call-interactively 'file-cache-files-matching)
-  (switch-to-buffer "*File Cache Files Matching*")
-  (file-cache-files-matching-mode)
-  (delete-other-windows)
-  (setq buffer-read-only t))
+  (let ((output-buffer "*File Cache Files Matching*"))
+
+    (kill-buffer-if-exists output-buffer)
+    (call-interactively 'file-cache-files-matching)
+    (switch-to-buffer output-buffer)
+    (file-cache-files-matching-mode)
+    (delete-other-windows)
+    (setq buffer-read-only t)))
 
 
 (defun file-cache-files-matching-mode-select ()
@@ -109,6 +115,31 @@ directory, select directory. Lastly the file is opened."
   (if (sequencep file-cache-alist)
       (length file-cache-alist)
     0))
+
+
+(defun enselic-elisp-report-missing-binaries ()
+  (interactive)
+  (let ((output-buffer "*enselic-elisp-report-missing-binaries*")
+        (binary-list   '("ctags --version"
+                         "grep --version"
+                         "find --version"
+                         "uncrustify --version"))
+        (success       t))
+
+    (kill-buffer-if-exists output-buffer)
+    (switch-to-buffer output-buffer)
+
+    (dolist (binary binary-list)
+      (when (not (= (shell-command binary) 0))
+        (insert (format "Executing `%s' didn't go as expected, is the binary in PATH?\n"
+                        binary))
+        (setq success nil)))
+
+    (if success
+        (insert "Everything looks OK!"))
+
+    ;; Clear minibuffer
+    (message "")))
 
 
 
