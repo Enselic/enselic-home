@@ -148,12 +148,14 @@ programming-project-batch-create PROJECTNAME'"
                                                   source-root
                                                   project-name
                                                   synchroniously)
-  (shell-command (format programming-project-ctags-command-format
-                         output-file
-                         source-root
-                         (if synchroniously "" "&"))
-                 (format "*ctags (%s) Shell Command*"
-                         project-name)))
+  (if (not (file-exists-p output-file))
+      (shell-command (format programming-project-ctags-command-format
+                             output-file
+                             source-root
+                             (if synchroniously "" "&"))
+                     (format "*ctags (%s) Shell Command*"
+                             project-name))
+    (message "Already exists, won't overwrite.")))
 
 
 (defun programming-project-recreate-id-database (project-name)
@@ -172,17 +174,19 @@ programming-project-batch-create PROJECTNAME'"
                                                           source-root
                                                           project-name
                                                           synchroniously)
-  (let (command)
-    (setq command (format programming-project-mkid-command-format
-                          source-root
-                          output-file
-                          (if synchroniously "" "&")))
+  (if (not (file-exists-p output-file))
+      (let (command)
+        (setq command (format programming-project-mkid-command-format
+                              source-root
+                              output-file
+                              (if synchroniously "" "&")))
 
-    (if (on-windows-p)
-        (setq command (windowsify-path command)))
+        (if (on-windows-p)
+            (setq command (windowsify-path command)))
     
-    (shell-command command
-                   (format "*mkid (%s) Shell Command*" project-name))))
+        (shell-command command
+                       (format "*mkid (%s) Shell Command*" project-name)))
+    (message "Already exists, won't overwrite.")))
 
 
 (defun programming-project-get-source-root (project-name)
@@ -274,9 +278,11 @@ programming-project-batch-create PROJECTNAME'"
 
 
 (defun programming-project-recreate-file-cache (project-name)
-  (file-cache-clear-cache)
-  (file-cache-add-directory-recursively (programming-project-get-source-root project-name))
-  (programming-project-save-file-cache project-name))
+  (if (not (file-exists-p (programming-project-get-file-cache-file project-name)))
+      (progn (file-cache-clear-cache)
+             (file-cache-add-directory-recursively (programming-project-get-source-root project-name))
+             (programming-project-save-file-cache project-name))
+    (message "Already exists, won't overwrite.")))
 
 
 (defun programming-project-recreate-current-project-file-cache ()
