@@ -61,9 +61,10 @@ The file cache can be saved to a file using
 `file-cache-save-cache-to-file'."
   (interactive "fFile: ")
   (file-cache-clear-cache)
-  (let ((buf (find-file-noselect file)))
-    (setq file-cache-alist (read buf))
-    (kill-buffer buf)))
+  (save-excursion
+    (set-buffer (find-file-noselect file))
+    (beginning-of-buffer)
+    (setq file-cache-alist (read (current-buffer)))))
 
 
 (defun file-cache-ido-find-file (file)
