@@ -52,6 +52,7 @@
 
 (setq-default cursor-type '(bar . 2))
 (c-add-style "2sp-linux" '("linux" (c-basic-offset . 2)))
+(c-add-style "3sp-linux" '("linux" (c-basic-offset . 3)))
 (fset 'yes-or-no-p 'y-or-n-p)
 
 
