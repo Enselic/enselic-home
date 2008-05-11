@@ -34,7 +34,7 @@
 (defconst programming-project-binary-to-debug-config-key       "binary_to_debug")
 (defconst programming-project-compile-command-config-key       "compile_command")
 (defconst programming-project-additional-tag-files-config-key  "additional_tag_files")
-(defconst programming-project-grep-template-command-format     "grep -rn \"%s\" -e ")
+(defconst programming-project-grep-template-command-format     "grep --include=*.c -rn \"%s\" -e ")
 (defconst programming-project-lid-template-command-format      "lid -f \"%s\" --result=grep ")
 (defconst programming-project-gdb-command-format               "libtool --mode=execute gdb --annotate=3 --args %s ")
 (defconst programming-project-default-compile-command-format   "make -k -j3 -C \"%s\"")
@@ -253,7 +253,7 @@ programming-project-batch-create PROJECTNAME'"
     (message "\n  ** Making sure project directory %s exists:" (simple-project-management-get-project-directory project-name))
     (simple-project-management-create-project-directory project-name)
 
-    (message "\n  ** Creating %s:" simple-project-management-config-file-name)
+    (message "\n  ** Creating %s:" simple-project-management-project-config-file-name)
     (simple-project-management-create-config-file project-name programming-project-type)
 
     (message "\n  ** Creating %s:" programming-project-config-file-name)

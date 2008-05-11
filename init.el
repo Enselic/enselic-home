@@ -60,12 +60,11 @@
 (add-hook 'after-init-hook  'session-initialize)
 (add-hook 'after-init-hook  'grep-compute-defaults)
 (add-hook 'after-init-hook  'programming-project-init)
+(add-hook 'after-init-hook  'simple-project-management-initialize)
 
 (add-hook 'find-file-hook   'improve-tab)
-;;(add-hook 'find-file-hook   'enable-hl-line-mode)
 
 (add-hook 'kill-emacs-hook  'write-abbrev-file)
-(add-hook 'kill-emacs-hook  'simple-project-management-on-kill-emacs)
 
 
 (custom-set-variables
@@ -89,7 +88,7 @@
  '(compilation-scroll-output t)
  '(dabbrev-case-fold-search nil)
  '(dabbrev-case-replace t)
- '(desktop-base-file-name "emacs.desktop")
+ '(desktop-base-file-name "DESKTOP")
  '(desktop-globals-to-clear nil)
  '(desktop-inhibit-find-file-warnings t)
  '(desktop-lazy-verbose nil)
