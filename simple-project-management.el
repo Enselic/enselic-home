@@ -137,7 +137,10 @@ interactively, prompts for the name."
   (setq simple-project-management-current-project project-name)
   (funcall (simple-project-management-get-load-function
             (simple-project-management-get-project-type project-name))
-           project-name))
+           project-name)
+
+  ;; Set the frame title
+  (modify-frame-parameters nil (list (cons 'name project-name))))
 
 
 (defun simple-project-management-unload-active-project ()
