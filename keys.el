@@ -43,10 +43,11 @@
 (global-set-key (kbd "C-c i")                 'browse-kill-ring)
 (global-set-key (kbd "C-c <backspace>")       'c-hungry-delete-backwards)
 (global-set-key (kbd "C-c C-d")               'c-hungry-delete-forward)
+(global-set-key (kbd "C-c d")                 'downcase-word)
 (global-set-key (kbd "C-c p")                 'programming-project-edit-current-project-file)
 (global-set-key (kbd "C-c l")                 'simple-project-management-load-project)
 (global-set-key (kbd "C-c e")                 'simple-project-management-create-project)
-(global-set-key (kbd "C-c d")                 'file-cache-add-or-delete-this-file)
+(global-set-key (kbd "C-c f")                 'file-cache-add-or-delete-this-file)
 (global-set-key (kbd "C-c o")                 'file-cache-ido-find-file)
 (global-set-key (kbd "C-c z")                 'file-cache-files-matching-with-mode)
 (global-set-key (kbd "C-c <f12>")             'find-file-dot-emacs)
@@ -59,6 +60,7 @@
 (global-set-key (kbd "C-c r")                 'rename-symbol)
 (global-set-key (kbd "C-c h")                 'shell)
 (global-set-key (kbd "C-c b")                 'svn-status-blame)
+(global-set-key (kbd "C-c u")                 'upcase-word)
 (global-set-key (kbd "C-c w")                 'whitespace-mode)
 
 ;; Ignored keystrokes
