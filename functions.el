@@ -132,6 +132,7 @@
         (substring line-string (match-beginning 2) (match-end 2))
       nil)))
 
+
 (defun c-find-other-file ()
   (interactive)
 
@@ -142,8 +143,11 @@
           (file-cache-ido-find-file (transform-h-to-idl
                                      (file-name-nondirectory file-name)))))
      (t
-      (or (file-cache-ido-find-file (transform-h-to-c-and-vice-versa
-                                     (file-name-nondirectory (buffer-file-name)))))))))
+      (or (and (get-buffer (transform-h-to-c-and-vice-versa (buffer-name)))
+               (switch-to-buffer (transform-h-to-c-and-vice-versa (buffer-name))))
+          (file-cache-ido-find-file (transform-h-to-c-and-vice-versa
+                                     (buffer-name))))))))
+
 
 (defun transform-h-to-c-and-vice-versa (file-name)
   (interactive "MFile name:")
