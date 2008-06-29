@@ -11,6 +11,7 @@
 (global-set-key (kbd "C-M-<return>")          'delete-window)
 (global-set-key (kbd "<f5>")                  'programming-project-debug-binary)
 (global-set-key (kbd "M-.")                   'etags-select-find-tag)
+(global-set-key (kbd "C-S-r")                 'exit-recursive-edit)
 (global-set-key (kbd "M-l")                   'file-cache-find-file-on-line)
 (global-set-key (kbd "M-+")                   'generic-enlarge-window)
 (global-set-key (kbd "M--")                   'generic-shrink-window)
