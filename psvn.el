@@ -1,8 +1,8 @@
 ;;; psvn.el --- Subversion interface for emacs
-;; Copyright (C) 2002-2007 by Stefan Reichoer
+;; Copyright (C) 2002-2008 by Stefan Reichoer
 
 ;; Author: Stefan Reichoer <stefan@xsteve.at>
-;; $Id: psvn.el 27834 2007-11-15 20:24:37Z xsteve $
+;; $Id: psvn.el 31888 2008-06-26 16:17:22Z xsteve $
 
 ;; psvn.el is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -185,6 +185,35 @@
 ;; Trac ticket links can be enabled in the *svn-log* buffers when using the following:
 ;; (setq svn-log-link-handlers '(trac-ticket-short))
 
+;; ---------------------------
+;; Frequently asked questions:
+;; ---------------------------
+
+;; Q1: I need support for user names with blanks/spaces
+;; A1: Add the user names to svn-user-names-including-blanks and set the
+;;     svn-pre-parse-status-hook.
+;;     The problem is, that the user names and the file names from the svn status
+;;     output can both contain blanks. Blanks in file names are supported.
+;;     the svn-user-names-including-blanks list is used to replace the spaces
+;;     in the user names with - to overcome this problem
+
+;; Q2: My svn-update command it taking a really long time. How can I
+;;     see what's going on?
+;; A2: In the *svn-status* buffer press "s".
+
+;; Q3: How do I enter a username and password?
+;; A3: In the *svn-status* buffer press "s", switch to the
+;;     *svn-process* buffer and press enter. You will be prompted for
+;;     username and password.
+
+;; Q4: What does "?", "M", and "C" in the first column of the
+;;     *svn-status* buffer mean?
+;; A4: "?" means the file(s) is not under Subversion control
+;;     "M" means you have a locally modified file
+;;     "C" means there is a conflict
+;;     "@$&#!" means someone is saying nasty things to you
+
+
 ;; Comments / suggestions and bug reports are welcome!
 
 ;; Development notes
@@ -210,6 +239,7 @@
 
 (eval-when-compile (require 'dired))
 (eval-when-compile (require 'ediff-util))
+(eval-when-compile (require 'ediff-wind))
 (eval-when-compile (require 'elp))
 (eval-when-compile (require 'pp))
 
@@ -218,7 +248,7 @@
       (require 'diff-mode))
   (error nil))
 
-(defconst svn-psvn-revision "$Id: psvn.el 27834 2007-11-15 20:24:37Z xsteve $"
+(defconst svn-psvn-revision "$Id: psvn.el 31888 2008-06-26 16:17:22Z xsteve $"
   "The revision number of psvn.")
 
 ;;; user setable variables
@@ -309,6 +339,11 @@ Possible values are: commit, revert."
 
 (defcustom svn-status-auto-revert-buffers t
   "*Auto revert buffers that have changed on disk."
+  :type 'boolean
+  :group 'psvn)
+
+(defcustom svn-status-fancy-file-state-in-modeline t
+  "*Show a color dot in the modeline that describes the state of the current file."
   :type 'boolean
   :group 'psvn)
 
@@ -471,6 +506,15 @@ use the following value:
   :type '(repeat string)
   :group 'psvn)
 (put 'svn-status-default-diff-arguments 'risky-local-variable t)
+
+(defcustom svn-status-default-status-arguments '()
+  "*A list of arguments that is passed to the svn status command.
+The following options are available: --ignore-externals
+
+"
+  :type '(repeat string)
+  :group 'psvn)
+(put 'svn-status-default-status-arguments 'risky-local-variable t)
 
 (defcustom svn-status-default-blame-arguments '("-x" "--ignore-eol-style")
   "*A list of arguments that is passed to the svn blame command.
@@ -867,6 +911,11 @@ If POS is nil, use current buffer location."
         (forward-line 0)
         (1+ (count-lines start (point)))))))
 
+(defun svn-substring-no-properties (string &optional from to)
+  (if (fboundp 'substring-no-properties)
+      (substring-no-properties string from to)
+    (substring string from to)))
+
 ; xemacs
 ;; Evaluate the defsubst at compile time, so that the byte compiler
 ;; knows the definition and can inline calls.  It cannot detect the
@@ -1096,7 +1145,7 @@ If there is no .svn directory, examine if there is CVS and run
       (setq default-directory dir
             svn-status-remote (when arg t))
       (set-buffer cur-buf)
-      (svn-run t t 'status "status" status-option))))
+      (svn-run t t 'status "status" svn-status-default-status-arguments status-option))))
 
 (defun svn-status-this-directory (arg)
   "Run `svn-status' for the `default-directory'"
@@ -1348,6 +1397,7 @@ The hook svn-pre-run-hook allows to monitor/modify the ARGLIST."
                  ((eq svn-process-cmd 'revert)
                   (when (member 'revert svn-status-unmark-files-after-list)
                     (svn-status-unset-all-usermarks))
+                  (svn-revert-some-buffers)
                   (svn-status-update)
                   (message "svn revert finished"))
                  ((eq svn-process-cmd 'resolved)
@@ -1440,6 +1490,8 @@ To be run after a commit, an update or a merge."
                            (string= root tree)
                            ;; buffer is modified and in the tree TREE.
                            svn-status-auto-revert-buffers)
+                  (when svn-status-fancy-file-state-in-modeline
+                    (svn-status-update-modeline))
                   ;; (message "svn-revert-some-buffers: %s %s" (buffer-file-name) (verify-visited-file-modtime (current-buffer)))
                   ;; Keep the buffer if the file doesn't exist
                   (when (and (file-exists-p file) (not (verify-visited-file-modtime (current-buffer))))
@@ -1527,7 +1579,11 @@ nb: LOCKED-MARK refers to the kind of locks you get after an error,
         locked-repo-mark
         psvn-extra-info))
 
-(defvar svn-user-names-including-blanks nil "A list of svn user names that include blanks.")
+(defvar svn-user-names-including-blanks nil "A list of svn user names that include blanks.
+To add support for the names \"feng shui\" and \"mister blank\", place the following in your .emacs:
+ (setq svn-user-names-including-blanks '(\"feng shui\" \"mister blank\"))
+ (add-hook 'svn-pre-parse-status-hook 'svn-status-parse-fixup-user-names-including-blanks)
+")
 ;;(setq svn-user-names-including-blanks '("feng shui" "mister blank"))
 ;;(add-hook 'svn-pre-parse-status-hook 'svn-status-parse-fixup-user-names-including-blanks)
 
@@ -1604,8 +1660,11 @@ The results are used to build the `svn-status-info' variable."
 
           ;; My attempt to merge the lines uses skip-double-external-dir-entry-name
           ;; and externals-map
-          (setq skip-double-external-dir-entry-name (match-string-no-properties 1))
+          (setq skip-double-external-dir-entry-name (svn-match-string-no-properties 1))
           ;; (message "Going to skip %s" skip-double-external-dir-entry-name)
+          nil)
+         ((looking-at "--- Changelist") ; skip svn changelist header lines
+          ;; See: http://svn.collab.net/repos/svn/trunk/notes/changelist-design.txt
           nil)
          (t
           (setq svn-marks (buffer-substring (point) (+ (point) svn-marks-length))
@@ -3017,10 +3076,14 @@ When called with a prefix argument go back the given number of lines."
   "Jump to a dired buffer, containing the file at point."
   (interactive)
   (let* ((line-info (svn-status-get-line-information))
-         (file-full-path (svn-status-line-info->full-path line-info)))
+         (file-full-path (if line-info
+                             (svn-status-line-info->full-path line-info)
+                           default-directory)))
     (let ((default-directory
             (file-name-as-directory
-             (expand-file-name (svn-status-line-info->directory-containing-line-info line-info t)))))
+             (expand-file-name (if line-info
+                                   (svn-status-line-info->directory-containing-line-info line-info t)
+                                 default-directory)))))
       (if (fboundp 'dired-jump-back) (dired-jump-back) (dired-jump))) ;; Xemacs uses dired-jump-back
     (dired-goto-file file-full-path)))
 
@@ -3960,7 +4023,7 @@ When called with a negative prefix argument, only update the selected files."
       (message "Running svn-update for %s" default-directory)
       (svn-run t t 'update "update"
                (when rev (list "-r" rev))
-               (list "--non-interactive")))))
+               (list "--non-interactive") default-directory))))
 
 (defun svn-status-commit ()
   "Commit selected files.
@@ -4124,6 +4187,104 @@ Recommended values are ?m or ?M.")
 (add-hook 'after-save-hook 'svn-status-after-save-hook)
 
 ;; --------------------------------------------------------------------------------
+;; vc-svn integration
+;; --------------------------------------------------------------------------------
+(defvar svn-status-state-mark-modeline t) ; modeline mark display or not
+(defvar svn-status-state-mark-tooltip nil) ; modeline tooltip display
+
+(defun svn-status-state-mark-modeline-dot (color)
+  (propertize "    "
+              'help-echo 'svn-status-state-mark-tooltip
+              'display
+              `(image :type xpm
+                      :data ,(format "/* XPM */
+static char * data[] = {
+\"18 13 3 1\",
+\"  c None\",
+\"+ c #000000\",
+\". c %s\",
+\"                  \",
+\"       +++++      \",
+\"      +.....+     \",
+\"     +.......+    \",
+\"    +.........+   \",
+\"    +.........+   \",
+\"    +.........+   \",
+\"    +.........+   \",
+\"    +.........+   \",
+\"     +.......+    \",
+\"      +.....+     \",
+\"       +++++      \",
+\"                  \"};"
+                                     color)
+                      :ascent center)))
+
+(defun svn-status-install-state-mark-modeline (color)
+  (push `(svn-status-state-mark-modeline
+          ,(svn-status-state-mark-modeline-dot color))
+        mode-line-format)
+  (force-mode-line-update t))
+
+(defun svn-status-uninstall-state-mark-modeline ()
+  (setq mode-line-format
+        (remove-if #'(lambda (mode) (eq (car-safe mode)
+                                        'svn-status-state-mark-modeline))
+                   mode-line-format))
+  (force-mode-line-update t))
+
+(defun svn-status-update-state-mark-tooltip (tooltip)
+  (setq svn-status-state-mark-tooltip tooltip))
+
+(defun svn-status-update-state-mark (color)
+  (svn-status-uninstall-state-mark-modeline)
+  (svn-status-install-state-mark-modeline color))
+
+(defsubst svn-status-in-vc-mode? ()
+  "Is vc-svn active?"
+  (and vc-mode (string-match "^ SVN" (svn-substring-no-properties vc-mode))))
+
+(when svn-status-fancy-file-state-in-modeline
+  (defadvice vc-find-file-hook (after svn-status-vc-svn-find-file-hook activate)
+    "vc-find-file-hook advice for synchronizing psvn with vc-svn interface"
+    (when (svn-status-in-vc-mode?) (svn-status-update-modeline)))
+
+  (defadvice vc-after-save (after svn-status-vc-svn-after-save activate)
+    "vc-after-save advice for synchronizing psvn when saving buffer"
+    (when (svn-status-in-vc-mode?) (svn-status-update-modeline)))
+
+  (defadvice ediff-refresh-mode-lines
+    (around svn-modeline-ediff-fixup activate compile)
+    "Fixup svn file status in the modeline when using ediff"
+    (ediff-with-current-buffer ediff-buffer-A
+                               (svn-status-uninstall-state-mark-modeline))
+    (ediff-with-current-buffer ediff-buffer-B
+                               (svn-status-uninstall-state-mark-modeline))
+    ad-do-it
+    (ediff-with-current-buffer ediff-buffer-A
+                               (svn-status-update-modeline))
+    (ediff-with-current-buffer ediff-buffer-B
+                               (svn-status-update-modeline))))
+
+(defun svn-status-update-modeline ()
+  "Update modeline state dot mark properly"
+  (when (and buffer-file-name (svn-status-in-vc-mode?))
+    (svn-status-update-state-mark
+     (svn-status-interprete-state-mode-color
+      (vc-svn-state buffer-file-name)))))
+
+(defsubst svn-status-interprete-state-mode-color (stat)
+  "Interpret vc-svn-state symbol to mode line color"
+  (case stat
+    ('edited "tomato"      )
+    ('up-to-date "GreenYellow" )
+    ;; what is missing here??
+    ;; ('unknown  "gray"        )
+    ;; ('added    "blue"        )
+    ;; ('deleted  "red"         )
+    ;; ('unmerged "purple"      )
+    (t "red")))
+
+;; --------------------------------------------------------------------------------
 ;; Getting older revisions
 ;; --------------------------------------------------------------------------------
 
@@ -4214,7 +4375,8 @@ names are relative to the directory where `svn-status' was run."
                                                            (file-name-nondirectory file-name)
                                                            ".svn-base"))
                            (progn
-                             (svn-run nil t 'cat "cat" "-r" revision (file-name-nondirectory file-name))
+                             (svn-run nil t 'cat "cat" "-r" revision
+                                      (concat default-directory (file-name-nondirectory file-name)))
                              ;;todo: error processing
                              ;;svn: Filesystem has no item
                              ;;svn: file not found: revision `15', path `/trunk/file.txt'
@@ -4225,7 +4387,9 @@ names are relative to the directory where `svn-status' was run."
                   (erase-buffer) ;Widen, because we'll save the whole buffer.
                   (insert content)
                   (goto-char (point-min))
-                  (save-buffer)))
+                  (let ((write-file-functions nil)
+                        (require-final-newline nil))
+                    (save-buffer))))
             (find-file file-name-with-revision)))))
     ;;(message "default-directory: %s revision-file-info: %S" default-directory svn-status-get-specific-revision-file-info)
     (nreverse svn-status-get-specific-revision-file-info)))
@@ -5025,6 +5189,7 @@ entry for file with defun.
                     ["Show Changeset" svn-log-view-diff t]
                     ["Ediff file at point" svn-log-ediff-specific-revision t]
                     ["Find file at point" svn-log-find-file-at-point t]
+                    ["Get older revision for file at point" svn-log-get-specific-revision t]
                     ["Edit log message" svn-log-edit-log-entry t]))
 
 (defun svn-log-view-popup-menu (event)
@@ -5079,7 +5244,10 @@ Commands:
 (defun svn-log-file-name-at-point (respect-checkout-prefix-path)
   (let ((full-file-name)
         (file-name)
-        (checkout-prefix-path (when respect-checkout-prefix-path (svn-status-checkout-prefix-path))))
+        (checkout-prefix-path (if respect-checkout-prefix-path
+                                  (url-unhex-string
+                                   (svn-status-checkout-prefix-path))
+                                "")))
     (save-excursion
       (beginning-of-line)
       (when (looking-at "   [MA] /\\(.+\\)$")
@@ -5133,7 +5301,7 @@ When called with a prefix argument, ask the user for the revision."
   ;; (message "%S" (svn-status-make-line-info (svn-log-file-name-at-point t)))
   (let ((default-directory (svn-status-base-dir)))
     (svn-status-get-specific-revision-internal
-     (list (svn-status-make-line-info (svn-log-file-name-at-point nil)))
+     (list (svn-status-make-line-info (svn-log-file-name-at-point t)))
      (svn-log-revision-at-point)
      nil)))
 
@@ -5230,7 +5398,7 @@ HANDLER-FUNCTION is called with the match of LINK-REGEXP when the user clicks at
 (defun svn-log-resolve-trac-ticket-short (link-name)
   "Show the trac ticket specified by LINK-NAME via `svn-trac-browse-ticket'."
   (interactive)
-  (let ((ticket-nr (string-to-number (substring-no-properties link-name 1))))
+  (let ((ticket-nr (string-to-number (svn-substring-no-properties link-name 1))))
     (svn-trac-browse-ticket ticket-nr)))
 
 ;; register the out of the box provided link handlers
@@ -5277,6 +5445,8 @@ Currently is the output from the svn update command known."
                            (progn (beginning-of-line) (re-search-forward ".. +") (point))
                            (line-end-position)))
                (pos))
+           (when (eq system-type 'windows-nt)
+             (setq file-name (replace-regexp-in-string "\\\\" "/" file-name)))
            (goto-char cur-pos)
            (with-current-buffer svn-status-buffer-name
              (setq pos (svn-status-get-file-name-buffer-position file-name)))
