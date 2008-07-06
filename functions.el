@@ -237,3 +237,7 @@
 
 (defun on-windows-p ()
   (string-match "mingw" (version)))
+
+(defun apply-patch ()
+  (interactive)
+  (shell-command (concat "patch -p0 < " (buffer-file-name))))
