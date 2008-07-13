@@ -203,13 +203,26 @@ programming-project-batch-create PROJECTNAME'"
                     (simple-project-management-get-project-directory project-name)))
 
 
-(defun programming-project-update-tags (project-name async)
+(defun programming-project-update-tags (project-name)
   (let ((output-file (expand-file-name programming-project-tags-file-name
                                        (simple-project-management-get-project-directory project-name)))
         (source-root (programming-project-get-source-root project-name)))
+    (delete-file-if-exists output-file)
     (programming-project-recreate-tags-command output-file
                                                source-root
-                                               project-name)))
+                                               project-name
+                                               t)))
+
+
+(defun programming-project-update-id-database (project-name)
+  (let ((output-file (expand-file-name programming-project-id-database-file-name
+                                       (simple-project-management-get-project-directory project-name)))
+        (source-root (programming-project-get-source-root project-name)))
+    (delete-file-if-exists output-file)
+    (programming-project-recreate-id-dabatabse-command output-file
+                                                       source-root
+                                                       project-name
+                                                       t)))
 
 
 (defun programming-project-get-desktop-file (project-name)
@@ -276,6 +289,14 @@ programming-project-batch-create PROJECTNAME'"
 
     (message (concat "\n===============================" (multiply-string "=" (length project-name)) "\n\n\n\n"))))
 
+
+(defun programming-project-force-refresh-of-current-project-tags ()
+  (interactive)
+  (programming-project-update-tags (simple-project-management-get-current-project)))
+
+(defun programming-project-force-refresh-of-current-project-id-database ()
+  (interactive)
+  (programming-project-update-id-database (simple-project-management-get-current-project)))
 
 (defun programming-project-recreate-file-cache (project-name)
   (if (not (file-exists-p (programming-project-get-file-cache-file project-name)))
