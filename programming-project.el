@@ -225,6 +225,15 @@ programming-project-batch-create PROJECTNAME'"
                                                        t)))
 
 
+(defun programming-project-update-file-cache (project-name)
+  (let ((output-file (expand-file-name programming-project-file-cache-file-name
+                                       (simple-project-management-get-project-directory project-name)))
+        (source-root (programming-project-get-source-root project-name)))
+    (delete-file-if-exists output-file)
+    (programming-project-recreate-file-cache project-name)
+    (file-cache-read-cache-from-file output-file)))    
+
+
 (defun programming-project-get-desktop-file (project-name)
   (expand-file-name desktop-base-file-name
                     (simple-project-management-get-project-directory project-name)))
@@ -294,9 +303,16 @@ programming-project-batch-create PROJECTNAME'"
   (interactive)
   (programming-project-update-tags (simple-project-management-get-current-project)))
 
+
 (defun programming-project-force-refresh-of-current-project-id-database ()
   (interactive)
   (programming-project-update-id-database (simple-project-management-get-current-project)))
+
+
+(defun programming-project-force-refresh-of-current-project-file-cache ()
+  (interactive)
+  (programming-project-update-file-cache (simple-project-management-get-current-project)))
+
 
 (defun programming-project-recreate-file-cache (project-name)
   (if (not (file-exists-p (programming-project-get-file-cache-file project-name)))
