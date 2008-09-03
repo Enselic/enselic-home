@@ -389,6 +389,10 @@ programming-project-batch-create PROJECTNAME'"
         (search-forward-regexp "lid.*=grep *\\(.*\\)" nil t))
     (match-string 1)))
 
+(defun ppuf ()
+  (interactive)
+  (programming-project-force-refresh-of-current-project-tags)
+  (programming-project-force-refresh-of-current-project-id-database))
 
 
 (provide 'programming-project)
