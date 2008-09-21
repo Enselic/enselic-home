@@ -110,7 +110,7 @@
   (interactive)
   (delete-file buffer-file-name))
 
-(defun adjust-tab-width ()
+(defun set-tab-width ()
   (interactive)
   (setq tab-width (read-number "New tab-width: ")))
 
