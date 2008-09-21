@@ -34,7 +34,7 @@
 (defconst programming-project-binary-to-debug-config-key       "binary_to_debug")
 (defconst programming-project-compile-command-config-key       "compile_command")
 (defconst programming-project-additional-tag-files-config-key  "additional_tag_files")
-(defconst programming-project-grep-template-command-format     "grep --include=*.c -rn \"%s\" -e ")
+(defconst programming-project-grep-template-command-format     "grep -rn \"%s\" -e ")
 (defconst programming-project-lid-template-command-format      "lid -f \"%s\" --result=grep ")
 (defconst programming-project-gdb-command-format               "libtool --mode=execute gdb --annotate=3 --args %s ")
 (defconst programming-project-default-compile-command-format   "make -k -j3 -C \"%s\"")
@@ -327,6 +327,10 @@ programming-project-batch-create PROJECTNAME'"
   (programming-project-recreate-file-cache (simple-project-management-get-current-project)))
   
 
+(defun programming-project-get-current-source-root ()
+  (programming-project-get-source-root (simple-project-management-get-current-project)))
+
+
 (defun programming-project-svn-status-current-source-root ()
   (interactive)
   (svn-status (programming-project-get-source-root (simple-project-management-get-current-project))))
@@ -389,10 +393,19 @@ programming-project-batch-create PROJECTNAME'"
         (search-forward-regexp "lid.*=grep *\\(.*\\)" nil t))
     (match-string 1)))
 
+
 (defun ppuf ()
   (interactive)
   (programming-project-force-refresh-of-current-project-tags)
-  (programming-project-force-refresh-of-current-project-id-database))
+  (programming-project-force-refresh-of-current-project-id-database)
+  (programming-project-force-refresh-of-current-project-file-cache))
+
+
+(defun programming-project-apply-patch-in-buffer ()
+  "Applies text in current buffer as a patch to the source root
+dir."
+  (interactive)
+  (apply-patch-in-buffer (programming-project-get-current-source-root)))
 
 
 (provide 'programming-project)
