@@ -238,9 +238,11 @@
 (defun on-windows-p ()
   (string-match "mingw" (version)))
 
+
 (defun apply-patch ()
   (interactive)
   (shell-command (concat "patch -p0 < " (buffer-file-name))))
+
 
 (defun apply-patch-in-buffer (&optional dir)
   "Applies the text in the current buffer as a patch."
