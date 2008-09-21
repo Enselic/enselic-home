@@ -123,6 +123,7 @@
  '(menu-bar-mode nil)
  '(mode-require-final-newline nil)
  '(recentf-max-saved-items 40)
+ '(safe-local-variable-values (quote ((c-set-style . gnu))))
  '(save-abbrevs nil)
  '(save-place t nil (saveplace))
  '(scroll-bar-mode (quote right))
