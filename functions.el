@@ -241,3 +241,12 @@
 (defun apply-patch ()
   (interactive)
   (shell-command (concat "patch -p0 < " (buffer-file-name))))
+
+(defun apply-patch-in-buffer (&optional dir)
+  "Applies the text in the current buffer as a patch."
+  (interactive)
+  (let ((temp-file (make-temp-file "patch")))
+    (write-file temp-file)
+    (if dir
+        (cd dir))
+    (shell-command (concat "patch -p0 < " temp-file))))
