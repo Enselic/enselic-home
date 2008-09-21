@@ -40,6 +40,7 @@
 (global-set-key (kbd "<f7>")                  'recompile)
 
 ;; C-c keystrokes
+(global-set-key (kbd "C-c a")                 'apply-patch-in-buffer)
 (global-set-key (kbd "C-c s")                 'highlight-symbol-at-point)
 (global-set-key (kbd "C-c i")                 'browse-kill-ring)
 (global-set-key (kbd "C-c <backspace>")       'c-hungry-delete-backwards)
@@ -73,6 +74,7 @@
 
 ;; Unset some local keys
 (add-hook 'svn-status-mode-hook   '(lambda () (local-unset-key (kbd "C-o"))))
+(add-hook 'cvs-mode-hook          '(lambda () (local-unset-key (kbd "C-o"))))
 (add-hook 'diff-mode-hook         '(lambda () (local-unset-key (kbd "M-RET"))))
 (add-hook 'etags-select-mode-hook '(lambda () (local-unset-key (kbd "M-<return>"))))
 (add-hook 'dired-mode-hook        '(lambda () (local-unset-key (kbd "C-o"))
