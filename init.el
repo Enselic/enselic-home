@@ -55,6 +55,7 @@
 (c-add-style "3sp-linux" '("linux" (c-basic-offset . 3)))
 (c-add-style "4sp-linux" '("linux" (c-basic-offset . 4)))
 (fset 'yes-or-no-p 'y-or-n-p)
+(set-background-color "white")
 
 
 (add-hook 'after-init-hook  'safe-load-abbrevs)
