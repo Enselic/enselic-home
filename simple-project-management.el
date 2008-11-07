@@ -125,6 +125,11 @@ called interactively, prompt for project name and type."
            project-name))
 
 
+(defun simple-project-management-load-project-from-command-line ()
+  (if (simple-project-management-project-exists argi)
+      (simple-project-management-load-project argi)))
+
+
 (defun simple-project-management-load-project (project-name)
   "Loads the project with the given name. If called
 interactively, prompts for the name."
@@ -140,7 +145,8 @@ interactively, prompts for the name."
            project-name)
 
   ;; Set the frame title
-  (modify-frame-parameters nil (list (cons 'name project-name))))
+  (modify-frame-parameters nil (list (cons 'name project-name)))
+  t)
 
 
 (defun simple-project-management-unload-active-project ()
@@ -182,7 +188,8 @@ themselves. `project-type-entry' is an instance of
 
 (defun simple-project-management-initialize ()
   "Add this to `after-init-hook'"
-  (add-hook 'kill-emacs-hook 'simple-project-management-unload-active-project))
+  (add-hook 'kill-emacs-hook 'simple-project-management-unload-active-project)
+  (add-hook 'command-line-functions 'simple-project-management-load-project-from-command-line))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -290,7 +297,8 @@ themselves. `project-type-entry' is an instance of
 
 (defun simple-project-management-project-exists (project-name)
   "Returns `t' if project `project-name' exists, `nil' otherwise."
-  (file-exists-p (simple-project-management-get-project-directory project-name)))
+  (and project-name
+       (file-exists-p (simple-project-management-get-project-directory project-name))))
 
 
 (defun simple-project-management-create-project-directory (project-name)
