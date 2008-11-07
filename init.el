@@ -35,14 +35,13 @@
 (require 'gtk-doc)
 (require 'highlight-symbol)
 (require 'iswitchb)
+(require 'programming-project)
 (require 'psvn)
 (require 'session)
-(require 'programming-project)
 (require 'simple-project-management)
 (require 'thingatpt)
 (require 'vc-clearcase-auto)
 (require 'whitespace)
-
 
 
 (load "functions.el")
@@ -114,7 +113,7 @@
  '(ido-mode (quote both) nil (ido))
  '(indent-tabs-mode nil)
  '(indicate-buffer-boundaries nil)
- '(inhibit-splash-screen t)
+ '(inhibit-startup-screen t)
  '(kill-read-only-ok t)
  '(large-file-warning-threshold nil)
  '(longlines-wrap-follows-window-size t)
@@ -124,7 +123,7 @@
  '(menu-bar-mode nil)
  '(mode-require-final-newline nil)
  '(recentf-max-saved-items 40)
- '(safe-local-variable-values (quote ((c-set-style . gnu))))
+ '(safe-local-variable-values (quote ((c-basic-indent . 2) (c-set-style . gnu))))
  '(save-abbrevs nil)
  '(save-place t nil (saveplace))
  '(scroll-bar-mode (quote right))
