@@ -42,6 +42,7 @@
 (require 'thingatpt)
 (require 'vc-clearcase-auto)
 (require 'whitespace)
+(require 'tinyreplace)
 
 
 (load "functions.el")
