@@ -151,10 +151,12 @@ interactively, prompts for the name."
 
 (defun simple-project-management-unload-active-project ()
   "Unloads active project. Not for interactive use."
-  (if simple-project-management-current-project
-      (funcall (simple-project-management-get-unload-function
-                (simple-project-management-get-project-type simple-project-management-current-project))
-               simple-project-management-current-project)))
+  (condition-case nil
+      (if simple-project-management-current-project
+          (funcall (simple-project-management-get-unload-function
+                    (simple-project-management-get-project-type simple-project-management-current-project))
+                   simple-project-management-current-project))
+    (error (message "Warning: Ignoring error in `simple-project-management-unload-active-project'"))))
       
 
 (defun simple-project-management-destroy-project (project-name)
