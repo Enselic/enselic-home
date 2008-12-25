@@ -26,6 +26,7 @@
 
 (require 'browse-kill-ring)
 (require 'cc-mode)
+(require 'egtk)
 (require 'etags-select)
 (require 'filecache)
 (require 'filecache-enhancements)
