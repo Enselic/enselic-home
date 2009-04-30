@@ -148,7 +148,7 @@
  '(undo-limit 200000)
  '(undo-strong-limit 300000)
  '(user-full-name "Martin Nordholts")
- '(user-mail-address "martinn@svn.gnome.org")
+ '(user-mail-address "martinn@src.gnome.org")
  '(vc-clearcase-diff-switches (quote ("-graphical")))
  '(vc-consult-headers nil)
  '(vc-display-status nil)
