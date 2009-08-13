@@ -61,7 +61,7 @@
 (global-set-key (kbd "C-c v")                 'programming-project-svn-status-current-source-root)
 (global-set-key (kbd "C-c r")                 'rename-symbol)
 (global-set-key (kbd "C-c h")                 'shell)
-(global-set-key (kbd "C-c b")                 'svn-status-blame)
+(global-set-key (kbd "C-c b")                 'git-blame-mode)
 (global-set-key (kbd "C-c u")                 'upcase-word)
 (global-set-key (kbd "C-c w")                 'whitespace-mode)
 
