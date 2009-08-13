@@ -45,6 +45,9 @@
 (require 'vc-clearcase-auto)
 (require 'whitespace)
 
+(autoload 'git-blame-mode "git-blame"
+  "Minor mode for incremental blame for Git." t)
+
 
 (load "functions.el")
 (load "keys.el")
