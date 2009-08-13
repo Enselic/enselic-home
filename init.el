@@ -77,7 +77,7 @@
   ;; If there is more than one, they won't work right.
  '(abbrev-mode t)
  '(add-log-full-name "Martin Nordholts")
- '(add-log-mailing-address "martinn@svn.gnome.org")
+ '(add-log-mailing-address "martinn@src.gnome.org")
  '(auto-save-default nil)
  '(backward-delete-char-untabify-method nil)
  '(browse-kill-ring-maximum-display-length 1000)
