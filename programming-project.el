@@ -37,6 +37,7 @@
 (defconst programming-project-grep-template-command-format     "grep -rn \"%s\" -e ")
 (defconst programming-project-lid-template-command-format      "lid -f \"%s\" --result=grep ")
 (defconst programming-project-gdb-command-format               "libtool --mode=execute gdb --annotate=3 --args %s ")
+;(defconst programming-project-gdb-command-format               "gdb --annotate=3 --args %s ")
 (defconst programming-project-default-compile-command-format   "make -k -j3 -C \"%s\"")
 (defconst programming-project-type                             "programming")
 (defconst programming-project-ctags-command-format             "ctags -e -o \"%s\" --recurse \"%s\" %s")
