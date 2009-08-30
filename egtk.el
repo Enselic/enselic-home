@@ -134,8 +134,8 @@ With arg, turn egtk mode on iff arg is positive
 (defun egtk-type-length (str)
   (print str)
   (if (string-match "[ \t]\\**$" str)
-      (length str)
-    (+ (length str) 1)))
+      (+ (length str ) 1)
+    (+ (length str) 2)))
 
 (defun egtk-get-proto-widths (return function args)
   (append (list (egtk-type-length return) (length function))
