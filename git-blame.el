@@ -107,7 +107,7 @@ selected element from l."
      e))
 
 (defvar git-blame-log-oneline-format
-  "format:[%cr] %cn: %s"
+  "format:%H [%cr] %cn: %s"
   "*Formatting option used for describing current line in the minibuffer.
 
 This option is used to pass to git log --pretty= command-line option,
