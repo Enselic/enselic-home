@@ -127,7 +127,7 @@
  '(menu-bar-mode nil)
  '(mode-require-final-newline nil)
  '(recentf-max-saved-items 40)
- '(safe-local-variable-values (quote ((py-indent-offset . 4) (py-indent-offset . 2) (c-basic-indent . 2) (c-set-style . gnu))))
+ '(safe-local-variable-values (quote ((c-file-offsets (innamespace . 0) (inline-open . 0) (case-label . +)) (py-indent-offset . 4) (py-indent-offset . 2) (c-basic-indent . 2) (c-set-style . gnu))))
  '(save-abbrevs nil)
  '(save-place t nil (saveplace))
  '(scroll-bar-mode (quote right))
