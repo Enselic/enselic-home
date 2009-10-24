@@ -35,6 +35,7 @@
 (require 'grep+)
 (require 'gtk-doc)
 (require 'highlight-symbol)
+(require 'idle-compile)
 (require 'iswitchb)
 (require 'programming-project)
 (require 'psvn)
