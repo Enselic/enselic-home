@@ -1186,12 +1186,16 @@ The FILES list must be sorted."
   (when (eq (window-buffer) (current-buffer))
     (shrink-window-if-larger-than-buffer)))
 
-(defun git-diff-file ()
-  "Diff the marked file(s) against HEAD."
-  (interactive)
+(defun git-diff-file (arg)
+  "Diff the marked file(s) against HEAD. Ignores changes in
+whitespace if called with an argument."
+  (interactive "P")
   (let ((files (git-marked-files)))
-    (git-setup-diff-buffer
-     (apply #'git-run-command-buffer "*git-diff*" "diff-index" "-p" "-M" "HEAD" "--" (git-get-filenames files)))))
+    (if arg
+        (git-setup-diff-buffer
+         (apply #'git-run-command-buffer "*git-diff*" "diff-index" "-p" "-M" "-b" "HEAD" "--" (git-get-filenames files)))
+      (git-setup-diff-buffer
+       (apply #'git-run-command-buffer "*git-diff*" "diff-index" "-p" "-M" "HEAD" "--" (git-get-filenames files))))))
 
 (defun git-diff-file-merge-head (arg)
   "Diff the marked file(s) against the first merge head (or the nth one with a numeric prefix)."
