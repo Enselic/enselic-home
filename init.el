@@ -38,7 +38,7 @@
 (require 'idle-compile)
 (require 'iswitchb)
 (require 'programming-project)
-(require 'psvn)
+;(require 'psvn)
 (require 'session)
 (require 'simple-project-management)
 (require 'thingatpt)
