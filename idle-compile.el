@@ -24,15 +24,8 @@
   "Timeout for compile after save.")
 
 
-(defvar idle-compile-debug nil
-  "If true, debug output is printed.")
-
 (defvar idle-compile-timeout-timer nil
   "Timer used for timeout.")
-(make-variable-buffer-local 'idle-compile-timeout-timer)
-
-(defvar idle-compile-post-command-hook-timer nil
-  "Timer for adding post-command-hook.")
 (make-variable-buffer-local 'idle-compile-timeout-timer)
 
 
@@ -40,61 +33,44 @@
   "When enabled, the current buffer will be compiled after a
 short time on inactivity following a save."
   nil " Idle-Compile" nil
+
   (if idle-compile-mode
       (idle-compile-turn-on)
     (idle-compile-turn-off)))
 
+
 (defun idle-compile-turn-on ()
   "Turns on idle compile."
-  (add-hook 'after-save-hook 'idle-compile-setup-timeout))
+  (add-hook 'after-save-hook 'idle-compile-setup-timeout t t))
+
 
 (defun idle-compile-turn-off ()
   "Turns off idle compile."
   (idle-compile-teardown-timeout)
-  (remove-hook 'after-save-hook 'idle-compile-setup-timeout))
+  (remove-hook 'after-save-hook 'idle-compile-setup-timeout t))
+
 
 (defun idle-compile-setup-timeout ()
-  "Setup a timeout for compile. Canceled on activity."
+  "Setup a timeout for compile."
 
-  ;; Kill prevoius timers
   (idle-compile-teardown-timeout)
 
-  ;; Setup inactivity timeout timer
   (setq idle-compile-timeout-timer
-        (run-with-timer idle-compile-timeout nil
-                        'idle-compile-compile))
-
-  ;; We can't add post-command-hook right away because it will run
-  ;; right after we return, so wait until we are idle before we add
-  ;; it
-  (setq idle-compile-post-command-hook-timer
-        (run-with-timer 0 nil
-                        'idle-compile-add-post-command-hook)))
-
-
-(defun idle-compile-add-post-command-hook ()
-  "Workaround."
-  (add-hook 'post-command-hook 'idle-compile-teardown-timeout))
+        (run-with-idle-timer idle-compile-timeout nil
+                             'idle-compile-compile)))
 
 
 (defun idle-compile-teardown-timeout ()
   "Abort any timeout."
 
-  (if idle-compile-debug (message "idle-compile-teardown-timeout"))
-
   (when idle-compile-timeout-timer
-    (remove-hook 'post-command-hook 'idle-compile-teardown-timeout)
     (cancel-timer idle-compile-timeout-timer)
-    (kill-local-variable 'idle-compile-timeout-timer))
-
-  (when idle-compile-post-command-hook-timer
-    (cancel-timer idle-compile-post-command-hook-timer)
-    (kill-local-variable 'idle-compile-post-command-hook-timer)))
+    (kill-local-variable 'idle-compile-timeout-timer)))
 
 
 (defun idle-compile-compile ()
   "Compiles the current buffer."
-  (if idle-compile-debug (message "idle-compile-compile buffer %s" buffer-file-name))
+
   (when (and buffer-file-name
              (equal (file-name-extension buffer-file-name) "c"))
 
@@ -111,14 +87,15 @@ short time on inactivity following a save."
       (setq compile-command original-compile-command)
 
       ;; Make the compile buffer as small as possible
-      (let ((compilation-buffer-window (get-buffer-window "*compilation*"))
-            error-symbol)
-        (if nil ;compilation-buffer-window
-            (condition-case error-symbol
-                (while t
-                  (message "ja")
-                  (adjust-window-trailing-edge compilation-buffer-window
-                                               -2 nil)
-                  (sleep-for 1))
-              (error (message error-symbol)))))
+      ;; (let ((compilation-buffer-window (get-buffer-window "*compilation*")) ;;
+      ;;       error-symbol)                                                   ;;
+      ;;   (if nil ;compilation-buffer-window                                  ;;
+      ;;       (condition-case error-symbol                                    ;;
+      ;;           (while t                                                    ;;
+      ;;             (message "ja")                                            ;;
+      ;;             (adjust-window-trailing-edge compilation-buffer-window    ;;
+      ;;                                          -2 nil)                      ;;
+      ;;             (sleep-for 1))                                            ;;
+      ;;         (error (message error-symbol)))))                             ;;
       )))
+
