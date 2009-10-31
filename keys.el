@@ -26,6 +26,7 @@
 (global-set-key (kbd "C-o")                   'ido-switch-buffer)
 (global-set-key (kbd "C-M-z")                 'highlight-symbol-prev-auto-on)
 (global-set-key (kbd "C-M-c")                 'highlight-symbol-next-auto-on)
+(global-set-key (kbd "<s-f7>")                'idle-compile-mode)
 (global-set-key (kbd "C-M-d")                 'kill-word)
 (global-set-key (kbd "M-0")                   'line-to-top-of-window)
 (global-set-key (kbd "M-I")                   'message-and-kill-add-buffer-file-name)
