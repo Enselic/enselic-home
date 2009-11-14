@@ -79,7 +79,8 @@ short time on inactivity following a save."
            (c-name (file-name-nondirectory buffer-file-name))
            (basename (file-name-sans-extension c-name))
            (obj-name (concat basename ".o"))
-           (original-compile-command compile-command))
+           (original-compile-command compile-command)
+           (compilation-ask-about-save nil))
 
       ;; Issue the compile command
       (setq compile-command (concat "make -C " dirname " " obj-name))
