@@ -43,21 +43,12 @@
 (require 'vc-clearcase-auto)
 (require 'whitespace)
 
-;; Autoloaded
-;; (require 'idle-compile)
-
 ;; Ignored
 ;; (require 'psvn)
 
 
 (autoload 'git-blame-mode "git-blame"
   "Minor mode for incremental blame for Git." t)
-
-(autoload 'idle-compile-mode "idle-compile"
-  "When enabled, the current buffer will be compiled after a
-short time on inactivity following a save.")
-(add-hook 'c-mode-hook 'idle-compile-mode)
-
 
 
 (load "functions.el")
