@@ -66,6 +66,9 @@
 (global-set-key (kbd "C-c u")                 'upcase-word)
 (global-set-key (kbd "C-c w")                 'whitespace-mode)
 
+;; C-x keystrokes
+(global-set-key (kbd "C-x r i")               'string-insert-rectangle)
+
 ;; Ignored keystrokes
 (global-set-key (kbd "C-z")                   'ignore)
 (global-set-key (kbd "C-h C-c")               'ignore)
