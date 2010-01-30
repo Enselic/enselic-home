@@ -101,10 +101,21 @@
   (interactive)
   (message (kill-new (thing-at-point 'symbol))))
 
-(defun message-and-kill-add-buffer-file-name ()
-  (interactive)
-  (message buffer-file-name)
-  (kill-new buffer-file-name))
+(defun message-and-kill-add-buffer-file-name (arg)
+  (interactive "P")
+  (let (the-string)
+    (setq the-string
+          (if arg
+              (concat
+               (replace-regexp-in-string "/home/martin/source/gimp"
+                                         "http://git.gnome.org/browse/gimp/tree"
+                                         buffer-file-name)
+               "#n"
+               (int-to-string (line-number-at-pos nil)))
+              
+            buffer-file-name))
+    (message the-string)
+    (kill-new the-string)))
 
 (defun delete-current-buffer-file ()
   (interactive)
