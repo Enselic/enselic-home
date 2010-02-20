@@ -83,7 +83,10 @@ programming-project-batch-create PROJECTNAME'"
     (setq source-root (programming-project-get-source-root project-name))
     (if (programming-project-get-compile-command project-name)
         (setq compile-command (programming-project-get-compile-command project-name))
-      (setq compile-command (format programming-project-default-compile-command-format source-root))))
+      (setq compile-command (format programming-project-default-compile-command-format source-root)))
+
+    (if (file-exists-p (concat source-root "/.git"))
+        (git-status source-root)))
 
   (if (file-regular-p (programming-project-get-file-cache-file project-name))
       (file-cache-read-cache-from-file (programming-project-get-file-cache-file project-name)))
