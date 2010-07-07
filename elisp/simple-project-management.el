@@ -36,7 +36,7 @@
 projects."
   :group   'tools)
 
-(defcustom simple-project-management-projects-directory       "~/projects"
+(defcustom simple-project-management-projects-directory       "~/.emacs-projects"
   "Where to store project data."
   :type  'directory
   :group 'simple-project-management)
