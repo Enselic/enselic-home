@@ -96,7 +96,7 @@
  '(compilation-scroll-output t)
  '(dabbrev-case-fold-search nil)
  '(dabbrev-case-replace t)
- '(desktop-base-file-name "DESKTOP")
+ '(desktop-base-file-name ".emacs-desktop")
  '(desktop-globals-to-clear nil)
  '(desktop-inhibit-find-file-warnings t)
  '(desktop-lazy-verbose nil)
