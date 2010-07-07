@@ -1,0 +1,146 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;;  filecache enhancements (from www.EmacsWiki.org)
+;;
+
+(defvar file-cache-files-matching-map nil)
+(if file-cache-files-matching-map
+    ()
+  (setq file-cache-files-matching-map (make-sparse-keymap))
+  (define-key file-cache-files-matching-map (kbd "RET") 'file-cache-files-matching-mode-select)
+  (define-key file-cache-files-matching-map (kbd "n")   'next-line)
+  (define-key file-cache-files-matching-map (kbd "p")   'previous-line))
+
+
+(defun kill-buffer-if-exists (buffer)
+  (if (get-buffer buffer)
+      (kill-buffer buffer)))
+
+
+(defun file-cache-files-matching-with-mode ()
+  (interactive)
+  (let ((output-buffer "*File Cache Files Matching*"))
+
+    (kill-buffer-if-exists output-buffer)
+    (call-interactively 'file-cache-files-matching)
+    (switch-to-buffer output-buffer)
+    (file-cache-files-matching-mode)
+    (delete-other-windows)
+    (setq buffer-read-only t)))
+
+
+(defun file-cache-files-matching-mode-select ()
+  (interactive)
+  (let (start
+        end
+        file-name)
+    (setq start     (line-beginning-position)
+          end       (line-end-position)
+          file-name (buffer-substring-no-properties start end))
+    (file-cache-ido-find-file file-name)))
+
+
+(defun file-cache-files-matching-mode ()
+  (kill-all-local-variables)
+  (use-local-map file-cache-files-matching-map)
+  (setq mode-name "FCFMM")
+  (setq major-mode 'file-cache-files-matching-mode))
+
+
+(defun file-cache-save-cache-to-file (file)
+  "Save contents of `file-cache-alist' to FILE.
+For later retrieval using `file-cache-read-cache-from-file'"
+  (interactive "FFile: ")
+  (with-temp-file (expand-file-name file)
+    (prin1 file-cache-alist (current-buffer))))
+
+
+(defun file-cache-read-cache-from-file (file)
+  "Clear `file-cache-alist' and read cache from FILE.
+The file cache can be saved to a file using
+`file-cache-save-cache-to-file'."
+  (interactive "fFile: ")
+  (file-cache-clear-cache)
+  (save-excursion
+    (set-buffer (find-file-noselect file))
+    (beginning-of-buffer)
+    (setq file-cache-alist (read (current-buffer)))))
+
+(defun file-cache-ido-find-file (file)
+  "Using ido, interactively open file from file cache'.
+First select a file, matched using ido-switch-buffer against the contents
+in `file-cache-alist'. If the file exist in more than one
+directory, select directory. Lastly the file is opened."
+  (interactive (list (file-cache-ido-read "File: "
+                                          (mapcar
+                                           (lambda (x)
+                                             (car x))
+                                           file-cache-alist))))
+  (let* ((record (assoc file file-cache-alist)))
+    (find-file
+     (expand-file-name
+      file
+      (if (= (length record) 2)
+          (car (cdr record))
+        (file-cache-ido-read
+         (format "Find %s in dir: " file) (cdr record)))))))
+
+
+(defun file-cache-ido-read (prompt choices)
+  (let ((ido-make-buffer-list-hook
+	 (lambda ()
+	   (setq ido-temp-list choices))))
+    (ido-read-buffer prompt)))
+
+
+(defun file-cache-add-this-file ()
+  (and buffer-file-name
+       (file-exists-p buffer-file-name)
+       (file-cache-add-file buffer-file-name)))
+
+
+(defun file-cache-delete-this-file ()
+  (and buffer-file-name
+       (file-cache-delete-file buffer-file-name)))
+
+
+(defun file-cache-add-or-delete-this-file (arg)
+  (interactive "P")
+  (if (not arg)
+      (file-cache-delete-this-file)
+    (file-cache-add-this-file)))               
+
+
+(defun file-cache-number-of-items ()
+  (if (sequencep file-cache-alist)
+      (length file-cache-alist)
+    0))
+
+
+(defun enselic-elisp-report-missing-binaries ()
+  (interactive)
+  (let ((output-buffer "*enselic-elisp-report-missing-binaries*")
+        (binary-list   '("ctags --version"
+                         "grep --version"
+                         "find --version"
+                         "uncrustify --version"))
+        (success       t))
+
+    (kill-buffer-if-exists output-buffer)
+    (switch-to-buffer output-buffer)
+
+    (dolist (binary binary-list)
+      (when (not (= (shell-command binary) 0))
+        (insert (format "Executing `%s' didn't go as expected, is the binary in PATH?\n"
+                        binary))
+        (setq success nil)))
+
+    (if success
+        (insert "Everything looks OK!"))
+
+    ;; Clear minibuffer
+    (message "")))
+
+
+
+(provide 'filecache-enhancements)
