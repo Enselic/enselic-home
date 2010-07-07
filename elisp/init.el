@@ -207,3 +207,8 @@
 
 
 (put 'downcase-region 'disabled nil)
+
+
+(setq default-tab-width 8)
+
+(define-abbrev c-mode-abbrev-table    "dop"   ""  'glib-debug-output)
