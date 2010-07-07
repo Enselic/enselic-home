@@ -1,0 +1,2 @@
+#!/bin/sh
+vncviewer LowColorLevel 1 192.168.0.100 $@

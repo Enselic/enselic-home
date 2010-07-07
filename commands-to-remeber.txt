@@ -1,0 +1,1 @@
+git --no-pager log GIMP_2_6_1.. -- `find -maxdepth 1 -type d | sort | grep --invert-match "^./po" | xargs echo` | grep "Author:" | uniq > authors.txt
