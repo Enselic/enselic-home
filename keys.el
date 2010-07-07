@@ -12,7 +12,6 @@
 (global-set-key (kbd "<f5>")                  'programming-project-debug-binary)
 (global-set-key (kbd "M-.")                   'etags-select-find-tag)
 (global-set-key (kbd "<f8>")                  'exit-recursive-edit)
-(global-set-key (kbd "M-l")                   'file-cache-find-file-on-line)
 (global-set-key (kbd "M-+")                   'generic-enlarge-window)
 (global-set-key (kbd "M--")                   'generic-shrink-window)
 (global-set-key (kbd "<f9>")                  'gud-break)
@@ -62,7 +61,7 @@
 (global-set-key (kbd "C-c v")                 'programming-project-svn-status-current-source-root)
 (global-set-key (kbd "C-c r")                 'rename-symbol)
 (global-set-key (kbd "C-c h")                 'shell)
-(global-set-key (kbd "C-c b")                 'git-blame-mode)
+(global-set-key (kbd "C-c b")                 'programming-project-git-gui-blame)
 (global-set-key (kbd "C-c u")                 'upcase-word)
 (global-set-key (kbd "C-c w")                 'whitespace-mode)
 

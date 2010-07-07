@@ -411,5 +411,16 @@ dir."
   (interactive)
   (apply-patch-in-buffer (programming-project-get-current-source-root)))
 
+(defun programming-project-git-gui-blame ()
+  (interactive)
+  (shell-command (concat "cd "
+                         (programming-project-get-current-source-root)
+                         " && "
+                         "git gui blame --line="
+                         (int-to-string (line-number-at-pos nil))
+                         " "
+                         (buffer-file-name)
+                         "&" )))
+
 
 (provide 'programming-project)
