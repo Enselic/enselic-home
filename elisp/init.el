@@ -22,7 +22,7 @@
 ;;   (load user-init-file)
 ;;
 
-(add-to-list 'load-path "~/enselic-elisp")
+(add-to-list 'load-path "~/enselic-home/elisp")
 
 (require 'browse-kill-ring)
 (require 'cc-mode)
