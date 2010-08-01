@@ -105,6 +105,7 @@
  '(desktop-save-mode t)
  '(echo-keystrokes 0.01)
  '(file-cache-filter-regexps (quote ("~$" "\\.o$" "\\.exe$" "\\.a$" "\\.elc$" ",v$" "\\.output$" "\\.$" "#$" "\\.class$" "/\\.")))
+ '(font-use-system-font t)
  '(fringe-mode (quote (1 . 0)) nil (fringe))
  '(global-auto-revert-mode t)
  '(grep-scroll-output t)
@@ -130,7 +131,7 @@
  '(menu-bar-mode nil)
  '(mode-require-final-newline nil)
  '(recentf-max-saved-items 40)
- '(safe-local-variable-values (quote ((c-file-offsets (innamespace . 0) (inline-open . 0) (case-label . +)) (py-indent-offset . 4) (py-indent-offset . 2) (c-basic-indent . 2) (c-set-style . gnu))))
+ '(safe-local-variable-values (quote ((test-case-name . buildbot\.test\.test_vc) (eval add-hook (quote write-file-hooks) (quote time-stamp)) (test-case-name . buildbot\.test\.test_runner) (test-case-name . buildbot\.test\.test_steps) (test-case-name . buildbot\.test\.test_steps\,buildbot\.test\.test_properties) (c-file-offsets (innamespace . 0) (inline-open . 0) (case-label . +)) (py-indent-offset . 4) (py-indent-offset . 2) (c-basic-indent . 2) (c-set-style . gnu))))
  '(save-abbrevs nil)
  '(save-place t nil (saveplace))
  '(scroll-bar-mode (quote right))
@@ -168,6 +169,7 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 98 :width normal :foundry "unknown" :family "Inconsolata"))))
  '(diff-added ((t (:foreground "#008B8B"))))
  '(diff-context ((((class color grayscale) (min-colors 88)) nil)))
  '(diff-file-header ((((class color) (min-colors 88) (background light)) (:inherit diff-header))))
