@@ -76,6 +76,7 @@
 (add-hook 'c-mode-hook            '(lambda () (local-set-key   (kbd "M-q") 'fill-paragraph)))
 
 ;; Unset some local keys
+(add-hook 'python-mode-hook       '(lambda () (local-unset-key (kbd "C-c C-d"))))
 (add-hook 'svn-status-mode-hook   '(lambda () (local-unset-key (kbd "C-o"))))
 (add-hook 'cvs-mode-hook          '(lambda () (local-unset-key (kbd "C-o"))))
 (add-hook 'diff-mode-hook         '(lambda () (local-unset-key (kbd "M-RET"))))
