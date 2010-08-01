@@ -383,7 +383,7 @@ programming-project-batch-create PROJECTNAME'"
   (interactive)
   (shell-command-on-region (region-beginning)
                            (region-end)
-                           "uncrustify -q -c ~/enselic-elisp/uncrustify/gimp-uncrustify.cfg"
+                           "uncrustify -q -c ~/enselic-home/elisp/uncrustify-config/gimp-uncrustify.cfg"
                            nil
                            t)
   (indent-or-dabbrev-completion))
