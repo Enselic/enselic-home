@@ -56,6 +56,7 @@
 (global-set-key (kbd "C-c c")                 'goto-scratch-buffer)
 (global-set-key (kbd "C-c j")                 'programming-project-grep-frontend)
 (global-set-key (kbd "C-c k")                 'kill-current-buffer)
+(global-set-key (kbd "C-c C-k")               'kill-current-buffer)
 (global-set-key (kbd "C-c C-<tab>")           'lisp-complete-symbol)
 (global-set-key (kbd "C-c q")                 'longlines-mode)
 (global-set-key (kbd "C-c v")                 'programming-project-svn-status-current-source-root)
@@ -64,6 +65,9 @@
 (global-set-key (kbd "C-c b")                 'programming-project-git-gui-blame)
 (global-set-key (kbd "C-c u")                 'upcase-word)
 (global-set-key (kbd "C-c w")                 'whitespace-mode)
+
+;; M-s keystrokes
+(global-set-key (kbd "M-s M-s")               'sort-lines)
 
 ;; C-x keystrokes
 (global-set-key (kbd "C-x r i")               'string-insert-rectangle)
@@ -83,6 +87,8 @@
 (add-hook 'etags-select-mode-hook '(lambda () (local-unset-key (kbd "M-<return>"))))
 (add-hook 'dired-mode-hook        '(lambda () (local-unset-key (kbd "C-o"))
                                               (local-unset-key (kbd "C-M-n"))
+                                              (local-unset-key (kbd "C-M-p"))))
+(add-hook 'nxml-mode-hook         '(lambda () (local-unset-key (kbd "C-M-n"))
                                               (local-unset-key (kbd "C-M-p"))))
 
 ;; Mode specific keys
