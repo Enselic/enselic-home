@@ -74,6 +74,10 @@
 
 (add-hook 'kill-emacs-hook  'write-abbrev-file)
 
+(defun set-4sp-linux ()
+  (c-set-style "4sp-linux"))
+(add-hook 'php-mode-hook  'set-4sp-linux)
+
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
@@ -130,6 +134,7 @@
  '(max-specpdl-size 10000)
  '(menu-bar-mode nil)
  '(mode-require-final-newline nil)
+ '(nxml-child-indent 4)
  '(recentf-max-saved-items 40)
  '(safe-local-variable-values (quote ((test-case-name . buildbot\.test\.test_vc) (eval add-hook (quote write-file-hooks) (quote time-stamp)) (test-case-name . buildbot\.test\.test_runner) (test-case-name . buildbot\.test\.test_steps) (test-case-name . buildbot\.test\.test_steps\,buildbot\.test\.test_properties) (c-file-offsets (innamespace . 0) (inline-open . 0) (case-label . +)) (py-indent-offset . 4) (py-indent-offset . 2) (c-basic-indent . 2) (c-set-style . gnu))))
  '(save-abbrevs nil)
