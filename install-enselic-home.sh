@@ -30,3 +30,9 @@ if [ -f $HOME/.bashrc ]; then
 else
     echo "Did not find $HOME/.bashrc, not installing enselic-home"
 fi
+
+git config --global alias.st status
+git config --global alias.br branch
+git config --global alias.rb rebase
+git config --global alias.up "pull --rebase"
+git config --global alias.ch checkout
