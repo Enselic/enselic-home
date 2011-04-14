@@ -1,22 +1,32 @@
 #!/bin/sh
 
-if [ ! -f ~/.gdbinit ]; then
-    echo "installing ~/.gdbinit"
-    cat > ~/.gdbinit <<EOF
+if [ ! -f $HOME/.gdbinit ]; then
+    echo "installing $HOME/.gdbinit"
+    cat > $HOME/.gdbinit <<EOF
 # Created with `basename $0`, do not edit!
-source ~/enselic-home/gdbinit.txt
+source $HOME/enselic-home/gdbinit.txt
 EOF
 else
-    echo "~/.gdbinit already installed"
+    echo "$HOME/.gdbinit already installed"
 fi
 
-if [ -f ~/.bashrc ]; then
-    if grep "enselic-home/bashrc.sh" ~/.bashrc &> /dev/null; then
-        echo "enselic-home already installed"
+if [ ! -f $HOME/.emacs ]; then
+    echo "installing $HOME/.emacs"
+    cat > $HOME/.emacs <<EOF
+(setq user-init-file "$HOME/enselic-home/elisp/init.el")
+(load user-init-file)
+EOF
+else
+    echo "$HOME/.emacs already installed"
+fi
+
+if [ -f $HOME/.bashrc ]; then
+    if grep "$HOME/enselic-home/bashrc.sh" $HOME/.bashrc &> /dev/null; then
+        echo "$HOME/enselic-home/bashrc.sh already installed"
     else
         echo "installing enselic-home"
-        echo "source $HOME/enselic-home/bashrc.sh" >> ~/.bashrc
+        echo "source $HOME/enselic-home/bashrc.sh" >> $HOME/.bashrc
     fi
 else
-    echo "Did not find ~/.bashrc, not installing enselic-home"
+    echo "Did not find $HOME/.bashrc, not installing enselic-home"
 fi
