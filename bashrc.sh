@@ -3,6 +3,7 @@ export EDITOR="gedit"
 export PS1='\[\033[1m\]\u@\h:\w\$ \[\033[0m\]'
 alias cd..='cd ..'
 export HISTSIZE=10000
+source ~/enselic-home/gdbinit.txt
 
 # Change to first ancestor dir with a .git subfolder, while avoiding
 # to mess up "cd -"
