@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ ! -f $HOME/.gdbinit ]; then
     echo "installing $HOME/.gdbinit"
