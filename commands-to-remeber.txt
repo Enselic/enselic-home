@@ -6,6 +6,8 @@ tarball=SDL-1.2.14.tar.gz; tar -xf $tarball && cd ${tarball%.tar.*} && ./configu
 
 sudo smartctl -a /dev/sda | grep Load_Cycle_Count
 
+git send-email --from "Martin Nordholts <enselic@gmail.com>" --compose --smtp-server smtprelay1.telia.com --to enselic@gmail.com  --subject "Example code, Vala as code generator" --suppress-cc author -2
+
 
 Things to remember:
  * Use the Inconsolata font by Ralp Levien for code
