@@ -60,6 +60,7 @@
 (c-add-style "2sp-linux" '("linux" (c-basic-offset . 2)))
 (c-add-style "3sp-linux" '("linux" (c-basic-offset . 3)))
 (c-add-style "4sp-linux" '("linux" (c-basic-offset . 4)))
+(c-add-style "8sp-linux" '("linux" (c-basic-offset . 8)))
 (fset 'yes-or-no-p 'y-or-n-p)
 (set-background-color "white")
 
