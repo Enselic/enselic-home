@@ -42,8 +42,8 @@ installtarball()
     wget ${url}
     tar -xvf ${tarballname}
     cd ${dirname}
-    ./configure --prefix=${prefix}
-    make -j5
+    ./configure --prefix=${prefix} && \
+    make -j5 && \
     make install
     cd ..
 }
