@@ -2,7 +2,7 @@
 
 # Defaults
 
-default_projects_dir="/home/martin/.emacs-projects/"
+default_projects_dir="$HOME/.emacs-projects/"
 
 
 # Make sure we get enough arguments
