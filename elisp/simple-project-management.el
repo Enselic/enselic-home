@@ -138,14 +138,16 @@ interactively, prompts for the name."
   ;; Unload the active project if any
   (simple-project-management-unload-active-project)
 
+  ;; Set the frame title, do this early so it is still done if there
+  ;; are problems loading the project
+  (modify-frame-parameters nil (list (cons 'name project-name)))
+
   ;; Load the project
   (setq simple-project-management-current-project project-name)
   (funcall (simple-project-management-get-load-function
             (simple-project-management-get-project-type project-name))
            project-name)
 
-  ;; Set the frame title
-  (modify-frame-parameters nil (list (cons 'name project-name)))
   t)
 
 
