@@ -1,3 +1,11 @@
+alias gitka="gitk &"
+alias gitc="git rebase --continue"
+alias gits="git rebase --skip"
+alias acat="adb shell cat"
+alias als="adb shell ls -l"
+alias arm="adb shell rm"
+alias pud="pushd ."
+alias pod="popd"
 export PATH="$HOME/bin:$HOME/enselic-home/bin:$PATH"
 export EDITOR="gedit"
 export PS1='\[\033[1m\]\u@\h:\w\$ \[\033[0m\]'
