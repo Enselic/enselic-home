@@ -4,6 +4,11 @@ export PS1='\[\033[1m\]\u@\h:\w\$ \[\033[0m\]'
 alias cd..='cd ..'
 export HISTSIZE=10000
 
+export ANDROID_SDK=~/android/android-sdk-linux
+if [ -n "$ANDROID_SDK" ]; then
+    export PATH="$ANDROID_SDK/tools:$ANDROID_SDK/platform-tools:$PATH"
+fi
+
 # Change to first ancestor dir with a .git subfolder, while avoiding
 # to mess up "cd -"
 groot()
@@ -26,7 +31,7 @@ groot()
     fi
 }
 
-installtarball()
+function installtarball()
 {
     if [ $# -lt 2 ]; then
         echo "Usage: installtarball PREFIX URL"
@@ -40,7 +45,7 @@ installtarball()
     dirname=${tarballname%.tar.*}
 
     wget ${url}
-    tar -xvf ${tarballname}
+    tar -xf ${tarballname}
     cd ${dirname}
     ./configure --prefix=${prefix} && \
     make -j5 && \
