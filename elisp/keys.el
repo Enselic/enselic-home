@@ -58,6 +58,7 @@
 (global-set-key (kbd "C-c k")                 'kill-current-buffer)
 (global-set-key (kbd "C-c C-k")               'kill-current-buffer)
 (global-set-key (kbd "C-c C-<tab>")           'lisp-complete-symbol)
+(global-set-key (kbd "C-<tab>")               'toggle-indent-tabs-mode)
 (global-set-key (kbd "C-c q")                 'longlines-mode)
 (global-set-key (kbd "C-c v")                 'programming-project-svn-status-current-source-root)
 (global-set-key (kbd "C-c r")                 'rename-symbol)
