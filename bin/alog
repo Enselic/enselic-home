@@ -27,7 +27,7 @@ mkdir -p "$logcat_dir"
 
 while true; do
     filename="$logcat_dir/constant-logcat_`echo $@ | tr -d ' -'`_`date +%F_%H%M%S`.txt"
-    ADB_CMD="adb $@ logcat -v time"
+    ADB_CMD="adb $@ logcat -v threadtime"
     echo "Will capture \`${ADB_CMD}\` to '$filename'"
     ${ADB_CMD} | tee "$filename"
     echo -e "Done capturing \`${ADB_CMD}\` to '$filename', starting over ...\n\n\n\n\n"

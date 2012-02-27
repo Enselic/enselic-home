@@ -6,11 +6,13 @@ alias als="adb shell ls -l"
 alias arm="adb shell rm"
 alias pud="pushd ."
 alias pod="popd"
+alias cd..='cd ..'
+
 export PATH="$HOME/bin:$HOME/enselic-home/bin:$PATH"
 export EDITOR="gedit"
 export PS1='\[\033[1m\]\u@\h:\w\$ \[\033[0m\]'
-alias cd..='cd ..'
 export HISTSIZE=10000
+export PROMPT_COMMAND="history -n; history -a"
 
 export ANDROID_SDK=~/android/android-sdk-linux
 if [ -n "$ANDROID_SDK" ]; then
