@@ -7,6 +7,7 @@ alias arm="adb shell rm"
 alias pud="pushd ."
 alias pod="popd"
 alias cd..='cd ..'
+alias clip="xclip -selection clipboard"
 
 export PATH="$HOME/bin:$HOME/enselic-home/bin:$PATH"
 export EDITOR="gedit"
