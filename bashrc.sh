@@ -52,11 +52,17 @@ function installtarball()
     url=$2
 
     tarballname=${url##*/}
-    dirname=${tarballname%.tar.*}
+    dirname=${tarballname%.tar*}
 
-    wget ${url}
-    tar -xf ${tarballname}
+    curl --remote-name ${url}
+    if [[ ${tarballname} =~ .*\.tar\.xz$ ]]; then
+        unxz ${tarballname}
+        tar -xf ${dirname}.tar
+    else
+        tar -xf ${tarballname}
+    fi
     cd ${dirname}
+    . ${prefix}/share/config.site
     ./configure --prefix=${prefix} && \
     make -j5 && \
     make install
