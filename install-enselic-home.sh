@@ -38,4 +38,4 @@ git config --global alias.up "pull --rebase"
 git config --global alias.ch checkout
 
 git config --global user.name "Martin Nordholts"
-git config --global user.email martinn@src.gnome.org
+git config --global user.email enselic@gmail.com
