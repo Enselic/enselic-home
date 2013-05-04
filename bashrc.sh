@@ -9,16 +9,38 @@ alias pod="popd"
 alias cd..='cd ..'
 alias clip="xclip -selection clipboard"
 
+
+
+
+# From http://unix.stackexchange.com/a/48113
+
+export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
+export HISTSIZE=100000                   # big big history
+export HISTFILESIZE=100000               # big big history
+shopt -s histappend                      # append to history, don't overwrite it
+
+# Save and reload the history after each command finishes
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+
+
+
+
 export PATH="$HOME/bin:$HOME/enselic-home/bin:$PATH"
 export EDITOR="gedit"
 export PS1='\[\033[1m\]\u@\h:\w\$ \[\033[0m\]'
-export HISTSIZE=10000
 export PROMPT_COMMAND="history -n; history -a"
 
 export ANDROID_SDK=~/android/android-sdk-linux
 if [ -n "$ANDROID_SDK" ]; then
     export PATH="$ANDROID_SDK/tools:$ANDROID_SDK/platform-tools:$PATH"
 fi
+
+if [ `uname` = Darwin -a -f /opt/local/etc/bash_completion ]; then
+    source /opt/local/etc/bash_completion
+    source /opt/local/share/git-core/contrib/completion/git-completion.bash
+fi
+
+
 
 # Change to first ancestor dir with a .git subfolder, while avoiding
 # to mess up "cd -"
