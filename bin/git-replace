@@ -1,2 +1,9 @@
 #!/bin/sh
-find -name .git -prune -o -type f -exec perl -pi -e $@ {} \;
+find . -name .git -and -prune -o -type f -and -exec perl -pi -e $@ {} \;
+for f in `git ls-tree HEAD --name-only -r`; do
+    new_f=`echo $f | sed $@`
+    if test "x$f" != "x$new_f"; then
+        git mv "$f" "$new_f"
+    fi
+done
+
