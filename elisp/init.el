@@ -22,6 +22,8 @@
 ;;   (load user-init-file)
 ;;
 
+(setenv "PATH" "Users/martinnordholts/bin:/Users/martinnordholts/android/android-sdk-linux/tools:/Users/martinnordholts/android/android-sdk-linux/platform-tools:/Users/martinnordholts/bin:/Users/martinnordholts/enselic-home/bin:/opt/local/bin:/Users/martinnordholts/usr/apache-maven-3.0.4/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/local/git/bin:/usr/X11/bin")
+
 (add-to-list 'load-path "~/enselic-home/elisp")
 
 (require 'browse-kill-ring)
@@ -46,6 +48,9 @@
 ;; Ignored
 ;; (require 'psvn)
 
+
+(setq mac-option-modifier 'super)
+(setq mac-command-modifier 'meta)
 
 (autoload 'git-blame-mode "git-blame"
   "Minor mode for incremental blame for Git." t)
@@ -81,11 +86,11 @@
 
 
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(abbrev-mode t)
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(abbrev-mode t t)
  '(add-log-full-name "Martin Nordholts")
  '(add-log-mailing-address "martinn@src.gnome.org")
  '(auto-save-default nil)
@@ -109,6 +114,7 @@
  '(desktop-save t)
  '(desktop-save-mode t)
  '(echo-keystrokes 0.01)
+ '(exec-path (quote ("/usr/bin" "/bin" "/usr/sbin" "/sbin" "/Applications/Emacs.app/Contents/MacOS/bin" "/opt/local/bin")))
  '(file-cache-filter-regexps (quote ("~$" "\\.o$" "\\.exe$" "\\.a$" "\\.elc$" ",v$" "\\.output$" "\\.$" "#$" "\\.class$" "/\\.")))
  '(font-use-system-font t)
  '(fringe-mode (quote (1 . 0)) nil (fringe))
