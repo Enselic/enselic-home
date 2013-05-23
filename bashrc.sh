@@ -8,6 +8,9 @@ alias pud="pushd ."
 alias pod="popd"
 alias cd..='cd ..'
 alias clip="xclip -selection clipboard"
+alias clip="xclip -selection clipboard"
+alias check="git diff --check HEAD^..HEAD"
+alias ms="git br -r | grep m/"
 
 
 
@@ -41,6 +44,11 @@ if [ `uname` = Darwin -a -f /opt/local/etc/bash_completion ]; then
 fi
 
 
+# Convert a path relative to the working directory to an absolute path
+p()
+{
+    echo `pwd`/$1
+}
 
 # Change to first ancestor dir with a .git subfolder, while avoiding
 # to mess up "cd -"
