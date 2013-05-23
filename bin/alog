@@ -31,4 +31,7 @@ while true; do
     echo "Will capture \`${ADB_CMD}\` to '$filename'"
     ${ADB_CMD} | tee "$filename"
     echo -e "Done capturing \`${ADB_CMD}\` to '$filename', starting over ...\n\n\n\n\n"
+
+    # Sleep for a while so the script can be easily killed with Ctrl+C
+    sleep 2
 done
