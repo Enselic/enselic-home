@@ -49,7 +49,7 @@
 ;; (require 'psvn)
 
 
-(setq mac-option-modifier 'super)
+(setq mac-option-modifier 'nil)
 (setq mac-command-modifier 'meta)
 
 (autoload 'git-blame-mode "git-blame"
