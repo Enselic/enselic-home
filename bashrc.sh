@@ -31,7 +31,6 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 export PATH="$HOME/bin:$HOME/enselic-home/bin:$PATH"
 export EDITOR="gedit"
 export PS1='\[\033[1m\]\u@\h:\w\$ \[\033[0m\]'
-export PROMPT_COMMAND="history -n; history -a"
 
 export ANDROID_SDK=~/android/android-sdk-linux
 if [ -n "$ANDROID_SDK" ]; then
