@@ -37,11 +37,19 @@ git config --global alias.rb rebase
 git config --global alias.up "pull --rebase"
 git config --global alias.ch checkout
 
+git config --global sendemail.from enselic@gmail.com
+git config --global sendemail.to enselic@gmail.com
+
+git config --global sendemail.smtpencryption tls
+git config --global sendemail.smtpserver smtp.gmail.com
+git config --global sendemail.smtpuser enselic@gmail.com
+git config --global sendemail.smtpserverport 587
+
 git config --global user.name "Martin Nordholts"
 git config --global user.email enselic@gmail.com
 
 sudo apt-get build-dep linux
-sudo apt-get install emacs gitk git-gui yakuake build-essential gdb libncurses5-dev id-utils exuberant-ctags strace
+sudo apt-get install emacs gitk git-gui yakuake build-essential gdb libncurses5-dev id-utils exuberant-ctags strace tree apt-file git-email initramfs-tools
 
 wget http://www.levien.com/type/myfonts/Inconsolata.otf
 gnome-open Inconsolata.otf
