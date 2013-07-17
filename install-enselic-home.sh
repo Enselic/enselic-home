@@ -49,7 +49,28 @@ git config --global user.name "Martin Nordholts"
 git config --global user.email enselic@gmail.com
 
 sudo apt-get build-dep linux
-sudo apt-get install emacs gitk git-gui yakuake build-essential gdb libncurses5-dev id-utils exuberant-ctags strace tree apt-file git-email initramfs-tools
+sudo apt-get install \
+    emacs \
+    gitk \
+    git-gui \
+    yakuake \
+    build-essential \
+    gdb \
+    libncurses5-dev \
+    id-utils \
+    exuberant-ctags \
+    strace \
+    tree \
+    apt-file \
+    git-email \
+    initramfs-tools \
+    ocaml \
+    python-dev \
+    apt-file \
+    libxml2-dev \
+    llvm-dev \
+    xclip
+    
 
 wget http://www.levien.com/type/myfonts/Inconsolata.otf
 gnome-open Inconsolata.otf
