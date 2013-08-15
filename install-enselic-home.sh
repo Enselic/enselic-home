@@ -20,34 +20,20 @@ else
     echo "$HOME/.emacs already installed"
 fi
 
-if [ -f $HOME/.bashrc ]; then
-    if grep "$HOME/enselic-home/bashrc.sh" $HOME/.bashrc &> /dev/null; then
+touch $HOME/.bash_profile
+if [ -f $HOME/.bash_profile ]; then
+    if grep "$HOME/enselic-home/bashrc.sh" $HOME/.bash_profile &> /dev/null; then
         echo "$HOME/enselic-home/bashrc.sh already installed"
     else
         echo "installing enselic-home"
-        echo "source $HOME/enselic-home/bashrc.sh" >> $HOME/.bashrc
+        echo "source $HOME/enselic-home/bashrc.sh" >> $HOME/.bash_profile
     fi
 else
-    echo "Did not find $HOME/.bashrc, not installing enselic-home"
+    echo "Did not find $HOME/.bash_profile, not installing enselic-home"
 fi
 
-git config --global alias.st status
-git config --global alias.br branch
-git config --global alias.rb rebase
-git config --global alias.up "pull --rebase"
-git config --global alias.ch checkout
-
-git config --global sendemail.from enselic@gmail.com
-git config --global sendemail.to enselic@gmail.com
-
-git config --global sendemail.smtpencryption tls
-git config --global sendemail.smtpserver smtp.gmail.com
-git config --global sendemail.smtpuser enselic@gmail.com
-git config --global sendemail.smtpserverport 587
-
-git config --global user.name "Martin Nordholts"
-git config --global user.email enselic@gmail.com
-
+# Install stuff
+if [ "Darwin" != `uname` ]; then
 sudo apt-get build-dep linux
 sudo apt-get install \
     emacs \
@@ -70,9 +56,30 @@ sudo apt-get install \
     libxml2-dev \
     llvm-dev \
     xclip
-    
+fi    
 
-wget http://www.levien.com/type/myfonts/Inconsolata.otf
+curl -O http://www.levien.com/type/myfonts/Inconsolata.otf
+if [ "Darwin" != `uname` ]; then
 gnome-open Inconsolata.otf
+else
+open Inconsolata.otf
+fi
 
+git config --global alias.st status
+git config --global alias.br branch
+git config --global alias.rb rebase
+git config --global alias.up "pull --rebase"
+git config --global alias.ch checkout
 
+git config --global sendemail.from enselic@gmail.com
+git config --global sendemail.to enselic@gmail.com
+
+git config --global sendemail.smtpencryption tls
+git config --global sendemail.smtpserver smtp.gmail.com
+git config --global sendemail.smtpuser enselic@gmail.com
+git config --global sendemail.smtpserverport 587
+
+git config --global user.name "Martin Nordholts"
+git config --global user.email enselic@gmail.com
+
+git config --global core.excludesfile ~/.gitignore
