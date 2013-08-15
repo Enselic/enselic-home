@@ -83,3 +83,4 @@ git config --global user.name "Martin Nordholts"
 git config --global user.email enselic@gmail.com
 
 git config --global core.excludesfile ~/.gitignore
+git config --global push.default matching
