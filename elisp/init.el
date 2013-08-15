@@ -59,6 +59,7 @@
 (load "functions.el")
 (load "keys.el")
 (load "skeletons.el")
+(load "path.el")
 
 
 (setq-default cursor-type '(bar . 2))
@@ -114,7 +115,6 @@
  '(desktop-save t)
  '(desktop-save-mode t)
  '(echo-keystrokes 0.01)
- '(exec-path (quote ("/usr/bin" "/bin" "/usr/sbin" "/sbin" "/Applications/Emacs.app/Contents/MacOS/bin" "/opt/local/bin")))
  '(file-cache-filter-regexps (quote ("~$" "\\.o$" "\\.exe$" "\\.a$" "\\.elc$" ",v$" "\\.output$" "\\.$" "#$" "\\.class$" "/\\.")))
  '(font-use-system-font t)
  '(fringe-mode (quote (1 . 0)) nil (fringe))
