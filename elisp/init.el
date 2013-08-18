@@ -215,6 +215,11 @@
  '(whitespace-space ((((class color) (background light)) (:foreground "#8b1a1a"))))
  '(whitespace-trailing ((t (:inherit whitespace-space :background "red1" :weight bold)))))
 
+;; Platform specific font adjustments
+;; Chromebook Pixel
+(if (file-exists-p "/sys/devices/platform/chromeos_laptop")
+    (set-face-attribute 'default nil :height 230))
+
 (put 'set-goal-column 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 (put 'narrow-to-page 'disabled nil)
