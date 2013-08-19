@@ -217,8 +217,12 @@
 
 ;; Platform specific font adjustments
 ;; Chromebook Pixel
-(if (file-exists-p "/sys/devices/platform/chromeos_laptop")
-    (set-face-attribute 'default nil :height 230))
+(if (file-exists-p "/sys/devices/virtual/dmi/id/product_name")
+    (if (string= (with-temp-buffer
+                   (insert-file-contents "/sys/devices/virtual/dmi/id/product_name")
+                   (buffer-string)) "Link
+")
+        (set-face-attribute 'default nil :height 230)))
 
 (put 'set-goal-column 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
