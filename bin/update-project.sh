@@ -18,6 +18,9 @@ fi
 # Read arguments
 
 name="$1"
+if [ -z "$name" ]; then
+    name=$(basename `pwd`)
+fi
 projects_dir="${2:-${default_projects_dir}}"
 
 
