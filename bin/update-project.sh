@@ -5,16 +5,6 @@
 default_projects_dir="$HOME/.emacs-projects/"
 
 
-# Make sure we get enough arguments
-
-if [ "$#" = "0" ]; then
-    echo "Usage: update-project.sh <name> [<projects-dir>]"
-    echo ""
-    echo "  <projects-dir> defaults to '${default_projects_dir}'"
-    exit -1
-fi
-
-
 # Read arguments
 
 name="$1"
