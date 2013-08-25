@@ -40,7 +40,6 @@
 ;(defconst programming-project-gdb-command-format               "gdb --annotate=3 --args %s ")
 (defconst programming-project-default-compile-command-format   "make -k -j3 -C \"%s\"")
 (defconst programming-project-type                             "programming")
-(defconst programming-project-ctags-command-format             "ctags -e -o \"%s\" --recurse \"%s\" %s")
 (defconst programming-project-mkid-command-format              "cd \"%s\" && mkid -o \"%s\" %s")
 
 
@@ -153,9 +152,9 @@ programming-project-batch-create PROJECTNAME'"
                                                   project-name
                                                   synchroniously)
   (if (not (file-exists-p output-file))
-      (shell-command (format programming-project-ctags-command-format
-                             output-file
+      (shell-command (format "find \"%s\" -type f -print0 | xargs -0 etags -o \"%s\""
                              source-root
+                             output-file
                              (if synchroniously "" "&"))
                      (format "*ctags (%s) Shell Command*"
                              project-name))
