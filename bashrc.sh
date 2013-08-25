@@ -37,6 +37,10 @@ if [ -n "$ANDROID_SDK" ]; then
     export PATH="$ANDROID_SDK/tools:$ANDROID_SDK/platform-tools:$PATH"
 fi
 
+if [ `uname` = Darwin ]; then
+    export PATH="/Applications/Emacs.app/Contents/MacOS/bin:$PATH"
+fi
+
 if [ `uname` = Darwin -a -f /opt/local/etc/bash_completion ]; then
     source /opt/local/etc/bash_completion
     source /opt/local/share/git-core/contrib/completion/git-completion.bash
