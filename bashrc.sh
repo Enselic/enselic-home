@@ -38,7 +38,10 @@ if [ -n "$ANDROID_SDK" ]; then
 fi
 
 if [ `uname` = Darwin ]; then
-    export PATH="/Applications/Emacs.app/Contents/MacOS/bin:$PATH"
+    export PATH="\
+/Applications/Emacs.app/Contents/MacOS/bin:\
+/Applications/Android Studio.app/sdk/platform-tools:$\
+PATH"
 fi
 
 if [ `uname` = Darwin -a -f /opt/local/etc/bash_completion ]; then
