@@ -11,6 +11,7 @@ alias clip="xclip -selection clipboard"
 alias clip="xclip -selection clipboard"
 alias check="git diff --check HEAD^..HEAD"
 alias ms="git br -r | grep m/"
+alias eapg="apg -a 1 -M ln -x 12 -m 12 -n 100"
 
 
 
