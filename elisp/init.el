@@ -48,6 +48,7 @@
 ;; Ignored
 ;; (require 'psvn)
 
+(modify-frame-parameters nil (list (cons 'name "<no-project>")))
 
 (setq mac-option-modifier 'nil)
 (setq mac-command-modifier 'meta)
