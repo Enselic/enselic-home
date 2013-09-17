@@ -198,7 +198,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 150 :width normal :foundry "apple" :family "Inconsolata"))))
+ '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "apple" :family "Inconsolata"))))
  '(diff-added ((t (:foreground "#008B8B"))))
  '(diff-context ((((class color grayscale) (min-colors 88)) nil)))
  '(diff-file-header ((((class color) (min-colors 88) (background light)) (:inherit diff-header))))
@@ -240,6 +240,9 @@
                    (buffer-string)) "Link
 ")
         (set-face-attribute 'default nil :height 230)))
+;; Mac OS X
+(if (file-exists-p "/Applications/Emacs.app")
+    (set-face-attribute 'default nil :height 150))
 
 (put 'set-goal-column 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
