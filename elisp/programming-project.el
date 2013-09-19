@@ -34,7 +34,6 @@
 (defconst programming-project-binary-to-debug-config-key       "binary_to_debug")
 (defconst programming-project-compile-command-config-key       "compile_command")
 (defconst programming-project-additional-tag-files-config-key  "additional_tag_files")
-(defconst programming-project-grep-template-command-format     "grep -rn \"%s\" -e ")
 (defconst programming-project-lid-template-command-format      "lid -f \"%s\" --result=grep ")
 (defconst programming-project-gdb-command-format               "libtool --mode=execute gdb --annotate=3 --args %s ")
 ;(defconst programming-project-gdb-command-format               "gdb --annotate=3 --args %s ")
@@ -360,22 +359,23 @@ programming-project-batch-create PROJECTNAME'"
           source-root  (programming-project-get-source-root project-name))
     
     (if (not arg)
+        ;; Default to rgrep
+        (rgrep (symbol-at-point) "*" source-root t)
+      ;; With an arg, use id-utils' lid
+      (progn
         (setq grep-command
               (format programming-project-lid-template-command-format
                       (programming-project-get-id-database-file project-name)))
-      (setq grep-command
-            (format programming-project-grep-template-command-format
-                    default-directory)))
-    ;; We don't want to let grep pick up any prefix arg
-    (setq current-prefix-arg nil)
-    (call-interactively 'grep)
-    (save-excursion
-      (let (new-name)
-        (setq new-name (format "*grep* %s" (programming-project-get-grep-e)))
-        (set-buffer "*grep*")
-        (if (get-buffer new-name)
-            (kill-buffer (get-buffer new-name)))
-        (rename-buffer new-name)))))
+        ;; We don't want to let grep pick up any prefix arg
+        (setq current-prefix-arg nil)
+        (call-interactively 'grep)
+        (save-excursion
+          (let (new-name)
+            (setq new-name (format "*grep* %s" (programming-project-get-grep-e)))
+            (set-buffer "*grep*")
+            (if (get-buffer new-name)
+                (kill-buffer (get-buffer new-name)))
+            (rename-buffer new-name)))))))
 
 
 (defun programming-project-uncrustify-region ()
