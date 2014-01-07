@@ -26,6 +26,9 @@ logcat_dir="$HOME/logcat"
 mkdir -p "$logcat_dir"
 
 while true; do
+    # Cleanup old files
+    find ~/logcat -mtime +5 -exec rm  {} \;
+
     filename="$logcat_dir/constant-logcat_`echo $@ | tr -d ' -'`_`date +%F_%H%M%S`.txt"
     ADB_CMD="adb $@ logcat -v threadtime -b main -b system -b events"
     echo "Will capture \`${ADB_CMD}\` to '$filename'"
