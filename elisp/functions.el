@@ -172,7 +172,7 @@
    ((string-match "\\.cpp$" file-name)
     (replace-regexp-in-string "\\.cpp$" ".h" file-name))
    ((string-match "\\.h$" file-name)
-    (replace-regexp-in-string "\\.h$" ".c" file-name))
+    (replace-regexp-in-string "\\.h$" ".cpp" file-name))
    (t
     (message "Not a .c or .h file!"))))
 
