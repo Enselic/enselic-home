@@ -64,12 +64,19 @@
 
 
 (setq-default cursor-type '(bar . 2))
+(fset 'yes-or-no-p 'y-or-n-p)
+(set-background-color "white")
+
+;; Style setup
 (c-add-style "2sp-linux" '("linux" (c-basic-offset . 2)))
 (c-add-style "3sp-linux" '("linux" (c-basic-offset . 3)))
 (c-add-style "4sp-linux" '("linux" (c-basic-offset . 4)))
 (c-add-style "8sp-linux" '("linux" (c-basic-offset . 8)))
-(fset 'yes-or-no-p 'y-or-n-p)
-(set-background-color "white")
+(defun set-4sp-linux ()
+  (c-set-style "4sp-linux"))
+(add-hook 'php-mode-hook  'set-4sp-linux)
+(add-hook 'c-mode-hook  'set-4sp-linux)
+(add-hook 'java-mode-hook  'set-4sp-linux)
 
 
 ;; From http://groovy.codehaus.org/Emacs+Groovy+Mode
@@ -98,11 +105,6 @@
 
 (add-hook 'kill-emacs-hook  'write-abbrev-file)
 
-(defun set-4sp-linux ()
-  (c-set-style "4sp-linux"))
-(add-hook 'php-mode-hook  'set-4sp-linux)
-
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -116,7 +118,7 @@
  '(browse-kill-ring-maximum-display-length 1000)
  '(c-basic-offset 2)
  '(c-block-comment-prefix "* ")
- '(c-default-style (quote ((c++-mode . "gnu") (java-mode . "java") (awk-mode . "awk") (other . "gnu"))))
+ '(c-default-style (quote ((c++-mode . "4sp-linux") (java-mode . "4sp-linux") (awk-mode . "awk") (other . "4sp-linux"))))
  '(clearcase-checkout-policy (quote reserved))
  '(column-number-mode t)
  '(comment-fill-column 80)
