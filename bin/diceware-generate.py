@@ -18,10 +18,12 @@ diceware = open(diceware8k_sv).readlines()
 random = random.SystemRandom();
 diceware_len = len(diceware)
 result = ""
-print "Picking", desired_count, "random words from a list of", diceware_len, "which results in an entropy of", math.log(diceware_len, 2) * desired_count
+print "Picking", desired_count, "random words from a list of", diceware_len, \
+        "which results in an entropy of", math.log(diceware_len, 2) * desired_count, " bits"
 for _ in range(0, desired_count):
     index_this_time = random.randint(0, diceware_len -1)
     print "Picking word #", index_this_time
     result += str(diceware[index_this_time]).rstrip() + " "
 
+print "The resulting passphrase is", len(result)-1, "characters:"
 print result
