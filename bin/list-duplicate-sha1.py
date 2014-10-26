@@ -64,8 +64,9 @@ def print_node(node, indent=""):
     if node.duplicates is not None:
         duplicates_without_self = list(node.duplicates)
         duplicates_without_self.remove(node.full_name)
-        if len(duplicates_without_self) > 0:
-            sys.stdout.write("  [" + ' '.join(duplicates_without_self) + "]")
+        n_duplicates = len(duplicates_without_self)
+        if n_duplicates > 0:
+            sys.stdout.write(" [" + str(n_duplicates) + "] [" + ' '.join(duplicates_without_self) + "]")
             if node.parent is not None:
                 node.parent.n_children_with_duplicates += 1
 
