@@ -34,7 +34,6 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 
 export PATH="$HOME/bin:$HOME/enselic-home/bin:$PATH"
-export EDITOR="gedit"
 export PS1='\[\033[1m\]\u@\h:\w\$ \[\033[0m\]'
 
 export ANDROID_SDK=~/android/android-sdk-linux
@@ -45,8 +44,10 @@ fi
 if [ `uname` = Darwin ]; then
     export PATH="\
 /Applications/Emacs.app/Contents/MacOS/bin:\
-/Applications/Android Studio.app/sdk/platform-tools:$\
-PATH"
+/Applications/Android Studio.app/sdk/platform-tools:\
+/Applications/Android Studio.app/sdk/build-tools/android-4.4.2:\
+/Applications/dart/dart-sdk/bin:\
+$PATH"
 fi
 
 if [ `uname` = Darwin -a -f /opt/local/etc/bash_completion ]; then
