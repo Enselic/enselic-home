@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 # Generate a file with "SHA1 dir/filename.ext" pairs on each line with this command (OS X):
-# time find . -name '.Trash' -prune -o -iname '*.jpg' -exec shasum {} + > martin/Desktop/really-all-jpgs-shasum.txt
+# time find . -name '.Trash' -prune -o -iname '*.jpg' -exec shasum {} + | /Users/martin/enselic-home/bin/list-duplicate-sha1.py
 
 import sys
 import fileinput
@@ -13,6 +13,7 @@ class FileNode:
         self.children = {};
         self.n_children_with_duplicates = 0
         self.full_name = None
+        self.parent = None
         self.duplicates = None
 
 root = FileNode("<root>")
@@ -70,7 +71,7 @@ def print_node(node, indent=""):
 
 print_node(root)
 
-print("Dirs with only duplicates:")
+print("\n\nDirs with only duplicates:")
 for d in dirs_with_duplicates:
     print d
 
