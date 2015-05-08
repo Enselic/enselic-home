@@ -65,6 +65,7 @@ else
 open Inconsolata.otf
 fi
 
+git config --global alias.cp cherry-pick
 git config --global alias.st status
 git config --global alias.br branch
 git config --global alias.rb rebase
