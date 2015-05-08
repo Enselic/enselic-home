@@ -1,3 +1,4 @@
 #!/bin/sh
 
 env | grep TARGET_PRODUCT
+env | grep TARGET_BUILD_VARIANT
