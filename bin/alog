@@ -22,19 +22,28 @@ EOF
     exit 0
 fi
 
+NORDHOLTS_IGNORED_TAGS="\
+exampletag1 \
+exampletag2 \
+"
+
 logcat_dir="$HOME/logcat"
 mkdir -p "$logcat_dir"
 
 while true; do
+    echo "Cleanup old files"
     # Cleanup old files
     find ~/logcat -mtime +5 -exec rm  {} \;
 
+    echo "Evaluating filename"
     filename="$logcat_dir/constant-logcat_`echo $@ | tr -d ' -'`_`date +%F_%H%M%S`.txt"
-    ADB_CMD="adb $@ logcat -v threadtime -b main -b system -b events"
+    echo "Evaluating ADB_CMD"
+    ADB_CMD="adb $@ logcat -v threadtime -b main -b system -b events $(echo "$NORDHOLTS_IGNORED_TAGS" | sed 's/ /:S /g')"
     echo "Will capture \`${ADB_CMD}\` to '$filename'"
     ${ADB_CMD} | tee "$filename"
     echo -e "Done capturing \`${ADB_CMD}\` to '$filename', starting over ...\n\n\n\n\n"
 
     # Sleep for a while so the script can be easily killed with Ctrl+C
+    echo "Sleep for a while so the script can be easily killed with Ctrl+C"
     sleep 2
 done
