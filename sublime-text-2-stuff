@@ -1,0 +1,8 @@
+# Sublime Text 2 stuff
+
+# User Settings, add these:
+
+	"binary_file_patterns": [
+		"*.jpg", "*.jpeg", "*.png", "*.gif", "*.ttf", "*.tga", "*.dds", "*.ico", "*.eot", "*.pdf", "*.swf", "*.jar", "*.zip",
+		"node_modules/**",
+	]
