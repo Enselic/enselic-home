@@ -12,10 +12,8 @@ alias cd....='cd ..; cd ..; cd ..'
 alias cd.....='cd ..; cd ..; cd ..; cd ..'
 alias cd......='cd ..; cd ..; cd ..; cd ..; cd ..'
 alias clip="xclip -selection clipboard"
-alias clip="xclip -selection clipboard"
 alias check="git diff --check HEAD^..HEAD"
 alias ms="git br -r | grep m/"
-alias eapg="apg -a 1 -M ln -x 12 -m 12 -n 100"
 
 
 
@@ -33,22 +31,13 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 
 
+# Generated with help of http://bashrcgenerator.com/
+export PS1="\[$(tput dim)\]\u@\h\[$(tput sgr0)\] \[$(tput bold )\]\w\[$(tput sgr0)\]\[$(tput setf 2)\]\$(__git_ps1)\[$(tput sgr0)\] \[$(tput bold )\]\$\[$(tput sgr0)\]"
+
+
+
 export PATH="$HOME/bin:$HOME/enselic-home/bin:$PATH"
-export PS1='\[\033[1m\]\u@\h:\w\$ \[\033[0m\]'
 
-export ANDROID_SDK=~/android/android-sdk-linux
-if [ -n "$ANDROID_SDK" ]; then
-    export PATH="$ANDROID_SDK/tools:$ANDROID_SDK/platform-tools:$PATH"
-fi
-
-if [ `uname` = Darwin ]; then
-    export PATH="\
-/Applications/Emacs.app/Contents/MacOS/bin:\
-/Applications/Android Studio.app/sdk/platform-tools:\
-/Applications/Android Studio.app/sdk/build-tools/android-4.4.2:\
-/Applications/dart/dart-sdk/bin:\
-$PATH"
-fi
 
 if [ `uname` = Darwin -a -f /opt/local/etc/bash_completion ]; then
     source /opt/local/etc/bash_completion
