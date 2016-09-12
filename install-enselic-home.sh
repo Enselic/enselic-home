@@ -12,7 +12,12 @@ if grep "$enselic_home_bashrc" "$install_file" &> /dev/null; then
 else
     echo "Installing $enselic_home_bashrc into $install_file"
     echo "source $enselic_home_bashrc" >> "$install_file"
+    # Hack for WSL
+    if [ -d /mnt/c ]; then
+        echo "source ~/.bash_profile" >> ~/.bashrc
+    fi
 fi
+
 
 # Install ~/.gdbinit
 if [ ! -f $HOME/.gdbinit ]; then
