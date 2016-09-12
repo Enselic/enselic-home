@@ -1,14 +1,17 @@
 #!/bin/bash
 
 # Install into ~/.bash_profile
-if [ ! -f $HOME/.bash_profile ]; then
-    touch $HOME/.bash_profile
+install_file="$HOME/.bash_profile"
+if [ ! -f "$install_file" ]; then
+    touch "$install_file"
 fi
-if grep "$HOME/enselic-home/bashrc.sh" $HOME/.bash_profile &> /dev/null; then
-    echo "$HOME/enselic-home/bashrc.sh already installed"
+enselic_home_root="$(cd $(dirname $0) && pwd)"
+enselic_home_bashrc="$enselic_home_root/bashrc.sh"
+if grep "$enselic_home_bashrc" "$install_file" &> /dev/null; then
+    echo "$enselic_home_bashrc already installed in $install_file"
 else
-    echo "installing enselic-home"
-    echo "source $HOME/enselic-home/bashrc.sh" >> $HOME/.bash_profile
+    echo "Installing $enselic_home_bashrc into $install_file"
+    echo "source $enselic_home_bashrc" >> "$install_file"
 fi
 
 # Install ~/.gdbinit
