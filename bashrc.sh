@@ -32,7 +32,7 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 
 # Generated with help of http://bashrcgenerator.com/
-export PS1="\[$(tput dim)\]\u@\h\[$(tput sgr0)\] \[$(tput bold )\]\w\[$(tput sgr0)\]\[$(tput setf 2)\]\$(__git_ps1)\[$(tput sgr0)\] \[$(tput bold )\]\$\[$(tput sgr0)\]"
+export PS1="\[$(tput dim)\]\u@\h\[$(tput sgr0)\] \[$(tput bold )\]\w\[$(tput sgr0)\]\[$(tput setf 2)\]\$(__git_ps1)\[$(tput sgr0)\] \[$(tput bold )\]\$\[$(tput sgr0)\] "
 
 
 
