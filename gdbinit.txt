@@ -1,7 +1,0 @@
-define print-when-hit
-  break $arg0
-  commands $bpnum
-    print $arg0
-    continue
-  end
-end
