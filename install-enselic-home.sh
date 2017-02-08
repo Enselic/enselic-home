@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install into ~/.bash_profile
-install_file="$HOME/.bash_profile"
+install_file="$HOME/.bash_aliases"
 if [ ! -f "$install_file" ]; then
     touch "$install_file"
 fi
@@ -18,6 +18,8 @@ else
     fi
 fi
 
+# Fix PATH in Alt + F2 prompt in GNOME
+grep "^export PATH=" "$enselic_home_bashrc" >> ~/.profile
 
 # Install ~/.gdbinit
 if [ ! -f $HOME/.gdbinit ]; then
