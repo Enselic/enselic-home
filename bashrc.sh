@@ -14,7 +14,7 @@ alias cd......='cd ..; cd ..; cd ..; cd ..; cd ..'
 alias clip="xclip -selection clipboard"
 alias check="git diff --check HEAD^..HEAD"
 alias ms="git br -r | grep m/"
-alias now="date +%Y-%m-%d_%H%M"
+alias now="date +%Y-%m-%d_%H%M%S"
 
 
 
