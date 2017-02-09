@@ -52,6 +52,15 @@ p()
     echo `pwd`/$1
 }
 
+# From http://unix.stackexchange.com/a/186167
+t() {
+  if [[ -z "$ORIG" ]]; then
+    ORIG=$PS1
+  fi
+  TITLE="\[\e]2;$*\a\]"
+  PS1=${ORIG}${TITLE}
+}
+
 # Change to first ancestor dir with a .git subfolder, while avoiding
 # to mess up "cd -"
 groot()
