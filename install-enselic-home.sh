@@ -1,36 +1,19 @@
 #!/bin/bash
 
-# Install into ~/.bash_profile
-install_file="$HOME/.bash_aliases"
-if [ ! -f "$install_file" ]; then
-    touch "$install_file"
-fi
-enselic_home_root="$(cd $(dirname $0) && pwd)"
-enselic_home_bashrc="$enselic_home_root/bashrc.sh"
-if grep "$enselic_home_bashrc" "$install_file" &> /dev/null; then
-    echo "$enselic_home_bashrc already installed in $install_file"
-else
-    echo "Installing $enselic_home_bashrc into $install_file"
-    echo "source $enselic_home_bashrc" >> "$install_file"
-    # Hack for WSL
-    if [ -d /mnt/c ]; then
-        echo "source ~/.bash_profile" >> ~/.bashrc
-    fi
-fi
+add_to_file() {
+    content="$1"
+    target="$2"
 
-# Fix PATH in Alt + F2 prompt in GNOME
-grep "^export PATH=" "$enselic_home_bashrc" >> ~/.profile
+    echo "Adding '$content' to '$target'"
 
-# Install ~/.gdbinit
-if [ ! -f $HOME/.gdbinit ]; then
-    echo "installing $HOME/.gdbinit"
-    cat > $HOME/.gdbinit <<EOF
-# Created with `basename $0`, do not edit!
-source $HOME/enselic-home/gdbinit.txt
-EOF
-else
-    echo "$HOME/.gdbinit already installed"
-fi
+    touch "$target"
+    grep --quiet --fixed-strings "$content" "$target" ||
+            echo "$content" >> "$target"
+}
+
+add_to_file "source $(dirname $0)/shell/bashrc.sh" $HOME/.bash_aliases
+add_to_file "source $(dirname $0)/shell/zshrc.sh" $HOME/.zshrc
+add_to_file "$(grep '^export PATH=' $(dirname $0)/shell/common.sh)" ~/.profile
 
 git config --global alias.cp cherry-pick
 git config --global alias.st status
@@ -50,5 +33,7 @@ git config --global sendemail.smtpserverport 587
 git config --global user.name "Martin Nordholts"
 git config --global user.email enselic@gmail.com
 
+git config --global core.editor "/usr/bin/subl -w"
 git config --global core.excludesfile ~/.gitignore
+git config --global log.decorate auto
 git config --global push.default matching
