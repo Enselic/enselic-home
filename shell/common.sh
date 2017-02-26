@@ -15,6 +15,16 @@ blame() {
     git gui blame "$file_path"
 }
 
+justpush() {
+    git add . && git commit -m "commit msg not relevant" && git push
+}
+
+glog() {
+    file_path="$1"
+    cd $(dirname "$file_path")
+    git log "$file_path"
+}
+
 # Convert a path relative to the working directory to an absolute path
 p()
 {
