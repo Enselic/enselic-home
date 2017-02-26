@@ -6,6 +6,7 @@ alias gitkk="gitk --all"
 alias gcp=gerrit_cherry_pick
 
 # PATH
+# add to .profile for Alt + F2 Gnome support
 export PATH="$HOME/enselic-home/bin:$PATH"
 
 # Functions
