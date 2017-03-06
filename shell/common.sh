@@ -24,6 +24,10 @@ justpush() {
     git add . && git commit -m "commit msg not relevant" && git push
 }
 
+wip() {
+    git add . && git commit -m "wip"
+}
+
 glog() {
     file_path="$1"
     if [ "${file_path:0:1}" != "/" ]; then
