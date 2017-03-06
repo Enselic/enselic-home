@@ -16,6 +16,10 @@ blame() {
     git gui blame "$file_path"
 }
 
+dumpcores() {
+    ulimit -c unlimited
+}
+
 justpush() {
     git add . && git commit -m "commit msg not relevant" && git push
 }
