@@ -26,6 +26,9 @@ justpush() {
 
 glog() {
     file_path="$1"
+    if [ "${file_path:0:1}" != "/" ]; then
+        file_path="$(pwd)/$file_path"
+    fi
     cd $(dirname "$file_path")
     git log "$file_path"
 }
