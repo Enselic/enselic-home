@@ -1,12 +1,12 @@
 # Aliases
 alias cd..='cd ..'
 alias check="git diff --check HEAD^..HEAD"
-alias now="date +%Y-%m-%d_%H%M%S"
+alias now="date +%Y-%m-%d_%H%M%S.%N"
 alias gitkk="gitk --all"
 alias gcp=gerrit_cherry_pick
 
 # PATH
-# add to .profile for Alt + F2 Gnome support
+# add to ~/.profile for Alt + F2 Gnome support
 export PATH="$HOME/enselic-home/bin:$PATH"
 
 # Functions
@@ -20,12 +20,33 @@ dumpcores() {
     ulimit -c unlimited
 }
 
+f() {
+    find . -name $1
+}
+
+log-1() {
+    git log -1
+}
+
 justpush() {
     git add . && git commit -m "commit msg not relevant" && git push
 }
 
 wip() {
     git add . && git commit -m "wip"
+}
+
+amend() {
+    git commit --amend
+}
+
+aamend() {
+    git commit -a --amend
+}
+
+hardamend() {
+    git reset HEAD^
+    git commit -a --amend
 }
 
 glog() {
