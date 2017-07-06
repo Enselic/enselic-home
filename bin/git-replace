@@ -1,9 +1,13 @@
 #!/bin/sh
-find . -name .git -and -prune -o -type f -and -exec perl -pi -e $@ {} \;
-for f in `git ls-tree HEAD --name-only -r`; do
+
+for f in $(git ls-files); do
+	# replace contents
+	perl -pi -e $@ "$f"
+
+	# replace file names
     new_f=`echo $f | sed $@`
     if test "x$f" != "x$new_f"; then
-        git mv "$f" "$new_f"
+        echo hej #git mv "$f" "$new_f"
     fi
 done
 
