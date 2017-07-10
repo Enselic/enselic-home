@@ -7,7 +7,6 @@ for f in $(git ls-files); do
 	# replace file names
     new_f=`echo $f | sed $@`
     if test "x$f" != "x$new_f"; then
-        echo hej #git mv "$f" "$new_f"
+        git mv "$f" "$new_f"
     fi
 done
-
