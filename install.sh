@@ -33,7 +33,7 @@ git config --global sendemail.smtpserverport 587
 git config --global user.name "Martin Nordholts"
 git config --global user.email enselic@gmail.com
 
-git config --global core.editor "/usr/bin/subl -w"
+git config --global core.editor "/usr/bin/code -n -w"
 git config --global core.excludesfile ~/.gitignore
 git config --global log.decorate auto
 git config --global push.default matching
