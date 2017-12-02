@@ -4,6 +4,7 @@ alias check="git diff --check HEAD^..HEAD"
 alias now="date +%Y-%m-%d_%H%M%S.%N"
 alias gitkk="gitk --all"
 alias gcp=gerrit_cherry_pick
+alias clipboard='xclip -selection clipboard'
 
 # PATH
 # add to ~/.profile for Alt + F2 Gnome support
