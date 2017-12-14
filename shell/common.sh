@@ -10,11 +10,18 @@ alias clipboard='xclip -selection clipboard'
 # add to ~/.profile for Alt + F2 Gnome support
 export PATH="$HOME/enselic-home/bin:$PATH"
 
+# Works both in bash and zsh
+export HISTSIZE=10000
+
 # Functions
 blame() {
     file_path="$1"
     cd $(dirname "$file_path")
     git gui blame "$file_path"
+}
+
+old() {
+    mv -v $1 $1-$(now)
 }
 
 dumpcores() {
@@ -23,6 +30,10 @@ dumpcores() {
 
 f() {
     find . -name $1
+}
+
+cf() {
+    find . -name $1 -exec cat {} \;
 }
 
 log-1() {
@@ -77,6 +88,28 @@ groot()
 
     if [ ! -d ".git" ]; then
         echo "No .git found in current or ancestor dirs"
+        cd "$previous_dir"
+        cd "$original_dir"
+    else
+        new_dir=`pwd`
+        # So 'cd -' works
+        cd "$original_dir"
+        cd "$new_dir"
+    fi
+}
+
+# Change to first ancestor dir with a .repo subfolder, while avoiding
+# to mess up "cd -"
+rroot()
+{
+    previous_dir=`cd -`
+    original_dir=`pwd`
+    while [ ! -d ".repo" ] && [ ! `pwd` = "/" ]; do
+        cd ..
+    done
+
+    if [ ! -d ".repo" ]; then
+        echo "No .repo found in current or ancestor dirs"
         cd "$previous_dir"
         cd "$original_dir"
     else

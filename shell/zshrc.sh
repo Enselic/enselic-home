@@ -1,5 +1,8 @@
 source ~/enselic-home/shell/common.sh
 
+# zsh specific
+export SAVEHIST=$HISTSIZE
+
 export PS1="
 %n@%M
 %B%d%b%{$fg[green]%}\$(__git_ps1)%{$reset_color%}
