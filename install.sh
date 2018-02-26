@@ -35,5 +35,5 @@ git config --global user.email enselic@gmail.com
 
 git config --global core.editor "/usr/bin/code -n -w"
 git config --global core.excludesfile ~/.gitignore
-git config --global log.decorate auto
+git config --global log.decorate short
 git config --global push.default matching
