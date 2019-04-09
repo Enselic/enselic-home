@@ -1,0 +1,2 @@
+Live Templates
+nl : android.util.Log.e("NORDH", "$END$");
