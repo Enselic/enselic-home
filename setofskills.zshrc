@@ -68,12 +68,12 @@ autoload -Uz vcs_info # [4]
 #
 #                      First 10 SHA1 chars in yellow fg like in git log
 #                      |              Green bacKground, black Foreground, bold (inspired by gitk branch name style)
-#                      |              |                     Red 'U' if there are unstaged changes
-#                      |              |                     |         Green 'S' if there are staged changes
-#                      |              |                     |         |
-#                      |              |                   vvvvvvvvv   |
-#                  vvvvvvvvvvvvvv vvvvvvvvvvvvvvvvvvvvvvvv         vvvvvvvvv
-baseformatstring=" %F{3}%10.10i%f %K{2}%F{0} %%B%b%%b %f%k%F{1}%u%f%F{2}%c%f"
+#                      |              |                      Red 'U' if there are unstaged changes
+#                      |              |                      |         Green 'S' if there are staged changes
+#                      |              |                      |         |
+#                      |              |                    vvvvvvvvv   |
+#                  vvvvvvvvvvvvvv vvvvvvvvvvvvvvvvvvvvvvvv          vvvvvvvvv
+baseformatstring=" %F{3}%10.10i%f %K{2}%F{0} %%B%b%%b %f%k %F{1}%u%f%F{2}%c%f"
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' get-revision true
 zstyle ':vcs_info:*' formats "$baseformatstring"
