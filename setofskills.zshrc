@@ -3,7 +3,7 @@
 #
 # Run this command:
 #
-#   f=~/.zshrc_setofskills ; curl -L setofskills.com/.zshrc -o $f ; echo "source $f" >> ~/.zshrc
+#   name=setofskills.zshrc ; curl -L setofskills.com/$name -o ~/$name ; echo "source ~/$name" >> ~/.zshrc
 
 
 
@@ -120,7 +120,7 @@ if [[ "$(git config --global alias.ch)" != "checkout" ]]; then
     git config --global user.email enselic@gmail.com
     git config --global user.name "Martin Nordholts"
 
-    // From Dethariel here https://stackoverflow.com/a/48999882/287761
+    # From Dethariel here https://stackoverflow.com/a/48999882/287761
     git config --global alias.amend-to '!f() { SHA=`git rev-parse "$1"`; git commit --fixup "$SHA" && GIT_SEQUENCE_EDITOR=true git rebase --autostash --interactive --autosquash "$SHA^"; }; f'
 fi
 
