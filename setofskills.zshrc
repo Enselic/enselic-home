@@ -28,6 +28,7 @@ unsetopt appendcreate autocd automenu clobber correct extendedglob listbeep menu
 
 if [[ "$(uname)" = "Darwin" ]]; then
     export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+    export PATH="$PATH:/Users/$USER/Library/Android/sdk/platform-tools"
 fi
 
 
