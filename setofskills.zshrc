@@ -1,9 +1,7 @@
-# INSTALATTION INSTRUCTIONS
-# =========================
-#
-# Run this command:
-#
-#   name=setofskills.zshrc ; curl -L setofskills.com/$name -o ~/$name ; echo "source ~/$name" >> ~/.zshrc
+# INSTALLATION
+# ============
+
+# curl -L setofskills.com/setofskills.zshrc -o ~/setofskills.zshrc ; echo "source ~/setofskills.zshrc" >> ~/.zshrc
 
 
 
@@ -25,6 +23,15 @@ unsetopt appendcreate autocd automenu clobber correct extendedglob listbeep menu
 
 
 
+# PATH
+# ====
+
+if [[ "$(uname)" = "Darwin" ]]; then
+    export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+fi
+
+
+
 # BINDINGS
 # ========
 
@@ -39,7 +46,6 @@ bindkey -s '^[[A' 'cd ..\n'
 # COMPLETION
 # ==========
 
-#
 autoload -Uz compinit && compinit -i # [7]
 
 
@@ -74,20 +80,16 @@ autoload -Uz vcs_info # [4]
 #                      |              |                    vvvvvvvvv   |
 #                  vvvvvvvvvvvvvv vvvvvvvvvvvvvvvvvvvvvvvv          vvvvvvvvv
 baseformatstring=" %F{3}%10.10i%f %K{2}%F{0} %%B%b%%b %f%k %F{1}%u%f%F{2}%c%f"
-zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' get-revision true
-zstyle ':vcs_info:*' formats "$baseformatstring"
-zstyle ':vcs_info:*' actionformats "$baseformatstring %F{5}%a%f"
-precmd() { vcs_info }
+zstyle ':vcs_info:*' check-for-changes true # [4]
+zstyle ':vcs_info:*' get-revision true # [4]
+zstyle ':vcs_info:*' formats "$baseformatstring" # [4]
+zstyle ':vcs_info:*' actionformats "$baseformatstring %F{5}%a%f" # [4]
+precmd() { vcs_info } # [4]
 
 PROMPT="
 %n @ %M
 %B%d%b\${vcs_info_msg_0_}
-%# " # [6]
-
-if [[ "$(uname)" = "Darwin" ]]; then
-    export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-fi
+%# " # [4] [6]
 
 
 
@@ -246,7 +248,7 @@ rroot()
 
 # REFERENCES
 # ==========
-#
+
 # [1] http://zsh.sourceforge.net/Doc/Release/Parameters.html#Parameters-Used-By-The-Shell
 # [2] http://zsh.sourceforge.net/Doc/Release/Options.html#Options
 # [3] http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Keymaps
