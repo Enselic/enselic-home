@@ -38,10 +38,6 @@ fi
 
 bindkey -e # [3]
 
-# Ctrl-Up goes up a dir
-# Press Ctrl-Up after running 'cat' to see if the code is still correct
-bindkey -s '^[[A' 'cd ..\n'
-
 
 
 # COMPLETION
@@ -103,6 +99,7 @@ if [[ "$(git config --global alias.ch)" != "checkout" ]]; then
     git config --global alias.br "branch --sort=-committerdate"
     git config --global alias.ch "checkout"
     git config --global alias.cp "cherry-pick"
+    git config --global alias.cm "commit -m"
     git config --global alias.diffcw "diff --color-words=."
     git config --global alias.diffs "diff --staged"
     git config --global alias.rb "rebase"
