@@ -19,7 +19,7 @@ setopt sharehistory histignoredups histexpiredupsfirst # [2]
 # =============
 
 setopt interactivecomments # [2]
-unsetopt appendcreate autocd automenu clobber correct extendedglob listbeep menucomplete # [2]
+unsetopt appendcreate autocd automenu clobber correct extendedglob listbeep menucomplete nomatch # [2]
 
 
 
