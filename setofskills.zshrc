@@ -114,6 +114,7 @@ if [[ "$(git config --global alias.ch)" != "checkout" ]]; then
     git config --global sendemail.smtpuser enselic@gmail.com
     git config --global sendemail.to enselic@gmail.com
 
+    git config --global branch.sort -committerdate
     git config --global core.editor "code -n -w"
     git config --global core.excludesfile ~/.gitignore
     git config --global log.decorate short
