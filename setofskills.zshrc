@@ -105,6 +105,7 @@ if [[ "$(git config --global alias.ch)" != "checkout" ]]; then
     git config --global alias.diffcw "diff --color-words=."
     git config --global alias.diffs "diff --staged"
     git config --global alias.diffscw "diff --staged --color-words=."
+    git config --global alias.showcw "show --color-words=."
     git config --global alias.rb "rebase"
     git config --global alias.restores "restore --staged"
     git config --global alias.st "status"
