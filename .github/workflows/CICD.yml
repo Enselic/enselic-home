@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy-setofskills.zshrc:
+  deploy-setofskills-zshrc:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
