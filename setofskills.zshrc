@@ -40,6 +40,13 @@ fi
 
 bindkey -e # [3]
 
+type-git-branch () {
+    br="$(git branch --show-current)"
+    LBUFFER=${LBUFFER}${br}
+}
+zle -N type-git-branch
+bindkey '^G' type-git-branch
+
 
 
 # COMPLETION
