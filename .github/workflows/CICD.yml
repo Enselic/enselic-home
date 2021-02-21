@@ -12,12 +12,11 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - uses: jakejarvis/s3-sync-action@v0.5.1 
+      - uses: aws-actions/configure-aws-credentials@v1
         with:
-          args: --acl public-read --content-type text/plain
-        env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          SOURCE_DIR: ./setofskills.zshrc
-          DEST_DIR: ./setofskills.zshrc
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+      - name: aws s3 cp setofskills.zshrc
+        run: |
+          aws s3 cp --acl public-read --content-type text/plain setofskills.zshrc s3://${{ secrets.AWS_S3_BUCKET }}/setofskills.zshrc
