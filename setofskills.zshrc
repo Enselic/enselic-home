@@ -45,8 +45,14 @@ type-git-branch () {
     LBUFFER=${LBUFFER}${br}
 }
 zle -N type-git-branch
-bindkey '^G' type-git-branch
+bindkey '^G^B' type-git-branch
 
+type-git-hash () {
+    h="$(git log -1 --format=%h)"
+    LBUFFER=${LBUFFER}${h}
+}
+zle -N type-git-hash
+bindkey '^G^H' type-git-hash
 
 
 # COMPLETION
