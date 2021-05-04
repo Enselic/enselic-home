@@ -155,6 +155,9 @@ alias check="git diff --check HEAD^..HEAD"
 alias now="date +%Y-%m-%d_%H%M%S.%N"
 alias gitkk="gitk --all"
 alias clipboard='xclip -selection clipboard'
+if [ "$(uname -s)" == Linux ]; then
+    alias open=xdg-open
+fi
 
 # Functions
 blame() {
