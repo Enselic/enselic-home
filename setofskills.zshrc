@@ -54,6 +54,8 @@ type-git-hash () {
 zle -N type-git-hash
 bindkey '^G^H' type-git-hash
 
+# https://superuser.com/a/1603845/173759
+bindkey "^R" history-incremental-pattern-search-backward
 
 # COMPLETION
 # ==========
