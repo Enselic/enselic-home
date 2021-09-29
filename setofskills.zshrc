@@ -101,7 +101,7 @@ zstyle ':vcs_info:*' actionformats "$baseformatstring %F{5}%a%f" # [4]
 precmd() { vcs_info } # [4]
 
 PROMPT="
-%n @ %M
+%n @ %M \$(date '+%Y-%m-%d %H:%M:%S')
 %B%d%b\${vcs_info_msg_0_}
 %# " # [4] [6]
 
