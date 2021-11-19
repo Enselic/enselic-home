@@ -87,23 +87,29 @@ autoload -Uz vcs_info # [4]
 # %K{n} = bacKground color change
 # %k    = stop background color change
 #
-#                      First 10 SHA1 chars in yellow fg like in git log
-#                      |              Green bacKground, black Foreground, bold (inspired by gitk branch name style)
-#                      |              |                      Red 'U' if there are unstaged changes
-#                      |              |                      |         Green 'S' if there are staged changes
-#                      |              |                      |         |
-#                      |              |                    vvvvvvvvv   |
-#                  vvvvvvvvvvvvvv vvvvvvvvvvvvvvvvvvvvvvvv          vvvvvvvvv
-baseformatstring=" %F{3}%10.10i%f %K{2}%F{0} %%B%b%%b %f%k %F{1}%u%f%F{2}%c%f"
+#                    Red 'U' if there are unstaged changes
+#                    |         Green 'S' if there are staged changes
+#                    |         |
+#                  vvvvvvvvv   |
+#                           vvvvvvvvv
+baseformatstring=" %F{1}%u%f%F{2}%c%f"
 zstyle ':vcs_info:*' check-for-changes true # [4]
-zstyle ':vcs_info:*' get-revision true # [4]
 zstyle ':vcs_info:*' formats "$baseformatstring" # [4]
 zstyle ':vcs_info:*' actionformats "$baseformatstring %F{5}%a%f" # [4]
-precmd() { vcs_info } # [4]
+precmd() {
+    if [ -d .git ]; then
+        vcs_info # [4]
+        commit_info=$(git log --color=always --oneline -1)
+        git_line="
+${commit_info}${vcs_info_msg_0_}"
+    else
+        git_line=""
+    fi;
+}
 
 PROMPT="
 %n @ %M \$(date '+%Y-%m-%d %H:%M:%S')
-%B%d%b\${vcs_info_msg_0_}
+%B%d%b\${git_line}
 %# " # [4] [6]
 
 
