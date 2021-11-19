@@ -101,7 +101,7 @@ zstyle ':vcs_info:*' actionformats "$baseformatstring %F{5}%a%f" # [4]
 precmd() {
     if [ -d .git ]; then
         vcs_info # [4]
-        commit_info=$(git log --color '--pretty=format:%C(yellow)%h%Creset %s%n' -1)
+        commit_info=$(git log --color '--pretty=format:%C(yellow)%h%Creset %s%n' -1 | cut -c 1-50)
         git_line="
 ${commit_info}${vcs_info_msg_0_}"
     else
