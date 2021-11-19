@@ -87,19 +87,21 @@ autoload -Uz vcs_info # [4]
 # %K{n} = bacKground color change
 # %k    = stop background color change
 #
-#                    Red 'U' if there are unstaged changes
-#                    |         Green 'S' if there are staged changes
-#                    |         |
-#                  vvvvvvvvv   |
-#                           vvvvvvvvv
-baseformatstring=" %F{1}%u%f%F{2}%c%f"
+#                      Green bacKground, black Foreground, bold (inspired by gitk branch name style)
+#                      |                      Red 'U' if there are unstaged changes
+#                      |                      |         Green 'S' if there are staged changes
+#                      |                      |         |
+#                      |                    vvvvvvvvv   |
+#                  vvvvvvvvvvvvvvvvvvvvvvvv          vvvvvvvvv
+baseformatstring=" %K{2}%F{0} %%B%b%%b %f%k %F{1}%u%f%F{2}%c%f"
 zstyle ':vcs_info:*' check-for-changes true # [4]
+zstyle ':vcs_info:*' get-revision true # [4]
 zstyle ':vcs_info:*' formats "$baseformatstring" # [4]
 zstyle ':vcs_info:*' actionformats "$baseformatstring %F{5}%a%f" # [4]
 precmd() {
     if [ -d .git ]; then
         vcs_info # [4]
-        commit_info=$(git log --color=always --oneline -1)
+        commit_info=$(git log --color '--pretty=format:%C(yellow)%h%Creset %s%n' -1)
         git_line="
 ${commit_info}${vcs_info_msg_0_}"
     else
