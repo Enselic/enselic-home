@@ -53,6 +53,7 @@ type-git-hash () {
 }
 zle -N type-git-hash
 bindkey '^G^H' type-git-hash
+bindkey -r '^G' # Disable so that being slow above does not timeout
 
 # https://superuser.com/a/1603845/173759
 bindkey "^R" history-incremental-pattern-search-backward
