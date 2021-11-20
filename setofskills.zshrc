@@ -110,6 +110,9 @@ ${commit_info}${vcs_info_msg_0_}"
 }
 
 PROMPT="
+
+
+
 %n @ %M \$(date '+%Y-%m-%d %H:%M:%S')
 %B%d%b\${git_line}
 %# " # [4] [6]
