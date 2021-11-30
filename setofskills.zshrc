@@ -183,6 +183,11 @@ blame() {
     git gui blame "$file_path"
 }
 
+# Inspired by https://medium.com/@mrWinston/smarter-git-checkout-using-fzf-to-supercharge-your-commandline-7507db600996
+gch() {
+    git checkout $(git branch --sort=-committerdate | fzf --no-sort  | tr -d '[:space:]')
+}
+
 old() {
     mv -v $1 $1-$(now)
 }
