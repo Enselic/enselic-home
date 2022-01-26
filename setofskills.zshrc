@@ -70,6 +70,7 @@ autoload -Uz compinit && compinit -i # [7]
 
 setopt promptsubst # [2]
 autoload -Uz vcs_info # [4]
+zstyle ':vcs_info:*' enable git # [4]
 
 # Colors [5]
 # ------
