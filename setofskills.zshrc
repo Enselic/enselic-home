@@ -139,7 +139,7 @@ if [[ "$(git config --global alias.ch)" != "checkout" ]]; then
     git config --global alias.showcw "show --color-words=."
     git config --global alias.rb "rebase"
     git config --global alias.restores "restore --staged"
-    git config --global alias.st "status"
+    git config --global alias.st "status --ignore-submodules"
     git config --global alias.up "pull --rebase"
 
     git config --global sendemail.from enselic@gmail.com
