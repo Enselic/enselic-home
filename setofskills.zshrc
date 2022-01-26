@@ -99,10 +99,10 @@ zstyle ':vcs_info:*' get-revision true # [4]
 zstyle ':vcs_info:*' formats "$baseformatstring" # [4]
 zstyle ':vcs_info:*' actionformats "$baseformatstring %F{5}%a%f" # [4]
 precmd() {
-    if git status >/dev/null 2>&1; then
+    if git status --ignore-submodules >/dev/null 2>&1; then
         vcs_info # [4]
-        commit_info=$(git log --color '--pretty=format:%C(yellow)%h%Creset %s%n' -1 | cut -c 1-50)
-        ref_info=$(git log --color --format=short --decorate-refs=refs/remotes --decorate-refs=refs/tags | head -n 1 | sed $'s/\x1B[^\x1B]*\x1B\\[m//')
+        commit_info=$(git log  --ignore-submodules --color '--pretty=format:%C(yellow)%h%Creset %s%n' -1 | cut -c 1-50)
+        ref_info=$(git log  --ignore-submodules --color --format=short --decorate-refs=refs/remotes --decorate-refs=refs/tags | head -n 1 | sed $'s/\x1B[^\x1B]*\x1B\\[m//')
         git_line="
 ${commit_info}${vcs_info_msg_0_}${ref_info}"
     else
