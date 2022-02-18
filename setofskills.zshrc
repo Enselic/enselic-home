@@ -175,6 +175,7 @@ alias gitkk="gitk --all"
 alias fdfd="fd -HI"
 alias graph="git log --graph --oneline"
 alias clipboard='xclip -selection clipboard'
+alias json="python3 -m json.tool"
 if [ "$(uname -s)" == Linux ]; then
     alias open=xdg-open
 fi
