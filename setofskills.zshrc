@@ -176,6 +176,7 @@ alias fdfd="fd -HI"
 alias graph="git log --graph --oneline"
 alias clipboard='xclip -selection clipboard'
 alias json="python3 -m json.tool"
+alias c='sed -E "s/^([^-+ ]*)[-+ ]/\\1/"'
 if [ "$(uname -s)" == Linux ]; then
     alias open=xdg-open
 fi
@@ -185,6 +186,10 @@ blame() {
     file_path="$1"
     cd $(dirname "$file_path")
     git gui blame "$file_path"
+}
+
+gitdiff() {
+    git diff --color=always "$1" | c | less -R
 }
 
 # Inspired by https://medium.com/@mrWinston/smarter-git-checkout-using-fzf-to-supercharge-your-commandline-7507db600996
