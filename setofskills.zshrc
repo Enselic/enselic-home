@@ -185,7 +185,8 @@ fi
 blame() {
     file_path="$1"
     cd $(dirname "$file_path")
-    git gui blame "$file_path"
+    file_name="$(basename "$file_path")"
+    git gui blame ${file_name} || git blame ${file_name}
 }
 
 gitdiff() {
