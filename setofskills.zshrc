@@ -206,6 +206,10 @@ dumpcores() {
     ulimit -c unlimited
 }
 
+batjson() {
+    cat "$1" | python3 -m json.tool | bat -ljson
+}
+
 f() {
     find . -name "$1"
 }
