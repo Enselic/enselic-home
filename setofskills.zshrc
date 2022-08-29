@@ -258,6 +258,10 @@ p()
     echo "$(pwd)"/"$1"
 }
 
+t() {
+  echo -e -n "\e]0;$@\a"
+}
+
 # Change to first ancestor dir with a .git subfolder, while avoiding
 # to mess up "cd -"
 groot()
