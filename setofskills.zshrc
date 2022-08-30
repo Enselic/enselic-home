@@ -5,22 +5,44 @@
 # curl -L https://setofskills.com/setofskills.zshrc -o ~/setofskills.zshrc ; echo "source ~/setofskills.zshrc" >> ~/.zshrc
 # curl -L https://raw.githubusercontent.com/Enselic/enselic-home/master/setofskills.zshrc -o ~/setofskills.zshrc ; echo "source ~/setofskills.zshrc" >> ~/.zshrc
 
+# This assumes that we will never launch zsh from within bash, only that we will
+# launch bash from wihtin zsh
+in_bash=false
+if [ -n "$BASH" ]; then
+    in_bash=true
+fi
 
 # HISTORY
 # =======
 
-HISTFILE=~/.zsh_history # [1]
-HISTSIZE=100000 # [1]
-SAVEHIST=50000 # [1]
-setopt sharehistory histignoredups histexpiredupsfirst # [2]
+if [ $in_bash = false ]; then
+    echo "NOTE!!!!!! Setting up --->      zsh       <---"
+
+    HISTFILE=~/.zsh_history # [1]
+    HISTSIZE=100000 # [1]
+    SAVEHIST=50000 # [1]
+    setopt sharehistory histignoredups histexpiredupsfirst # [2]
+else
+    echo "NOTE!!!!!! Setting up --->      bash      <---"
+
+    # From http://unix.stackexchange.com/a/48113
+    export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
+    export HISTFILESIZE=100000               # big big history
+    shopt -s histappend                      # append to history, don't overwrite it
+
+    # Save and reload the history after each command finishes
+    export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+fi
 
 
 
 # OTHER OPTIONS
 # =============
 
-setopt interactivecomments # [2]
-unsetopt appendcreate autocd automenu clobber correct extendedglob listbeep menucomplete nomatch # [2]
+if [ $in_bash = false ]; then
+    setopt interactivecomments # [2]
+    unsetopt appendcreate autocd automenu clobber correct extendedglob listbeep menucomplete nomatch # [2]
+fi
 
 
 
@@ -38,86 +60,104 @@ fi
 # BINDINGS
 # ========
 
-bindkey -e # [3]
+if [ $in_bash = false ]; then
+    bindkey -e # [3]
 
-type-git-branch () {
-    br="$(git branch --show-current)"
-    LBUFFER=${LBUFFER}${br}
-}
-zle -N type-git-branch
-bindkey '^G^B' type-git-branch
+    type-git-branch () {
+        br="$(git branch --show-current)"
+        LBUFFER=${LBUFFER}${br}
+    }
+    zle -N type-git-branch
+    bindkey '^G^B' type-git-branch
 
-type-git-hash () {
-    h="$(git log -1 --format=%h)"
-    LBUFFER=${LBUFFER}${h}
-}
-zle -N type-git-hash
-bindkey '^G^H' type-git-hash
-bindkey -r '^G' # Disable so that being slow above does not timeout
+    type-git-hash () {
+        h="$(git log -1 --format=%h)"
+        LBUFFER=${LBUFFER}${h}
+    }
+    zle -N type-git-hash
+    bindkey '^G^H' type-git-hash
+    bindkey -r '^G' # Disable so that being slow above does not timeout
 
-# https://superuser.com/a/1603845/173759
-bindkey "^R" history-incremental-pattern-search-backward
+    # https://superuser.com/a/1603845/173759
+    bindkey "^R" history-incremental-pattern-search-backward
+fi
 
 # COMPLETION
 # ==========
 
-autoload -Uz compinit && compinit -i # [7]
+if [ $in_bash = false ]; then
+    autoload -Uz compinit && compinit -i # [7]
+else
+    # Mac OS X
+    if [ `uname` = Darwin -a -f /opt/local/etc/bash_completion ]; then
+        source /opt/local/etc/bash_completion
+        source /opt/local/share/git-core/contrib/completion/git-completion.bash
+    fi
+fi
 
 
 
 # GIT PROMPT
 # ==========
 
-setopt promptsubst # [2]
-autoload -Uz vcs_info # [4]
-zstyle ':vcs_info:*' enable git # [4]
+if [ $in_bash = false ]; then
+    setopt promptsubst # [2]
+    autoload -Uz vcs_info # [4]
+    zstyle ':vcs_info:*' enable git # [4]
 
-# Colors [5]
-# ------
-# 0 = black
-# 1 = red
-# 2 = green
-# 3 = yellow
-# 4 = blue
-# 5 = magenta
-# 6 = cyan
-# 7 = white
-#
-# %F{n} = Foreground color change
-# %f    = stop foreground color change
-# %K{n} = bacKground color change
-# %k    = stop background color change
-#
-#                      Green bacKground, black Foreground, bold (inspired by gitk branch name style)
-#                      |                      Red 'U' if there are unstaged changes
-#                      |                      |         Green 'S' if there are staged changes
-#                      |                      |         |
-#                      |                    vvvvvvvvv   |
-#                  vvvvvvvvvvvvvvvvvvvvvvvv          vvvvvvvvv
-baseformatstring=" %K{2}%F{0} %%B%b%%b %f%k %F{1}%u%f%F{2}%c%f"
-zstyle ':vcs_info:*' check-for-changes true # [4]
-zstyle ':vcs_info:*' get-revision true # [4]
-zstyle ':vcs_info:*' formats "$baseformatstring" # [4]
-zstyle ':vcs_info:*' actionformats "$baseformatstring %F{5}%a%f" # [4]
-precmd() {
-    vcs_info # [4]
-    if [ -n "${vcs_info_msg_0_}" ]; then
-        commit_info=$(git log  --ignore-submodules --color '--pretty=format:%C(yellow)%h%Creset %s%n' -1 | cut -c 1-50)
-        ref_info=$(git log  --ignore-submodules --color --format=short --decorate-refs=refs/remotes --decorate-refs=refs/tags  -1 | head -n 1 | sed $'s/\x1B[^\x1B]*\x1B\\[m//')
-        git_line="
+    # Colors [5]
+    # ------
+    # 0 = black
+    # 1 = red
+    # 2 = green
+    # 3 = yellow
+    # 4 = blue
+    # 5 = magenta
+    # 6 = cyan
+    # 7 = white
+    #
+    # %F{n} = Foreground color change
+    # %f    = stop foreground color change
+    # %K{n} = bacKground color change
+    # %k    = stop background color change
+    #
+    #                      Green bacKground, black Foreground, bold (inspired by gitk branch name style)
+    #                      |                      Red 'U' if there are unstaged changes
+    #                      |                      |         Green 'S' if there are staged changes
+    #                      |                      |         |
+    #                      |                    vvvvvvvvv   |
+    #                  vvvvvvvvvvvvvvvvvvvvvvvv          vvvvvvvvv
+    baseformatstring=" %K{2}%F{0} %%B%b%%b %f%k %F{1}%u%f%F{2}%c%f"
+    zstyle ':vcs_info:*' check-for-changes true # [4]
+    zstyle ':vcs_info:*' get-revision true # [4]
+    zstyle ':vcs_info:*' formats "$baseformatstring" # [4]
+    zstyle ':vcs_info:*' actionformats "$baseformatstring %F{5}%a%f" # [4]
+    precmd() {
+        vcs_info # [4]
+        if [ -n "${vcs_info_msg_0_}" ]; then
+            commit_info=$(git log  --ignore-submodules --color '--pretty=format:%C(yellow)%h%Creset %s%n' -1 | cut -c 1-50)
+            ref_info=$(git log  --ignore-submodules --color --format=short --decorate-refs=refs/remotes --decorate-refs=refs/tags  -1 | head -n 1 | sed $'s/\x1B[^\x1B]*\x1B\\[m//')
+            git_line="
 ${commit_info}${vcs_info_msg_0_}${ref_info}"
-    else
-        git_line=""
-    fi;
-}
+        else
+            git_line=""
+        fi;
+    }
 
-PROMPT="
+    PROMPT="
 
 
 
 %n @ %M \$(date '+%Y-%m-%d %H:%M:%S')
 %B%d%b\${git_line}
 %# " # [4] [6]
+else
+    # Generated with help of http://bashrcgenerator.com/
+    export PS1="
+\[$(tput dim)\]\u@\h\[$(tput sgr0)\]
+\[$(tput bold )\]\w\[$(tput sgr0)\] \[$(tput setf 2)\]\$(__git_ps1)\[$(tput sgr0)\] \[$(tput bold )\]
+\$\[$(tput sgr0)\] "
+fi
 
 
 
