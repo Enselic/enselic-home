@@ -323,6 +323,7 @@ groot()
         cd "$new_dir"
     fi
 }
+alias g=groot
 
 # Change to first ancestor dir with a .repo subfolder, while avoiding
 # to mess up "cd -"
@@ -345,6 +346,7 @@ rroot()
         cd "$new_dir"
     fi
 }
+alias r=rroot
 
 
 
