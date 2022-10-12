@@ -150,7 +150,7 @@ ${commit_info}${vcs_info_msg_0_}${ref_info}"
 
 %n @ %M \$(date '+%Y-%m-%d %H:%M:%S')
 %B%d%b\${git_line}
-%# " # [4] [6]
+$ " # [4] [6]
 else
     # Generated with help of http://bashrcgenerator.com/
     export PS1="
