@@ -254,6 +254,10 @@ f() {
     find . -name "$1"
 }
 
+i() {
+    bash -c 'echo $(( $(cat ~/.i) + 1 )) > ~/.i ; cat ~/.i'
+}
+
 cf() {
     find . -name "$1" -exec cat {} \;
 }
