@@ -1,11 +1,68 @@
-// rm $HOME/.config/Code/User/keybindings.json ; ln -s $HOME/enselic-home/vscode/keybindings.json $HOME/.config/Code/User/keybindings.json
+// Place your key bindings in this file to override the defaultsauto[]
 [
-    {
-        "key": "alt+left",
-        "command": "workbench.action.navigateBack"
-    },
-    {
-        "key": "alt+right",
-        "command": "workbench.action.navigateForward"
-    }
+        {
+                "key": "ctrl+alt+left",
+                "command": "workbench.action.navigateBack"
+        },
+        {
+                "key": "ctrl+alt+right",
+                "command": "workbench.action.navigateForward",
+                "when": "canNavigateForward"
+        },
+        {
+                "key": "ctrl+shift+-",
+                "command": "-workbench.action.navigateForward",
+                "when": "canNavigateForward"
+        },
+        {
+                "key": "ctrl+alt+\\",
+                "command": "workbench.action.editorLayoutSingle"
+        },
+        {
+                "key": "ctrl+alt+c",
+                "command": "copyFilePath"
+        },
+        {
+                "key": "ctrl+alt+c",
+                "command": "-copyFilePath",
+                "when": "!editorFocus"
+        },
+        {
+                "key": "shift+escape",
+                "command": "workbench.action.terminal.killAll"
+        },
+        {
+                "key": "ctrl+escape",
+                "command": "workbench.action.switchWindow"
+        },
+        {
+                "key": "ctrl+shift+alt+c",
+                "command": "-copyRelativeFilePath",
+                "when": "!editorFocus"
+        },
+        {
+                "key": "ctrl+shift+alt+c",
+                "command": "copyRelativeFilePath"
+        },
+        {
+                "key": "ctrl+k ctrl+shift+alt+c",
+                "command": "-copyRelativeFilePath",
+                "when": "editorFocus"
+        },
+        {
+                "key": "alt+f12",
+                "command": "editor.action.goToTypeDefinition"
+        },
+        {
+                "key": "ctrl+alt+right",
+                "command": "-workbench.action.moveEditorToNextGroup"
+        },
+        {
+                "key": "ctrl+alt+left",
+                "command": "-workbench.action.moveEditorToPreviousGroup"
+        },
+        {
+                "key": "ctrl+m ctrl+c",
+                "command": "merge-conflict.accept.current"
+        }
 ]
