@@ -64,5 +64,21 @@
         {
                 "key": "ctrl+m ctrl+c",
                 "command": "merge-conflict.accept.current"
+        },
+        {
+                "key": "shift+escape",
+                "command": "workbench.action.closePanel"
+        },
+        {
+                "key": "ctrl+m ctrl+b",
+                "command": "merge-conflict.accept.both"
+        },
+        {
+                "key": "ctrl+m ctrl+i",
+                "command": "merge-conflict.accept.incoming"
+        },
+        {
+                "key": "ctrl+m ctrl+s",
+                "command": "merge-conflict.accept.selection"
         }
 ]
