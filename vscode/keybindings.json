@@ -80,5 +80,36 @@
         {
                 "key": "ctrl+m ctrl+s",
                 "command": "merge-conflict.accept.selection"
+        },
+        {
+                "key": "f8",
+                "command": "-editor.action.marker.nextInFiles",
+                "when": "editorFocus"
+        },
+        {
+                "key": "f8",
+                "command": "editor.action.marker.nextInFiles"
+        },
+        {
+                "key": "ctrl+shift+delete",
+                "command": "workbench.action.terminal.clear"
+        },
+        {
+                "key": "ctrl+alt+home",
+                "command": "workbench.action.terminal.scrollToTop"
+        },
+        {
+                "key": "ctrl+alt+s",
+                "command": "cSpell.disableForWorkspace",
+                "when": "config.cSpell.enabled"
+        },
+        {
+                "key": "ctrl+alt+s",
+                "command": "cSpell.enableForWorkspace",
+                "when": "!config.cSpell.enabled"
+        },
+        {
+                "key": "ctrl+shift+alt+s",
+                "command": "cSpell.addIgnoreWordsToUser"
         }
 ]
