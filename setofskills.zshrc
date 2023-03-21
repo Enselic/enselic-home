@@ -86,6 +86,7 @@ fi
 # ==========
 
 if [ $in_bash = false ]; then
+    fpath+=~/.zfunc
     autoload -Uz compinit && compinit -i # [7]
 else
     # Mac OS X
