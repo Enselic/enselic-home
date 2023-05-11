@@ -256,7 +256,7 @@ f() {
 }
 
 i() {
-    bash -c 'echo $(( $(cat ~/.i) + 1 )) > ~/.i ; cat ~/.i'
+    bash -c 'echo $(( $(cat ~/.i) + 1 )) > ~/.i ; printf %09d $(cat ~/.i)'
 }
 
 cf() {
