@@ -217,7 +217,8 @@ alias fdfd="fd -HI"
 alias graph="git log --graph --oneline"
 alias clipboard='xclip -selection clipboard'
 alias json="python3 -m json.tool"
-alias c='sed -E "s/^([^-+ ]*)[-+ ]/\\1/"'
+# alias c='sed -E "s/^([^-+ ]*)[-+ ]/\\1/"'
+alias c=git-branch-deleter
 if [ "$(uname -s)" == Linux ]; then
     alias open=xdg-open
 fi
