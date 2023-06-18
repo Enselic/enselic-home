@@ -1,8 +1,6 @@
 # INSTALLATION
 # ============
 
-# One of
-# curl -L https://setofskills.com/setofskills.zshrc -o ~/setofskills.zshrc ; echo "source ~/setofskills.zshrc" >> ~/.zshrc
 # curl -L https://raw.githubusercontent.com/Enselic/enselic-home/master/setofskills.zshrc -o ~/setofskills.zshrc ; echo "source ~/setofskills.zshrc" >> ~/.zshrc
 
 # This assumes that we will never launch zsh from within bash, only that we will
