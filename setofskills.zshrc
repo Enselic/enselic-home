@@ -211,6 +211,7 @@ fi
 alias check="git diff --check HEAD^..HEAD"
 alias now="date +%Y-%m-%d_%H%M%S.%N"
 alias gitkk="gitk --all"
+alias ch="git-branch-deleter"
 alias fdfd="fd -HI"
 alias graph="git log --graph --oneline"
 alias clipboard='xclip -selection clipboard'
