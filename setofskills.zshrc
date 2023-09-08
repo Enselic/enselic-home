@@ -263,6 +263,13 @@ cf() {
     find . -name "$1" -exec cat {} \;
 }
 
+cdc() {
+    if [ -n "$1" ]; then
+        cd "$1"
+        code .
+    fi
+}
+
 log-1() {
     git log -1
 }
