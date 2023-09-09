@@ -213,6 +213,7 @@ alias now="date +%Y-%m-%d_%H%M%S.%N"
 alias gitkk="gitk --all"
 alias ch="git-branch-deleter"
 alias fdfd="fd -HI"
+alias ri="rustup install --profile minimal"
 alias graph="git log --graph --oneline"
 alias clipboard='xclip -selection clipboard'
 alias json="python3 -m json.tool"
