@@ -19,7 +19,7 @@
                 "command": "workbench.action.editorLayoutSingle"
         },
         {
-                "key": "ctrl+alt+c",
+                "key": "ctrl+shift+alt+c",
                 "command": "copyFilePath"
         },
         {
@@ -41,7 +41,7 @@
                 "when": "!editorFocus"
         },
         {
-                "key": "ctrl+shift+alt+c",
+                "key": "ctrl+alt+c",
                 "command": "copyRelativeFilePath"
         },
         {
