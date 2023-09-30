@@ -20,6 +20,7 @@ if [ $in_bash = false ]; then
     HISTSIZE=100000 # [1]
     SAVEHIST=50000 # [1]
     setopt sharehistory histignoredups histexpiredupsfirst # [2]
+    cdpath=~/src
 else
     echo "NOTE!!!!!! Setting up --->      bash      <---"
 
