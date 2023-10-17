@@ -174,6 +174,7 @@ if [[ "$(git config --global alias.ch)" != "checkout" ]]; then
     git config --global alias.diffcw "diff --color-words='([A-Z][A-Z_]+|[A-Z][a-zA-Z_]+|[a-z][a-z_]+|.)'"
     git config --global alias.diffs "diff --staged"
     git config --global alias.diffscw "diff --staged --color-words='([A-Z][A-Z_]+|[A-Z][a-zA-Z_]+|[a-z][a-z_]+|.)'"
+    git config --global alias.logcw "log --color-words='([A-Z][A-Z_]+|[A-Z][a-zA-Z_]+|[a-z][a-z_]+|.)'"
     git config --global alias.pop "reset --hard HEAD^"
     git config --global alias.rh "reset HEAD^"
     git config --global alias.showcw "show --color-words='([A-Z][A-Z_]+|[A-Z][a-zA-Z_]+|[a-z][a-z_]+|.)'"
