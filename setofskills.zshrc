@@ -247,6 +247,12 @@ old() {
     mv -v $1 $1-$(now)
 }
 
+cdc() {
+    cd $1
+    t $1
+    code $1
+}
+
 dumpcores() {
     ulimit -c unlimited
 }
