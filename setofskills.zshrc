@@ -248,9 +248,9 @@ old() {
 }
 
 cdc() {
-    cd $1
-    t $1
     code $1
+    t $1
+    cd $1
 }
 
 dumpcores() {
