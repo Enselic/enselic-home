@@ -247,6 +247,18 @@ old() {
     mv -v $1 $1-$(now)
 }
 
+push() {
+    git push origin "$(git branch --show-current)"
+}
+
+pushn() {
+    git push --no-verify origin "$(git branch --show-current)"
+}
+
+pushf() {
+    git push -f origin "$(git branch --show-current)"
+}
+
 cdc() {
     code $1
     t $1
