@@ -211,6 +211,7 @@ fi
 # =====================
 
 # Aliases
+alias codede="code --disable-extensions"
 alias check="git diff --check HEAD^..HEAD"
 alias now="date +%Y-%m-%d_%H%M%S.%N"
 alias gitkk="gitk --all"
