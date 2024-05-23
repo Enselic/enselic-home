@@ -184,12 +184,12 @@ if [[ "$(git config --global alias.ch)" != "checkout" ]]; then
     git config --global alias.st "status --ignore-submodules"
     git config --global alias.up "pull --rebase"
 
-    git config --global sendemail.from enselic@gmail.com
+    git config --global sendemail.from martin.nordholts@codetale.se
     git config --global sendemail.smtpencryption tls
     git config --global sendemail.smtpserver smtp.gmail.com
     git config --global sendemail.smtpserverport 587
-    git config --global sendemail.smtpuser enselic@gmail.com
-    git config --global sendemail.to enselic@gmail.com
+    git config --global sendemail.smtpuser martin.nordholts@codetale.se
+    git config --global sendemail.to martin.nordholts@codetale.se
 
     git config --global branch.sort -committerdate
     git config --global core.editor "code -n -w"
@@ -198,7 +198,7 @@ if [[ "$(git config --global alias.ch)" != "checkout" ]]; then
     git config --global merge.conflictstyle diff3
     git config --global push.default nothing
     git config --global rebase.autosquash true
-    git config --global user.email enselic@gmail.com
+    git config --global user.email martin.nordholts@codetale.se
     git config --global user.name "Martin Nordholts"
 
     # From Dethariel here https://stackoverflow.com/a/48999882/287761
