@@ -216,6 +216,7 @@ alias check="git diff --check HEAD^..HEAD"
 alias now="date +%Y-%m-%d_%H%M%S.%N"
 alias gitkk="gitk --all"
 alias ch="git-branch-deleter"
+alias xbat="git ls-files | xargs bat"
 alias fdfd="fd -HI"
 alias ri="rustup install --profile minimal"
 alias graph="git log --graph --oneline"
@@ -249,15 +250,15 @@ old() {
 }
 
 push() {
-    git push origin "$(git branch --show-current)"
+    git push ${1:-origin} "$(git branch --show-current)"
 }
 
 pushn() {
-    git push --no-verify origin "$(git branch --show-current)"
+    git push --no-verify ${1:-origin} "$(git branch --show-current)"
 }
 
 pushf() {
-    git push -f origin "$(git branch --show-current)"
+    git push -f ${1:-origin} "$(git branch --show-current)"
 }
 
 cdc() {
@@ -279,7 +280,7 @@ f() {
 }
 
 i() {
-    bash -c 'echo $(( $(cat ~/.i) + 1 )) > ~/.i ; printf %09d $(cat ~/.i)'
+    bash -c 'echo $(( $(cat ~/.i) + 1 )) > ~/.i ; printf %05d $(cat ~/.i)'
 }
 
 cf() {
@@ -331,6 +332,15 @@ glog() {
 p()
 {
     echo "$(pwd)"/"$1"
+}
+
+pc() {
+    p $1 | tr -d '\n' | xclip -selection clipboard
+}
+
+cpm() {
+    mkdir -p $(dirname $2)
+    cp $1 $2
 }
 
 t() {
