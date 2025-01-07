@@ -180,7 +180,6 @@ if [[ "$(git config --global alias.ch)" != "checkout" ]]; then
     git config --global alias.showcw "show --color-words='([A-Z][A-Z_]+|[A-Z][a-zA-Z_]+|[a-z][a-z_]+|.)'"
     git config --global alias.rb "rebase"
     git config --global alias.restores "restore --staged"
-    git config --global alias.pushn "push --no-verify"
     git config --global alias.st "status --ignore-submodules"
     git config --global alias.up "pull --rebase"
 
@@ -259,6 +258,10 @@ pushn() {
 
 pushf() {
     git push -f ${1:-origin} "$(git branch --show-current)"
+}
+
+pushfn() {
+    git push -f --no-verify ${1:-origin} "$(git branch --show-current)"
 }
 
 cdc() {
