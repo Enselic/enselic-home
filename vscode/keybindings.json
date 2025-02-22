@@ -1,3 +1,4 @@
+// cp ./src/enselic-home/vscode/keybindings.json ./.config/Code/User/keybindings.json
 // Place your key bindings in this file to override the defaultsauto[]
 [
         {
