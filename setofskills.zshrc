@@ -218,6 +218,7 @@ fi
 # =====================
 
 # Aliases
+alias cm="git commit -m"
 alias batcat=bat
 alias codede="code --disable-extensions"
 alias check="git diff --check HEAD^..HEAD"
