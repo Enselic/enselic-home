@@ -247,6 +247,24 @@ blame() {
     git gui blame ${file_name} || git blame ${file_name}
 }
 
+# Increment Branch Name
+# ChatGPT wrote this.
+ibn() {
+    local current_branch new_branch
+    current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+    # Increment the last number in the branch name
+    new_branch=$(echo "$current_branch" | perl -pe 's/(.*?)(\d+)$/$1.($2+1)/e')
+
+    if [ "$current_branch" = "$new_branch" ]; then
+        echo "Error: Branch name does not end with a number."
+        return 1
+    fi
+
+    git branch -m "$new_branch"
+    echo "Renamed branch '$current_branch' to '$new_branch'"
+}
+
 gitdiff() {
     git diff --color=always "$1" | c | less -R
 }
