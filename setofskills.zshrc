@@ -219,7 +219,7 @@ fi
 
 # Aliases
 alias d="git diff"
-alias wipp="wip && push"
+alias wipp="wip ; push"
 alias cm="git commit -m"
 alias batcat=bat
 alias codede="code --disable-extensions"
