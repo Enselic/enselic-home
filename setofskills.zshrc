@@ -6,9 +6,7 @@ install_enselic_home() {
     mkdir ~/src
     cd ~/src
     git clone https://github.com/Enselic/enselic-home.git
-    cd enselic-home
-    ln -s ~/src/enselic-home/setofskills.zshrc ~/setofskills.zshrc
-    echo "source ~/setofskills.zshrc" >> ~/.zshrc
+    echo "source ~/src/enselic-home/setofskills.zshrc" >> ~/.zshrc
 }
 
 # This assumes that we will never launch zsh from within bash, only that we will
@@ -50,6 +48,8 @@ if [ $in_bash = false ]; then
     setopt interactivecomments # [2]
     unsetopt appendcreate autocd automenu clobber correct extendedglob listbeep menucomplete nomatch # [2]
 fi
+
+export src=~/src
 
 
 
