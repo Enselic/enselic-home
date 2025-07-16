@@ -253,12 +253,12 @@ ibn() {
     local current_branch new_branch
     current_branch=$(git rev-parse --abbrev-ref HEAD)
 
-    # Increment the last number in the branch name
-    new_branch=$(echo "$current_branch" | perl -pe 's/(.*?)(\d+)$/$1.($2+1)/e')
-
-    if [ "$current_branch" = "$new_branch" ]; then
-        echo "Error: Branch name does not end with a number."
-        return 1
+    if [[ $current_branch =~ (.*[^0-9])([0-9]+)$ ]]; then
+        prefix=${BASH_REMATCH[1]:-${match[1]}}
+        number=${BASH_REMATCH[2]:-${match[2]}}
+        new_branch="${prefix}$((number + 1))"
+    else
+        new_branch="${current_branch}-1"
     fi
 
     git branch -m "$new_branch"
