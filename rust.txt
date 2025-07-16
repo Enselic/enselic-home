@@ -1,0 +1,1 @@
+PATH="/home/martin/opt/wasmtime-v19/wasmtime-v19.0.0-x86_64-linux:$PATH" WASI_SDK_PATH=/home/martin/opt/wasi-sdk-25/wasi-sdk-25.0-x86_64-linux ./x test --stage 1 --set rust.lld=true --target wasm32-wasip1 tests/codegen/fn-parameters-on-different-lines-debuginfo.rs --verbose --no-capture
