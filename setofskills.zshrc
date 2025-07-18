@@ -239,6 +239,11 @@ if [ "$(uname -s)" == Linux ]; then
     alias open=xdg-open
 fi
 
+# For WSL
+winopen() {
+    /mnt/c/Program\ Files/Google/Chrome/Application/chrome.exe file://wsl.localhost/Ubuntu-24.04$1
+}
+
 # Functions
 blame() {
     file_path="$1"
