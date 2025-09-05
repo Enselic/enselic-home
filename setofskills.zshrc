@@ -219,7 +219,6 @@ fi
 
 # Aliases
 alias d="git diff"
-alias wipp="wip ; push"
 alias cm="git commit -m"
 alias batcat=bat
 alias codede="code --disable-extensions"
@@ -238,6 +237,11 @@ alias c=git-branch-deleter
 if [ "$(uname -s)" == Linux ]; then
     alias open=xdg-open
 fi
+
+wipp() {
+    wip "$@"
+    push
+}
 
 # For WSL
 winopen() {
