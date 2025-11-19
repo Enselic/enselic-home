@@ -219,7 +219,7 @@ fi
 # Aliases
 alias d="git diff"
 alias cm="git commit -m"
-alias batcat=bat
+alias bat=batcat
 alias codede="code --disable-extensions"
 alias check="git diff --check HEAD^..HEAD"
 alias now="date +%Y-%m-%d_%H%M%S.%N"
