@@ -1,0 +1,11 @@
+{
+    "editor.inlayHints.enabled": "offUnlessPressed",
+    "[git-commit]": {
+        "editor.rulers": [
+            72,
+        ],
+    },
+    "editor.rulers": [
+        80,
+    ]
+}
