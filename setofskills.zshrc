@@ -217,6 +217,7 @@ fi
 # =====================
 
 # Aliases
+alias one="git log --oneline"
 alias d="git diff"
 alias cm="git commit -m"
 alias bat=batcat
