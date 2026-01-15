@@ -217,6 +217,7 @@ fi
 # =====================
 
 # Aliases
+alias br='date +%G-W%V-%u'
 alias one="git log --oneline"
 alias d="git diff"
 alias cm="git commit -m"
