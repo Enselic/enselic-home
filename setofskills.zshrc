@@ -221,7 +221,6 @@ alias br='date +%G-W%V-%u'
 alias one="git log --oneline"
 alias d="git diff"
 alias cm="git commit -m"
-alias bat=batcat
 alias codede="code --disable-extensions"
 alias check="git diff --check HEAD^..HEAD"
 alias now="date +%Y-%m-%d_%H%M%S.%N"
