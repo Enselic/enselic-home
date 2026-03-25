@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug stage1 rustc borrowck async static test",
+            "type": "lldb",
+            "request": "launch",
+            "program": "/home/martin/src/rust-async-fixes/build/x86_64-unknown-linux-gnu/stage1/bin/rustc",
+            "args": [
+                "/home/martin/src/rust-async-fixes/tests/ui/borrowck/tests/ui/borrowck/unused-param-not-metioned-in-async-static-error.rs",
+                "-A",
+                "unused",
+                "-W",
+                "unused_attributes",
+                "-A",
+                "internal_features",
+                "-A",
+                "unused_parens",
+                "-A",
+                "unused_braces",
+                "--edition=2018"
+            ],
+            "cwd": "/home/martin/src/rust-async-fixes"
+       }
+    ]
+}
