@@ -28,6 +28,22 @@ function wipp {
     push
 }
 
+function ibn {
+    $currentBranch = git rev-parse --abbrev-ref HEAD
+
+    if ($currentBranch -match '^(.*[^0-9])([0-9]+)$') {
+        $prefix = $Matches[1]
+        $number = [int]$Matches[2]
+        $newBranch = "$prefix$($number + 1)"
+    }
+    else {
+        $newBranch = "$currentBranch-1"
+    }
+
+    git branch -m $newBranch
+    Write-Host "Renamed branch '$currentBranch' to '$newBranch'"
+}
+
 Set-PSReadLineKeyHandler -Chord "Ctrl+g,Ctrl+b" -ScriptBlock {
     $text = git branch --show-current
 
