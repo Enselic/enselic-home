@@ -202,7 +202,7 @@ if [[ "$(git config --global alias.ch)" != "checkout" ]]; then
     git config --global core.excludesfile ~/.gitignore
     git config --global log.decorate short
     git config --global merge.conflictstyle diff3
-    git config --global push.default nothing
+    git config --global push.default current
     git config --global rebase.autosquash true
     git config --global user.email martin.nordholts@codetale.se
     git config --global user.name "Martin Nordholts"
