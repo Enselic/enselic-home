@@ -1,7 +1,23 @@
+# curl.exe -L 'https://raw.githubusercontent.com/Enselic/enselic-home/refs/heads/master/profile.ps1' -o $PROFILE
+
 Set-PSReadLineOption -EditMode Emacs
+
+function g {
+    $root = git rev-parse --show-toplevel 2>$null
+    if ($LASTEXITCODE -eq 0) {
+        Set-Location $root
+    }
+}
 
 function ch {
     & "$HOME\bin\git-branch-deleter.exe" @args
+}
+
+function fd {
+    param([string]$Pattern)
+
+    Get-ChildItem -Recurse -File -Filter "*$Pattern*" -ErrorAction SilentlyContinue |
+        Select-Object -ExpandProperty FullName
 }
 
 function amend {
