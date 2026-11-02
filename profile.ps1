@@ -16,7 +16,7 @@ function ch {
 function fd {
     param([string]$Pattern)
 
-    Get-ChildItem -Recurse -File -Filter "*$Pattern*" -ErrorAction SilentlyContinue |
+    Get-ChildItem -Recurse -Filter "*$Pattern*" -ErrorAction SilentlyContinue |
         Select-Object -ExpandProperty FullName
 }
 
