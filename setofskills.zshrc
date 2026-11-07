@@ -204,7 +204,7 @@ if [[ "$(git config --global alias.ch)" != "checkout" ]]; then
     git config --global merge.conflictstyle diff3
     git config --global push.default current
     git config --global rebase.autosquash true
-    git config --global user.email martin.nordholts@codetale.se
+    git config --global user.email enselic@gmail.com
     git config --global user.name "Martin Nordholts"
 
     # From Dethariel here https://stackoverflow.com/a/48999882/287761
