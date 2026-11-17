@@ -1,3 +1,4 @@
+# mkdir (Split-Path $PROFILE)
 # curl.exe -L 'https://raw.githubusercontent.com/Enselic/enselic-home/refs/heads/master/profile.ps1' -o $PROFILE
 
 Set-PSReadLineOption -EditMode Emacs
